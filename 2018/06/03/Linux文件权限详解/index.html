@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Linux用户与组管理详解 · tangwei&#39;s Studio</title>
+    <title>Linux文件权限详解 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >tangwei&#39;s Studio</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Linux用户与组管理详解</a>
+                <a href="#" class="post-name">Linux文件权限详解</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Linux用户与组管理详解
+            Linux文件权限详解
             <!-- 404 -->
             
         </h1>
@@ -258,7 +258,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,508</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">1,607</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -386,232 +386,198 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="Linux用户与组管理详解"><a href="#Linux用户与组管理详解" class="headerlink" title="Linux用户与组管理详解"></a>Linux用户与组管理详解</h2><blockquote>
-<p>在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：</p>
+        <h2 id="Linux文件权限详解"><a href="#Linux文件权限详解" class="headerlink" title="Linux文件权限详解"></a>Linux文件权限详解</h2><blockquote>
+<p>Linux系统中不仅是对用户与组根据UID,GID进行了管理，还对Linux系统中的文件，按照用户与组进行分类，针对不同的群体进行了权限管理，用他来确定谁能通过何种方式对文件和目录进行访问和操作。</p>
 </blockquote>
-<h4 id="安全3A"><a href="#安全3A" class="headerlink" title="安全3A"></a>安全3A</h4><p>Linux通过三个机制来保证用户的安全：</p>
+<h3 id="一、文件权限"><a href="#一、文件权限" class="headerlink" title="一、文件权限"></a>一、文件权限</h3><h4 id="1-文件的权限针对三类对象进行定义"><a href="#1-文件的权限针对三类对象进行定义" class="headerlink" title="1.文件的权限针对三类对象进行定义"></a>1.文件的权限针对三类对象进行定义</h4><ul>
+<li><p>r：读取文件内容</p>
+</li>
+<li><p>w：修改文件内容</p>
+</li>
+<li><p>x：执行权限对除二进制程序以外的文件没什么意义</p>
+</li>
+</ul>
+<h4 id="2-每个文件针对每类访问者定义了三种主要权限"><a href="#2-每个文件针对每类访问者定义了三种主要权限" class="headerlink" title="2.每个文件针对每类访问者定义了三种主要权限"></a>2.每个文件针对每类访问者定义了三种主要权限</h4><ul>
+<li><p>r：Read      读</p>
+</li>
+<li><p>w：Write      写</p>
+</li>
+<li><p>x：eXecute      执行</p>
+</li>
+</ul>
+<p>另 X：针对目录加执行权限，文件不加执行权限（因文件具备执行权限有安全隐患）</p>
+<p>注意：root账户不受文件权限的读写限制，执行权限受限制</p>
+<h4 id="3-对于文件和目录来说，r，w，x有着不同的作用和含义"><a href="#3-对于文件和目录来说，r，w，x有着不同的作用和含义" class="headerlink" title="3.对于文件和目录来说，r，w，x有着不同的作用和含义"></a>3.对于文件和目录来说，r，w，x有着不同的作用和含义</h4><p> 针对文件：</p>
 <ul>
-<li><p>Authentication：认证</p>
+<li><p>r：读取文件内容</p>
 </li>
-<li><p>Authorization：授权</p>
+<li><p>w：修改文件内容</p>
 </li>
-<li><p>Accouting|Audition：审计</p>
+<li><p>x：执行权限对除二进制程序以外的文件没什么意义</p>
 </li>
 </ul>
-<h4 id="用户user"><a href="#用户user" class="headerlink" title="用户user"></a>用户user</h4><p>令牌：token</p>
-<p>Linux用户：Username</p>
-<p>管理员：root，UID=0（拥有对系统的最高操作权限）</p>
-<p>普通用户：</p>
+<p>针对目录：</p>
+<p>目录本质可看做是存放文件列表、节点号等内容的文件</p>
 <ul>
-<li><p>系统用户：1-499,1-999（centos7）</p>
+<li><p>r：查看目录下的文件列表</p>
 </li>
-<li><p>登录用户：500+，1000+（centos7）</p>
+<li><p>w：删除和创建目录下的文件</p>
+</li>
+<li><p>x：可以cd进入目录，能查看目录中文件的详细属性，能访问目录下文件内容（基础权限）</p>
 </li>
 </ul>
-<h4 id="组-group："><a href="#组-group：" class="headerlink" title="组 group："></a>组 group：</h4><p>Linux组：Groupname/GID</p>
-<p>管理员组：root，GID=0</p>
-<p>普通组：</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%9D%83%E9%99%90.png" alt="enter image description here"></p>
+<h4 id="4-用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。"><a href="#4-用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。" class="headerlink" title="4.用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。"></a>4.用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。</h4><h3 id="二、修改文件访问权限的方法"><a href="#二、修改文件访问权限的方法" class="headerlink" title="二、修改文件访问权限的方法"></a>二、修改文件访问权限的方法</h3><p>chmod              修改权限 change mode</p>
+<h4 id="1-mode法"><a href="#1-mode法" class="headerlink" title="1.mode法"></a>1.mode法</h4><p>格式：chmod who opt per file</p>
 <ul>
-<li><p>系统组：1-499,1-999（centos7）</p>
+<li><p>who：u g o a（all）</p>
 </li>
-<li><p>普通组：500+，1000+（centos7）</p>
+<li><p>opt：+ – =</p>
 </li>
-</ul>
-<p>在创建用户不指定组的情况下，默认创建一个与该用户名相同的组作为该用户的主组</p>
-<h4 id="组的类别："><a href="#组的类别：" class="headerlink" title="组的类别："></a>组的类别：</h4><p>用户的主要组：</p>
-<p>用户必须属于一个且只有一个主组</p>
-<p>组名同用户名，且仅包含一个用户，私有组</p>
-<p>用户的附加组：</p>
-<p>一个用户可以属于零个或多个附加组</p>
-<h4 id="安全上下文"><a href="#安全上下文" class="headerlink" title="安全上下文"></a>安全上下文</h4><p>进程所能够访问资源的权限取决于进程的运行者的身份</p>
-<h4 id="用户和组的配置文件"><a href="#用户和组的配置文件" class="headerlink" title="用户和组的配置文件"></a>用户和组的配置文件</h4><ul>
-<li><p>/etc/passwd：        存放用户及其属性信息</p>
-</li>
-<li><p>/etc/shadow：       存放用户密码及其相关信息</p>
-</li>
-<li><p>/etc/group：  存放组及属性信息</p>
-</li>
-<li><p>/etc/gshadow：     存放组密码及其相关信息</p>
-</li>
-<li><p>/etc/default/useradd：新建账户模板信息</p>
+<li><p>per：r w x X</p>
 </li>
 </ul>
-<h4 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/passwd.png" alt="enter image description here"></p>
-<p>name：password:UID:GID:GECEO:directory:shell</p>
-<ol>
-<li><p>用户名</p>
-</li>
-<li><p>密码：显示为x</p>
-</li>
-<li><p>UID：用户ID</p>
-</li>
-<li><p>GID：组ID</p>
-</li>
-<li><p>描述信息：GECOS，可添加用户描述信息</p>
-</li>
-<li><p>家目录：用户家目录</p>
-</li>
-<li><p>shell类型：用户shell类型</p>
-<h4 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/shadow.png" alt="enter image description here"></p>
-</li>
-<li><p>用户名</p>
-</li>
-<li><p>密码加密：算法$6；!!表示账户锁定</p>
-</li>
-<li><p>上次修改密码时间：距离1970.1.1的天数</p>
-</li>
-<li><p>密码最小修改时间：距离下次修改密码至少需间隔的天数（0表示随时可变更）</p>
-</li>
-<li><p>密码最大修改时间：距离本次密码修改时间最多可间隔的天数（99999表示永不过期）</p>
-</li>
-<li><p>密码提醒时间：距离密码即将到期提前警告的天数</p>
-</li>
-<li><p>密码到期后宽限时间：密码到期后账户还能使用的天数</p>
-</li>
-<li><p>账户有效期：该账户可使用的日期</p>
-</li>
-<li><p>保留区域：保留将来可能增加的区域</p>
-</li>
-</ol>
-<h4 id="etc-group"><a href="#etc-group" class="headerlink" title="/etc/group"></a>/etc/group</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/group.png" alt="enter image description here"></p>
-<p>group_name:password:GID:user_list</p>
-<ol>
-<li><p>组名</p>
-</li>
-<li><p>组密码：普通用户加入某个组时需要的密码（不推荐设置密码）</p>
-</li>
-<li><p>GID：组ID</p>
-</li>
-<li><p>组成员：“,”作为分隔符</p>
-</li>
-</ol>
-<h4 id="etc-gshadow"><a href="#etc-gshadow" class="headerlink" title="/etc/gshadow"></a>/etc/gshadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/gshadow.png" alt="enter image description here"></p>
-<p>group_name:encrypted_password:administrators:members</p>
-<ol>
-<li><p>组名</p>
-</li>
-<li><p>组密码</p>
-</li>
-<li><p>组管理员（组长）</p>
-</li>
-<li><p>组成员：“,”作为分隔符</p>
-</li>
-</ol>
-<h4 id="etc-default-useradd"><a href="#etc-default-useradd" class="headerlink" title="/etc/default/useradd"></a>/etc/default/useradd</h4><ol>
-<li><p>GROUP=100                     创建用户无指定组时默认所属的组users</p>
-</li>
-<li><p>HOME=/home                          创建用户默认家目录路径</p>
-</li>
-<li><p>INACTIVE=-1                    创建用户时默认没有宽限时间</p>
-</li>
-<li><p>EXPIRE=                             创建用户时默认有效期</p>
-</li>
-<li><p>SHELL=/bin/bash                      创建用户时默认shell类型</p>
-</li>
-<li><p>SKEL=/etc/skel                          创建用户时家目录模板</p>
-</li>
-<li><p>CREATE_MAIL_SPOOL=yes             创建用户时默认创建邮箱</p>
-</li>
-</ol>
-<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><ul>
-<li><p>vipw         等同于vi /etc/passwd</p>
-</li>
-<li><p>vigr           等同于vi /etc/group</p>
-</li>
-<li><p>pwck        检查passwd文件格式错误</p>
-</li>
-<li><p>grpck        检查group文件格式错误</p>
-</li>
-</ul>
-<h3 id="用户与组的管理命令"><a href="#用户与组的管理命令" class="headerlink" title="用户与组的管理命令"></a>用户与组的管理命令</h3><p>用户管理命令及常用选项：</p>
-<h4 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h4><p>etc/default/useradd存放创建用户时的默认信息</p>
+<h4 id="2-数字法"><a href="#2-数字法" class="headerlink" title="2.数字法"></a>2.数字法</h4><p>格式：chmod XXX file</p>
 <ul>
-<li><p>-u     指定uid（生产环境中多台服务器保证程序是同一UID）</p>
+<li><p>rwx rw- r–</p>
 </li>
-<li><p>-o     不检查UID的唯一性，需配合-u使用（不建议UID一样）</p>
+<li><p>111 110 100</p>
 </li>
-<li><p>-g     创建用户时指定主组</p>
-</li>
-<li><p>-c  创建用户时添加描述</p>
-</li>
-<li><p>-d     创建用户时指定家目录路径，二层目录（生产环境中创建给服务用的账户可能会用到）</p>
-</li>
-<li><p>-s      创建用户时指定shell类型/etc/shells</p>
-</li>
-<li><p>-r      创建系统用户（默认不创建家目录）</p>
-</li>
-<li><p>-m    强行创建家目录，用于系统用户，配合-r使用（生产环境中为服务生成系统用户）-M         强行不创建家目录，用于普通用户</p>
-</li>
-<li><p>-G     创建用户时加入到多个辅助组里，多个辅助组用“，”分开</p>
-</li>
-<li><p>-N   创建一个用户名和主组名不同的用户，默认users作为主组</p>
-</li>
-<li><p>-p    创建用户添加密码（不建议此种方式添加口令，口令会在shadow文件中明文）</p>
+<li><p>7   6   4</p>
 </li>
 </ul>
-<h4 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h4><ul>
-<li><p>-u     修改UID</p>
+<ul>
+<li><p>r：4</p>
 </li>
-<li><p>-g     修改GID（组需存在）</p>
+<li><p>w：2</p>
 </li>
-<li><p>-G     修改辅助组（会将原来的辅助组覆盖），如果要保留原辅助组配合-a使用</p>
-</li>
-<li><p>-s      新的默认shell</p>
-</li>
-<li><p>-c     新的注释信息</p>
-</li>
-<li><p>-d     新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项（-m -d有顺序）</p>
-</li>
-<li><p>-l      新的用户名</p>
-</li>
-<li><p>-L     用户加锁</p>
-</li>
-<li><p>-U    用户解锁（centos6以后禁止此方式解锁）</p>
+<li><p>x：1</p>
 </li>
 </ul>
-<h4 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h4><ul>
-<li>-r      删除用户的所有文件，家目录及邮箱（工作中不建议用，建议保留数据）</li>
+<p>例：chmod 764 file        给file文件添加 rwxrw-r– 权限</p>
+<p>chmod -R +X dir               给dir目录添加X执行权限，dir目录下文件不添加执行权限</p>
+<p>（如果dir目录下有文件已具备执行权限，则添加该文件执行权限）</p>
+<h3 id="三、UMASK值"><a href="#三、UMASK值" class="headerlink" title="三、UMASK值"></a>三、UMASK值</h3><p>作用：取消对应的权限，影响创建文件和目录的默认权限</p>
+<p>对目录：</p>
+<ul>
+<li>umask+default=777（dir）</li>
 </ul>
-<h3 id="组帐号维护命令及常用选项"><a href="#组帐号维护命令及常用选项" class="headerlink" title="组帐号维护命令及常用选项"></a>组帐号维护命令及常用选项</h3><h4 id="groupadd"><a href="#groupadd" class="headerlink" title="groupadd"></a>groupadd</h4><ul>
-<li><p>-g     指明GID号创建组</p>
-</li>
-<li><p>-r      创建系统组group（centos6：ID&lt;500、centos7：ID&lt;1000）</p>
-</li>
+<p>对文件：</p>
+<ul>
+<li>666-umask：观察结果，如果有奇数，奇数位+1，偶数不变</li>
 </ul>
-<h4 id="groupmod"><a href="#groupmod" class="headerlink" title="groupmod"></a>groupmod</h4><ul>
-<li><p>-n     新的组名</p>
+<h3 id="四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）"><a href="#四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）" class="headerlink" title="四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）"></a>四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）</h3><h4 id="1-suid"><a href="#1-suid" class="headerlink" title="1.suid"></a>1.suid</h4><p>作用：给一个用户继承二进制程序所有者拥有的权限</p>
+<p>suid权限位 位于所有者的执行权限位上，如果一个文件具有suid权限，则所有者执行位为s，文件表现为红色背景</p>
+<p>例：<code>ll /usr/bin/passwd</code></p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E7%BA%A2%E8%89%B2suid.png" alt="enter image description here"></p>
+<p>给file文件增加suid权限</p>
+<ul>
+<li><p>chmod u+s file</p>
 </li>
-<li><p>-g     新的GID</p>
-</li>
-</ul>
-<h4 id="groupdel-删除组（前提没有用户以此组为主组）"><a href="#groupdel-删除组（前提没有用户以此组为主组）" class="headerlink" title="groupdel 删除组（前提没有用户以此组为主组）"></a>groupdel 删除组（前提没有用户以此组为主组）</h4><h4 id="groupmems-查看指定组的成员"><a href="#groupmems-查看指定组的成员" class="headerlink" title="groupmems     查看指定组的成员"></a>groupmems     查看指定组的成员</h4><ul>
-<li><p>-g     更改为指定组（只有root）</p>
-</li>
-<li><p>-a     指定用户加入组</p>
-</li>
-<li><p>-d     从组中删除用户</p>
-</li>
-<li><p>-p     从组中清除所有成员</p>
-</li>
-<li><p>-l      显示组成员列表（读取的/etc/group文件中对应组的最后一个字段的全部内容）</p>
+<li><p>chmod 4755 file               suid数字法表示为4</p>
 </li>
 </ul>
-<h4 id="gpasswd-给组添加口令"><a href="#gpasswd-给组添加口令" class="headerlink" title="gpasswd           给组添加口令"></a>gpasswd           给组添加口令</h4><ul>
-<li><p>-a user     将user添加至指定组中</p>
+<p>suid只适合作用在二进制程序上</p>
+<h4 id="2-sgid"><a href="#2-sgid" class="headerlink" title="2.sgid"></a>2.sgid</h4><p>作用1：给一个用户继承二进制程序所有组拥有的权限</p>
+<p>sgid权限位 位于所有组的执行权限位，如果一个文件具有suid权限，则所有组的执行位为s，文件表现为黄色背景</p>
+<p>例：<code>ll which cat</code><br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%BB%84%E8%89%B2sgid.png" alt="enter image description here"></p>
+<p>给file文件增加sgid权限</p>
+<ul>
+<li><p>chmod g+s file</p>
 </li>
-<li><p>-d user     从指定组中移除用户user</p>
-</li>
-<li><p>-A user1，user2…  设置有管理权限的用户列表（设置组管理员）</p>
+<li><p>chmod 2755 file               sgid数字法表示为2</p>
 </li>
 </ul>
-
+<p>作用2：作用在目录上时，使一个目录下的新建的文件继承目录的所属组</p>
+<h4 id="3-sticky"><a href="#3-sticky" class="headerlink" title="3.sticky"></a>3.sticky</h4><p> 作用：作用于目录上，此目录的文件只能被所有者删除</p>
+<p>sticky权限位 位于其他的执行权限位上，如果一个文件具有sticky权限，则其他的执行位为t，目录表现为绿色背景</p>
+<p>例：<code>ll -d /tmp</code><br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E7%BB%BF%E8%89%B2sticky.png" alt="enter image description here"></p>
+<p>给dir目录添加sticky权限</p>
+<ul>
+<li><p>chmod o+t dir</p>
+</li>
+<li><p>chmod 1777 dir                sticky数字法表示为1</p>
+</li>
+</ul>
+<h3 id="五、ACL访问控制列表"><a href="#五、ACL访问控制列表" class="headerlink" title="五、ACL访问控制列表"></a>五、ACL访问控制列表</h3><p>作用：实现更加灵活的权限管理，打破了三类用户的权限管理</p>
+<h4 id="1-添加ACL权限"><a href="#1-添加ACL权限" class="headerlink" title="1.添加ACL权限"></a>1.添加ACL权限</h4><ul>
+<li><p>setfacl -m u:wang:0 file 使wang账户对指定file文件无权限</p>
+</li>
+<li><p>setfacl -m u:mage:rw file       使mage账户对指定file文件有读写权限</p>
+</li>
+<li><p>setfacl -m g:g1:rw file 使g1组对指定file文件有读写权限</p>
+</li>
+<li><p>getfacl     file                     查看指定file文件的ACL权限</p>
+</li>
+</ul>
+<p>ACL权限执行顺序类似于用户获取文件权限的顺序，getfacl顺序从上到下执行，一旦生效，下面的将不再生效（如果属于多个组，权限累加）</p>
+<h4 id="2-删除ACL权限"><a href="#2-删除ACL权限" class="headerlink" title="2.删除ACL权限"></a>2.删除ACL权限</h4><ul>
+<li><p>setfacl -x u:wang file      删除wang账户对指定file文件的ACL权限</p>
+</li>
+<li><p>setfacl -x g:g1 file   删除g1组对指定file文件的ACL权限</p>
+</li>
+</ul>
+<h4 id="3-ACL权限下的mask"><a href="#3-ACL权限下的mask" class="headerlink" title="3.ACL权限下的mask"></a>3.ACL权限下的mask</h4><p>设置用户对指定文件所能拥有的最大权限（限高作用）</p>
+<ul>
+<li><p>setfacl -m mask::r file             使指定文件file所拥有的最大权限位读r</p>
+</li>
+<li><p>setfacl -x mask::r file               取消指定文件file的最大权限限制mask</p>
+</li>
+<li><p>setfacl -b f1                      取消f1文件所有的ACL权限</p>
+</li>
+</ul>
+<p>ACL生效顺序：所有者、自定义用户、自定义组、其他人</p>
+<h4 id="4-备份和恢复ACL权限"><a href="#4-备份和恢复ACL权限" class="headerlink" title="4.备份和恢复ACL权限"></a>4.备份和恢复ACL权限</h4><ul>
+<li><p>getfacl -R /tmp/dir1&gt;acl.txt           将dir1目录下ACL权限备份</p>
+</li>
+<li><p>setfacl -R –set-file=acl.txt /tem/dir      恢复dir1目录下ACL权限</p>
+</li>
+</ul>
+<h3 id="六、文件权限操作的常用命令"><a href="#六、文件权限操作的常用命令" class="headerlink" title="六、文件权限操作的常用命令"></a>六、文件权限操作的常用命令</h3><h4 id="1-chown-设置文件所有者（普通用户无法修改文件所有者）"><a href="#1-chown-设置文件所有者（普通用户无法修改文件所有者）" class="headerlink" title="1.chown              设置文件所有者（普通用户无法修改文件所有者）"></a>1.chown              设置文件所有者（普通用户无法修改文件所有者）</h4><ul>
+<li><p>-R     递归</p>
+</li>
+<li><p>user：group   同时修改所有者，所有组</p>
+</li>
+</ul>
+<h4 id="2-chgrp-设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）"><a href="#2-chgrp-设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）" class="headerlink" title="2.chgrp                设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）"></a>2.chgrp                设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）</h4><ul>
+<li>-R     递归</li>
+</ul>
+<h4 id="3-chmod-设置指定文件权限"><a href="#3-chmod-设置指定文件权限" class="headerlink" title="3.chmod              设置指定文件权限"></a>3.chmod              设置指定文件权限</h4><ul>
+<li><p>-R     递归</p>
+</li>
+<li><p>–reference=f1 f2 f3        参考f1文件权限设置f2，f3文件</p>
+</li>
+</ul>
+<h4 id="4-chattr-给指定文件添加保护，避免root账户误操作"><a href="#4-chattr-给指定文件添加保护，避免root账户误操作" class="headerlink" title="4,chattr               给指定文件添加保护，避免root账户误操作"></a>4,chattr               给指定文件添加保护，避免root账户误操作</h4><ul>
+<li><p>i      锁定文件，不能删除，不能改名，不能更改内容</p>
+</li>
+<li><p>-i      解锁+i</p>
+</li>
+<li><p>-a     锁定文件，不能删除，不能改名，但可追加内容（追加重定向）</p>
+</li>
+<li><p>-a     解锁+a</p>
+</li>
+<li><p>+A    指定文件读时间atime不再更改</p>
+</li>
+</ul>
+<h4 id="5-lsattr-查看指定文件是否有锁定状态"><a href="#5-lsattr-查看指定文件是否有锁定状态" class="headerlink" title="5.lsattr                 查看指定文件是否有锁定状态"></a>5.lsattr                 查看指定文件是否有锁定状态</h4><h4 id="6-setfacl-设置文件ACL权限"><a href="#6-setfacl-设置文件ACL权限" class="headerlink" title="6.setfacl              设置文件ACL权限"></a>6.setfacl              设置文件ACL权限</h4><ul>
+<li><p>-m mask::r file          使指定文件file所拥有的最大权限位读r</p>
+</li>
+<li><p>-x mask::r file            取消指定文件file的最大权限限制mask</p>
+</li>
+<li><p>-b f1                   取消f1文件所有的ACL权限</p>
+</li>
+<li><p>-R –set-file=acl.txt /tem/dir   恢复dir1目录下ACL权限</p>
+</li>
+</ul>
+<h4 id="7-getfacl-查看文件ACL权限"><a href="#7-getfacl-查看文件ACL权限" class="headerlink" title="7.getfacl              查看文件ACL权限"></a>7.getfacl              查看文件ACL权限</h4>
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">隔壁小翔</a>
-            <p>原文链接: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">http://yoursite.com/2018/06/03/Linux用户与组管理详解/</a>
-            <p>发表日期: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">June 3rd 2018, 7:00:19</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/06/03/Linux文件权限详解/">http://yoursite.com/2018/06/03/Linux文件权限详解/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/06/03/Linux文件权限详解/">June 3rd 2018, 8:27:36</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -619,17 +585,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/" title= Linux用户与组管理命令的易混淆点和重合点 >
-                    <div class="nextTitle">Linux用户与组管理命令的易混淆点和重合点</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/06/03/带你认识Linux中的通配符/" title= 带你认识Linux中的通配符 >
-                    <div class="prevTitle">带你认识Linux中的通配符</div>
+                <a href= "/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/" title= Linux用户与组管理命令的易混淆点和重合点 >
+                    <div class="prevTitle">Linux用户与组管理命令的易混淆点和重合点</div>
                 </a>
             
         </li>
@@ -742,7 +703,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux用户与组管理详解"><span class="toc-number">1.</span> <span class="toc-text">Linux用户与组管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全3A"><span class="toc-number">1.0.1.</span> <span class="toc-text">安全3A</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户user"><span class="toc-number">1.0.2.</span> <span class="toc-text">用户user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组-group："><span class="toc-number">1.0.3.</span> <span class="toc-text">组 group：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组的类别："><span class="toc-number">1.0.4.</span> <span class="toc-text">组的类别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全上下文"><span class="toc-number">1.0.5.</span> <span class="toc-text">安全上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户和组的配置文件"><span class="toc-number">1.0.6.</span> <span class="toc-text">用户和组的配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-passwd"><span class="toc-number">1.0.7.</span> <span class="toc-text">/etc/passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-shadow"><span class="toc-number">1.0.8.</span> <span class="toc-text">/etc/shadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-group"><span class="toc-number">1.0.9.</span> <span class="toc-text">/etc/group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-gshadow"><span class="toc-number">1.0.10.</span> <span class="toc-text">/etc/gshadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-default-useradd"><span class="toc-number">1.0.11.</span> <span class="toc-text">/etc/default/useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件操作"><span class="toc-number">1.0.12.</span> <span class="toc-text">文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户与组的管理命令"><span class="toc-number">1.1.</span> <span class="toc-text">用户与组的管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useradd"><span class="toc-number">1.1.1.</span> <span class="toc-text">useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#usermod"><span class="toc-number">1.1.2.</span> <span class="toc-text">usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#userdel"><span class="toc-number">1.1.3.</span> <span class="toc-text">userdel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组帐号维护命令及常用选项"><span class="toc-number">1.2.</span> <span class="toc-text">组帐号维护命令及常用选项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#groupadd"><span class="toc-number">1.2.1.</span> <span class="toc-text">groupadd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmod"><span class="toc-number">1.2.2.</span> <span class="toc-text">groupmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupdel-删除组（前提没有用户以此组为主组）"><span class="toc-number">1.2.3.</span> <span class="toc-text">groupdel 删除组（前提没有用户以此组为主组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmems-查看指定组的成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">groupmems     查看指定组的成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gpasswd-给组添加口令"><span class="toc-number">1.2.5.</span> <span class="toc-text">gpasswd           给组添加口令</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件权限详解"><span class="toc-number">1.</span> <span class="toc-text">Linux文件权限详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、文件权限"><span class="toc-number">1.1.</span> <span class="toc-text">一、文件权限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-文件的权限针对三类对象进行定义"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.文件的权限针对三类对象进行定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-每个文件针对每类访问者定义了三种主要权限"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.每个文件针对每类访问者定义了三种主要权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-对于文件和目录来说，r，w，x有着不同的作用和含义"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.对于文件和目录来说，r，w，x有着不同的作用和含义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.用户获取文件权限的顺序：首先看是否为所有者，如果是，则后面权限不看；再看是否为所属组，如果是，则后面权限不看。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、修改文件访问权限的方法"><span class="toc-number">1.2.</span> <span class="toc-text">二、修改文件访问权限的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-mode法"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.mode法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-数字法"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.数字法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、UMASK值"><span class="toc-number">1.3.</span> <span class="toc-text">三、UMASK值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）"><span class="toc-number">1.4.</span> <span class="toc-text">四、三种特殊权限suid、sgid、sticky（sticky权限工作环境中相对常用）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-suid"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.suid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-sgid"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.sgid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-sticky"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.sticky</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、ACL访问控制列表"><span class="toc-number">1.5.</span> <span class="toc-text">五、ACL访问控制列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-添加ACL权限"><span class="toc-number">1.5.1.</span> <span class="toc-text">1.添加ACL权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-删除ACL权限"><span class="toc-number">1.5.2.</span> <span class="toc-text">2.删除ACL权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ACL权限下的mask"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.ACL权限下的mask</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-备份和恢复ACL权限"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.备份和恢复ACL权限</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、文件权限操作的常用命令"><span class="toc-number">1.6.</span> <span class="toc-text">六、文件权限操作的常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-chown-设置文件所有者（普通用户无法修改文件所有者）"><span class="toc-number">1.6.1.</span> <span class="toc-text">1.chown              设置文件所有者（普通用户无法修改文件所有者）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-chgrp-设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）"><span class="toc-number">1.6.2.</span> <span class="toc-text">2.chgrp                设置文件所属组（普通用户要想该所属组，前提是文件所有者为自己，自己在所属组中）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-chmod-设置指定文件权限"><span class="toc-number">1.6.3.</span> <span class="toc-text">3.chmod              设置指定文件权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-chattr-给指定文件添加保护，避免root账户误操作"><span class="toc-number">1.6.4.</span> <span class="toc-text">4,chattr               给指定文件添加保护，避免root账户误操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-lsattr-查看指定文件是否有锁定状态"><span class="toc-number">1.6.5.</span> <span class="toc-text">5.lsattr                 查看指定文件是否有锁定状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-setfacl-设置文件ACL权限"><span class="toc-number">1.6.6.</span> <span class="toc-text">6.setfacl              设置文件ACL权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-getfacl-查看文件ACL权限"><span class="toc-number">1.6.7.</span> <span class="toc-text">7.getfacl              查看文件ACL权限</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
