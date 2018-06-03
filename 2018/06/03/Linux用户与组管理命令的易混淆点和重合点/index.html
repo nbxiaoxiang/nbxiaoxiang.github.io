@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Linux用户与组管理详解 · tangwei&#39;s Studio</title>
+    <title>Linux用户与组管理命令的易混淆点和重合点 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >tangwei&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Linux用户与组管理详解</a>
+                <a href="#" class="post-name">Linux用户与组管理命令的易混淆点和重合点</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Linux用户与组管理详解
+            Linux用户与组管理命令的易混淆点和重合点
             <!-- 404 -->
             
         </h1>
@@ -258,7 +258,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,508</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">1,075</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -386,232 +386,134 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="Linux用户与组管理详解"><a href="#Linux用户与组管理详解" class="headerlink" title="Linux用户与组管理详解"></a>Linux用户与组管理详解</h2><blockquote>
-<p>在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：</p>
+        <h2 id="Linux用户与组管理命令的易混淆点和重合点"><a href="#Linux用户与组管理命令的易混淆点和重合点" class="headerlink" title="Linux用户与组管理命令的易混淆点和重合点"></a>Linux用户与组管理命令的易混淆点和重合点</h2><blockquote>
+<p>Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。</p>
 </blockquote>
-<h4 id="安全3A"><a href="#安全3A" class="headerlink" title="安全3A"></a>安全3A</h4><p>Linux通过三个机制来保证用户的安全：</p>
-<ul>
-<li><p>Authentication：认证</p>
-</li>
-<li><p>Authorization：授权</p>
-</li>
-<li><p>Accouting|Audition：审计</p>
-</li>
-</ul>
-<h4 id="用户user"><a href="#用户user" class="headerlink" title="用户user"></a>用户user</h4><p>令牌：token</p>
-<p>Linux用户：Username</p>
-<p>管理员：root，UID=0（拥有对系统的最高操作权限）</p>
-<p>普通用户：</p>
-<ul>
-<li><p>系统用户：1-499,1-999（centos7）</p>
-</li>
-<li><p>登录用户：500+，1000+（centos7）</p>
-</li>
-</ul>
-<h4 id="组-group："><a href="#组-group：" class="headerlink" title="组 group："></a>组 group：</h4><p>Linux组：Groupname/GID</p>
-<p>管理员组：root，GID=0</p>
-<p>普通组：</p>
-<ul>
-<li><p>系统组：1-499,1-999（centos7）</p>
-</li>
-<li><p>普通组：500+，1000+（centos7）</p>
-</li>
-</ul>
-<p>在创建用户不指定组的情况下，默认创建一个与该用户名相同的组作为该用户的主组</p>
-<h4 id="组的类别："><a href="#组的类别：" class="headerlink" title="组的类别："></a>组的类别：</h4><p>用户的主要组：</p>
-<p>用户必须属于一个且只有一个主组</p>
-<p>组名同用户名，且仅包含一个用户，私有组</p>
-<p>用户的附加组：</p>
-<p>一个用户可以属于零个或多个附加组</p>
-<h4 id="安全上下文"><a href="#安全上下文" class="headerlink" title="安全上下文"></a>安全上下文</h4><p>进程所能够访问资源的权限取决于进程的运行者的身份</p>
-<h4 id="用户和组的配置文件"><a href="#用户和组的配置文件" class="headerlink" title="用户和组的配置文件"></a>用户和组的配置文件</h4><ul>
-<li><p>/etc/passwd：        存放用户及其属性信息</p>
-</li>
-<li><p>/etc/shadow：       存放用户密码及其相关信息</p>
-</li>
-<li><p>/etc/group：  存放组及属性信息</p>
-</li>
-<li><p>/etc/gshadow：     存放组密码及其相关信息</p>
-</li>
-<li><p>/etc/default/useradd：新建账户模板信息</p>
-</li>
-</ul>
-<h4 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/passwd.png" alt="enter image description here"></p>
-<p>name：password:UID:GID:GECEO:directory:shell</p>
-<ol>
-<li><p>用户名</p>
-</li>
-<li><p>密码：显示为x</p>
-</li>
-<li><p>UID：用户ID</p>
-</li>
-<li><p>GID：组ID</p>
-</li>
-<li><p>描述信息：GECOS，可添加用户描述信息</p>
-</li>
-<li><p>家目录：用户家目录</p>
-</li>
-<li><p>shell类型：用户shell类型</p>
-<h4 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/shadow.png" alt="enter image description here"></p>
-</li>
-<li><p>用户名</p>
-</li>
-<li><p>密码加密：算法$6；!!表示账户锁定</p>
-</li>
-<li><p>上次修改密码时间：距离1970.1.1的天数</p>
-</li>
-<li><p>密码最小修改时间：距离下次修改密码至少需间隔的天数（0表示随时可变更）</p>
-</li>
-<li><p>密码最大修改时间：距离本次密码修改时间最多可间隔的天数（99999表示永不过期）</p>
-</li>
-<li><p>密码提醒时间：距离密码即将到期提前警告的天数</p>
-</li>
-<li><p>密码到期后宽限时间：密码到期后账户还能使用的天数</p>
-</li>
-<li><p>账户有效期：该账户可使用的日期</p>
-</li>
-<li><p>保留区域：保留将来可能增加的区域</p>
-</li>
-</ol>
-<h4 id="etc-group"><a href="#etc-group" class="headerlink" title="/etc/group"></a>/etc/group</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/group.png" alt="enter image description here"></p>
-<p>group_name:password:GID:user_list</p>
-<ol>
-<li><p>组名</p>
-</li>
-<li><p>组密码：普通用户加入某个组时需要的密码（不推荐设置密码）</p>
-</li>
-<li><p>GID：组ID</p>
-</li>
-<li><p>组成员：“,”作为分隔符</p>
-</li>
-</ol>
-<h4 id="etc-gshadow"><a href="#etc-gshadow" class="headerlink" title="/etc/gshadow"></a>/etc/gshadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/gshadow.png" alt="enter image description here"></p>
-<p>group_name:encrypted_password:administrators:members</p>
-<ol>
-<li><p>组名</p>
-</li>
-<li><p>组密码</p>
-</li>
-<li><p>组管理员（组长）</p>
-</li>
-<li><p>组成员：“,”作为分隔符</p>
-</li>
-</ol>
-<h4 id="etc-default-useradd"><a href="#etc-default-useradd" class="headerlink" title="/etc/default/useradd"></a>/etc/default/useradd</h4><ol>
-<li><p>GROUP=100                     创建用户无指定组时默认所属的组users</p>
-</li>
-<li><p>HOME=/home                          创建用户默认家目录路径</p>
-</li>
-<li><p>INACTIVE=-1                    创建用户时默认没有宽限时间</p>
-</li>
-<li><p>EXPIRE=                             创建用户时默认有效期</p>
-</li>
-<li><p>SHELL=/bin/bash                      创建用户时默认shell类型</p>
-</li>
-<li><p>SKEL=/etc/skel                          创建用户时家目录模板</p>
-</li>
-<li><p>CREATE_MAIL_SPOOL=yes             创建用户时默认创建邮箱</p>
-</li>
-</ol>
-<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><ul>
-<li><p>vipw         等同于vi /etc/passwd</p>
-</li>
-<li><p>vigr           等同于vi /etc/group</p>
-</li>
-<li><p>pwck        检查passwd文件格式错误</p>
-</li>
-<li><p>grpck        检查group文件格式错误</p>
-</li>
-</ul>
-<h3 id="用户与组的管理命令"><a href="#用户与组的管理命令" class="headerlink" title="用户与组的管理命令"></a>用户与组的管理命令</h3><p>用户管理命令及常用选项：</p>
-<h4 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h4><p>etc/default/useradd存放创建用户时的默认信息</p>
-<ul>
-<li><p>-u     指定uid（生产环境中多台服务器保证程序是同一UID）</p>
-</li>
-<li><p>-o     不检查UID的唯一性，需配合-u使用（不建议UID一样）</p>
-</li>
-<li><p>-g     创建用户时指定主组</p>
-</li>
-<li><p>-c  创建用户时添加描述</p>
-</li>
-<li><p>-d     创建用户时指定家目录路径，二层目录（生产环境中创建给服务用的账户可能会用到）</p>
-</li>
-<li><p>-s      创建用户时指定shell类型/etc/shells</p>
-</li>
-<li><p>-r      创建系统用户（默认不创建家目录）</p>
-</li>
-<li><p>-m    强行创建家目录，用于系统用户，配合-r使用（生产环境中为服务生成系统用户）-M         强行不创建家目录，用于普通用户</p>
-</li>
-<li><p>-G     创建用户时加入到多个辅助组里，多个辅助组用“，”分开</p>
-</li>
-<li><p>-N   创建一个用户名和主组名不同的用户，默认users作为主组</p>
-</li>
-<li><p>-p    创建用户添加密码（不建议此种方式添加口令，口令会在shadow文件中明文）</p>
-</li>
-</ul>
-<h4 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h4><ul>
-<li><p>-u     修改UID</p>
-</li>
-<li><p>-g     修改GID（组需存在）</p>
-</li>
-<li><p>-G     修改辅助组（会将原来的辅助组覆盖），如果要保留原辅助组配合-a使用</p>
-</li>
-<li><p>-s      新的默认shell</p>
-</li>
-<li><p>-c     新的注释信息</p>
-</li>
-<li><p>-d     新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项（-m -d有顺序）</p>
-</li>
-<li><p>-l      新的用户名</p>
-</li>
-<li><p>-L     用户加锁</p>
-</li>
-<li><p>-U    用户解锁（centos6以后禁止此方式解锁）</p>
-</li>
-</ul>
-<h4 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h4><ul>
-<li>-r      删除用户的所有文件，家目录及邮箱（工作中不建议用，建议保留数据）</li>
-</ul>
-<h3 id="组帐号维护命令及常用选项"><a href="#组帐号维护命令及常用选项" class="headerlink" title="组帐号维护命令及常用选项"></a>组帐号维护命令及常用选项</h3><h4 id="groupadd"><a href="#groupadd" class="headerlink" title="groupadd"></a>groupadd</h4><ul>
-<li><p>-g     指明GID号创建组</p>
-</li>
-<li><p>-r      创建系统组group（centos6：ID&lt;500、centos7：ID&lt;1000）</p>
-</li>
-</ul>
-<h4 id="groupmod"><a href="#groupmod" class="headerlink" title="groupmod"></a>groupmod</h4><ul>
-<li><p>-n     新的组名</p>
-</li>
-<li><p>-g     新的GID</p>
-</li>
-</ul>
-<h4 id="groupdel-删除组（前提没有用户以此组为主组）"><a href="#groupdel-删除组（前提没有用户以此组为主组）" class="headerlink" title="groupdel 删除组（前提没有用户以此组为主组）"></a>groupdel 删除组（前提没有用户以此组为主组）</h4><h4 id="groupmems-查看指定组的成员"><a href="#groupmems-查看指定组的成员" class="headerlink" title="groupmems     查看指定组的成员"></a>groupmems     查看指定组的成员</h4><ul>
-<li><p>-g     更改为指定组（只有root）</p>
-</li>
-<li><p>-a     指定用户加入组</p>
-</li>
-<li><p>-d     从组中删除用户</p>
-</li>
-<li><p>-p     从组中清除所有成员</p>
-</li>
-<li><p>-l      显示组成员列表（读取的/etc/group文件中对应组的最后一个字段的全部内容）</p>
-</li>
-</ul>
-<h4 id="gpasswd-给组添加口令"><a href="#gpasswd-给组添加口令" class="headerlink" title="gpasswd           给组添加口令"></a>gpasswd           给组添加口令</h4><ul>
-<li><p>-a user     将user添加至指定组中</p>
-</li>
-<li><p>-d user     从指定组中移除用户user</p>
-</li>
-<li><p>-A user1，user2…  设置有管理权限的用户列表（设置组管理员）</p>
-</li>
-</ul>
+<h3 id="一、易混淆点：关于GID的改变"><a href="#一、易混淆点：关于GID的改变" class="headerlink" title="一、易混淆点：关于GID的改变"></a>一、易混淆点：关于GID的改变</h3><h4 id="1-改变一个用户的gid"><a href="#1-改变一个用户的gid" class="headerlink" title="1.改变一个用户的gid"></a>1.改变一个用户的gid</h4><pre><code>usermod -g
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+
+[root@CentOS6 ~]#usermod -g 4322 wangx
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=4322(mage) groups=4322(mage)
+</code></pre><p>此条命令改变了用户的主组，需注意的是新改变的主组需已存在</p>
+<h4 id="2-临时改变一个用户的gid"><a href="#2-临时改变一个用户的gid" class="headerlink" title="2.临时改变一个用户的gid"></a>2.临时改变一个用户的gid</h4><pre><code>[wangx@CentOS6 ~]$id
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+[wangx@CentOS6 ~]$newgrp mage
+
+[wangx@CentOS6 ~]$id
+
+uid=1666(wangx) gid=4322(mage) groups=4322(mage),1235(wangx) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+[wangx@CentOS6 ~]$id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+</code></pre><p>此条命令作用为切换当前登录用户的主组，注意是临时切换，重新登录后失效，使用id  user命令看到的还是切换前的主组</p>
+<h4 id="3-改变组的gid"><a href="#3-改变组的gid" class="headerlink" title="3.改变组的gid"></a>3.改变组的gid</h4><pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+
+[root@CentOS6 ~]#groupmod -g 1236 wangx
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1236(wangx) groups=1236(wangx)
+</code></pre><p>此条命令仅仅是改变了组的ID，组成员还是原来的组成员，没有变化。</p>
+<h3 id="二、增、删辅助组的多种方式"><a href="#二、增、删辅助组的多种方式" class="headerlink" title="二、增、删辅助组的多种方式"></a>二、增、删辅助组的多种方式</h3><h4 id="1-指定用户user加入组group"><a href="#1-指定用户user加入组group" class="headerlink" title="1.指定用户user加入组group"></a>1.指定用户user加入组group</h4><p>groupmems -a user -g group    </p>
+<pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+
+[root@CentOS6 ~]#groupmems -a wangx -g mage
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+</code></pre><h4 id="2-将用户user添加至指定组group中"><a href="#2-将用户user添加至指定组group中" class="headerlink" title="2.将用户user添加至指定组group中"></a>2.将用户user添加至指定组group中</h4><p>gpasswd -a user group     </p>
+<pre><code>[root@CentOS6 ~]#gpasswd -a wangx mage
+
+Adding user wangx to group mage
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+</code></pre><h4 id="3-为user用户添加辅助组"><a href="#3-为user用户添加辅助组" class="headerlink" title="3.为user用户添加辅助组"></a>3.为user用户添加辅助组</h4><p>注意：新的辅助组覆盖原辅助组<br>usermod -G</p>
+<pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+
+[root@CentOS6 ~]#usermod -G mage wangx
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+</code></pre><h4 id="4-从group组中删除用户user"><a href="#4-从group组中删除用户user" class="headerlink" title="4.从group组中删除用户user"></a>4.从group组中删除用户user</h4><p>groupmems  -d  user  -g  group</p>
+<pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+
+[root@CentOS6 ~]#groupmems -d wangx -g mage
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+</code></pre><h4 id="5-将用户user从group组中删除"><a href="#5-将用户user从group组中删除" class="headerlink" title="5.将用户user从group组中删除"></a>5.将用户user从group组中删除</h4><p>gpasswd      -d   user  group</p>
+<pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+
+[root@CentOS6 ~]#gpasswd -d wangx mage
+
+Removing user wangx from group mage
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+</code></pre><h4 id="6-两种方法均可删除所有辅助组"><a href="#6-两种方法均可删除所有辅助组" class="headerlink" title="6.两种方法均可删除所有辅助组"></a>6.两种方法均可删除所有辅助组</h4><p>usermod -G user user<br>usermod -G   “”   user</p>
+<pre><code>[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx),4322(mage)
+
+[root@CentOS6 ~]#usermod -G wangx wangx
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx) gid=1235(wangx) groups=1235(wangx)
+</code></pre><h3 id="三、其他的一些拥有多种命令可实现相同需求的情况"><a href="#三、其他的一些拥有多种命令可实现相同需求的情况" class="headerlink" title="三、其他的一些拥有多种命令可实现相同需求的情况"></a>三、其他的一些拥有多种命令可实现相同需求的情况</h3><h4 id="1-修改一个用户的shell类型（2种方法）"><a href="#1-修改一个用户的shell类型（2种方法）" class="headerlink" title="1.修改一个用户的shell类型（2种方法）"></a>1.修改一个用户的shell类型（2种方法）</h4><p>命令1：chsh             修改用户的shell</p>
+<p>命令2：usermod -s  新的默认shell</p>
+<h4 id="2-修改一个用户的描述信息（2种方法）"><a href="#2-修改一个用户的描述信息（2种方法）" class="headerlink" title="2.修改一个用户的描述信息（2种方法）"></a>2.修改一个用户的描述信息（2种方法）</h4><p>命令1：chfn              修改用户描述信息</p>
+<p>命令2：usermod -c  新的用户描述信息</p>
+<h4 id="3-修改一个账号下次登录自动修改密码（2种方法）"><a href="#3-修改一个账号下次登录自动修改密码（2种方法）" class="headerlink" title="3.修改一个账号下次登录自动修改密码（2种方法）"></a>3.修改一个账号下次登录自动修改密码（2种方法）</h4><p>命令1：chage -l wang    使wang账户口令立马失效，下次登录自动修改</p>
+<p>命令2：passwd -e wang 使wang账户口令立马失效，下次登录自动修改</p>
+<h4 id="4-给一个账号加锁（4种方法）"><a href="#4-给一个账号加锁（4种方法）" class="headerlink" title="4.给一个账号加锁（4种方法）"></a>4.给一个账号加锁（4种方法）</h4><p>命令1：usermod -L</p>
+<p>命令2：passwd -l</p>
+<p>命令3：usermod -U</p>
+<p>命令4：passwd -u</p>
+<h4 id="5-给一个账号指定最短使用期限（mindays）（2种方法）"><a href="#5-给一个账号指定最短使用期限（mindays）（2种方法）" class="headerlink" title="5.给一个账号指定最短使用期限（mindays）（2种方法）"></a>5.给一个账号指定最短使用期限（mindays）（2种方法）</h4><p>命令1：passwd -n</p>
+<p>命令2：chage -m</p>
+<h4 id="6-最大使用期限（maxdays）（2种方法）"><a href="#6-最大使用期限（maxdays）（2种方法）" class="headerlink" title="6.最大使用期限（maxdays）（2种方法）"></a>6.最大使用期限（maxdays）（2种方法）</h4><p>命令1：passwd -x</p>
+<p>命令2：chage -M</p>
+<h4 id="7-设置一个账号提前多少天开始警告（warndays）（2种方法）"><a href="#7-设置一个账号提前多少天开始警告（warndays）（2种方法）" class="headerlink" title="7.设置一个账号提前多少天开始警告（warndays）（2种方法）"></a>7.设置一个账号提前多少天开始警告（warndays）（2种方法）</h4><p>命令1：passwd -w</p>
+<p>命令2：chage -W</p>
+<h4 id="8-设置一个账号非活动期限（inactivedays）（3种方法）"><a href="#8-设置一个账号非活动期限（inactivedays）（3种方法）" class="headerlink" title="8.设置一个账号非活动期限（inactivedays）（3种方法）"></a>8.设置一个账号非活动期限（inactivedays）（3种方法）</h4><p>命令1：passwd -i</p>
+<p>命令2：usermod -f</p>
+<p>命令3：chage -I</p>
+<h4 id="9-设置一个账号的有效期（expiredate）（2种方法）"><a href="#9-设置一个账号的有效期（expiredate）（2种方法）" class="headerlink" title="9.设置一个账号的有效期（expiredate）（2种方法）"></a>9.设置一个账号的有效期（expiredate）（2种方法）</h4><p>命令1：usermod -e YYYY-MM-DD    设置用户账号过期时间</p>
+<p>命令2：chage -E YYYY-MM-DD 设置用户账号过期时间</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">隔壁小翔</a>
-            <p>原文链接: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">http://yoursite.com/2018/06/03/Linux用户与组管理详解/</a>
-            <p>发表日期: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">June 3rd 2018, 7:00:19</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/">http://yoursite.com/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/">June 3rd 2018, 7:31:11</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -619,17 +521,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/06/03/Linux用户与组管理命令的易混淆点和重合点/" title= Linux用户与组管理命令的易混淆点和重合点 >
-                    <div class="nextTitle">Linux用户与组管理命令的易混淆点和重合点</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/06/03/带你认识Linux中的通配符/" title= 带你认识Linux中的通配符 >
-                    <div class="prevTitle">带你认识Linux中的通配符</div>
+                <a href= "/2018/06/03/Linux用户与组管理详解/" title= Linux用户与组管理详解 >
+                    <div class="prevTitle">Linux用户与组管理详解</div>
                 </a>
             
         </li>
@@ -742,7 +639,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux用户与组管理详解"><span class="toc-number">1.</span> <span class="toc-text">Linux用户与组管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全3A"><span class="toc-number">1.0.1.</span> <span class="toc-text">安全3A</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户user"><span class="toc-number">1.0.2.</span> <span class="toc-text">用户user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组-group："><span class="toc-number">1.0.3.</span> <span class="toc-text">组 group：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组的类别："><span class="toc-number">1.0.4.</span> <span class="toc-text">组的类别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全上下文"><span class="toc-number">1.0.5.</span> <span class="toc-text">安全上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户和组的配置文件"><span class="toc-number">1.0.6.</span> <span class="toc-text">用户和组的配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-passwd"><span class="toc-number">1.0.7.</span> <span class="toc-text">/etc/passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-shadow"><span class="toc-number">1.0.8.</span> <span class="toc-text">/etc/shadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-group"><span class="toc-number">1.0.9.</span> <span class="toc-text">/etc/group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-gshadow"><span class="toc-number">1.0.10.</span> <span class="toc-text">/etc/gshadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-default-useradd"><span class="toc-number">1.0.11.</span> <span class="toc-text">/etc/default/useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件操作"><span class="toc-number">1.0.12.</span> <span class="toc-text">文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户与组的管理命令"><span class="toc-number">1.1.</span> <span class="toc-text">用户与组的管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useradd"><span class="toc-number">1.1.1.</span> <span class="toc-text">useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#usermod"><span class="toc-number">1.1.2.</span> <span class="toc-text">usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#userdel"><span class="toc-number">1.1.3.</span> <span class="toc-text">userdel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组帐号维护命令及常用选项"><span class="toc-number">1.2.</span> <span class="toc-text">组帐号维护命令及常用选项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#groupadd"><span class="toc-number">1.2.1.</span> <span class="toc-text">groupadd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmod"><span class="toc-number">1.2.2.</span> <span class="toc-text">groupmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupdel-删除组（前提没有用户以此组为主组）"><span class="toc-number">1.2.3.</span> <span class="toc-text">groupdel 删除组（前提没有用户以此组为主组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmems-查看指定组的成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">groupmems     查看指定组的成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gpasswd-给组添加口令"><span class="toc-number">1.2.5.</span> <span class="toc-text">gpasswd           给组添加口令</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux用户与组管理命令的易混淆点和重合点"><span class="toc-number">1.</span> <span class="toc-text">Linux用户与组管理命令的易混淆点和重合点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、易混淆点：关于GID的改变"><span class="toc-number">1.1.</span> <span class="toc-text">一、易混淆点：关于GID的改变</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-改变一个用户的gid"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.改变一个用户的gid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-临时改变一个用户的gid"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.临时改变一个用户的gid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-改变组的gid"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.改变组的gid</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、增、删辅助组的多种方式"><span class="toc-number">1.2.</span> <span class="toc-text">二、增、删辅助组的多种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-指定用户user加入组group"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.指定用户user加入组group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-将用户user添加至指定组group中"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.将用户user添加至指定组group中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-为user用户添加辅助组"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.为user用户添加辅助组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-从group组中删除用户user"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.从group组中删除用户user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-将用户user从group组中删除"><span class="toc-number">1.2.5.</span> <span class="toc-text">5.将用户user从group组中删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-两种方法均可删除所有辅助组"><span class="toc-number">1.2.6.</span> <span class="toc-text">6.两种方法均可删除所有辅助组</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、其他的一些拥有多种命令可实现相同需求的情况"><span class="toc-number">1.3.</span> <span class="toc-text">三、其他的一些拥有多种命令可实现相同需求的情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-修改一个用户的shell类型（2种方法）"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.修改一个用户的shell类型（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改一个用户的描述信息（2种方法）"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.修改一个用户的描述信息（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-修改一个账号下次登录自动修改密码（2种方法）"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.修改一个账号下次登录自动修改密码（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-给一个账号加锁（4种方法）"><span class="toc-number">1.3.4.</span> <span class="toc-text">4.给一个账号加锁（4种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-给一个账号指定最短使用期限（mindays）（2种方法）"><span class="toc-number">1.3.5.</span> <span class="toc-text">5.给一个账号指定最短使用期限（mindays）（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-最大使用期限（maxdays）（2种方法）"><span class="toc-number">1.3.6.</span> <span class="toc-text">6.最大使用期限（maxdays）（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-设置一个账号提前多少天开始警告（warndays）（2种方法）"><span class="toc-number">1.3.7.</span> <span class="toc-text">7.设置一个账号提前多少天开始警告（warndays）（2种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-设置一个账号非活动期限（inactivedays）（3种方法）"><span class="toc-number">1.3.8.</span> <span class="toc-text">8.设置一个账号非活动期限（inactivedays）（3种方法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-设置一个账号的有效期（expiredate）（2种方法）"><span class="toc-number">1.3.9.</span> <span class="toc-text">9.设置一个账号的有效期（expiredate）（2种方法）</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
