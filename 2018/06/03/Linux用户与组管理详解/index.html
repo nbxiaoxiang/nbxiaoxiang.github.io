@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>带你认识Linux中的通配符 · tangwei&#39;s Studio</title>
+    <title>Linux用户与组管理详解 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >tangwei&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">带你认识Linux中的通配符</a>
+                <a href="#" class="post-name">Linux用户与组管理详解</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            带你认识Linux中的通配符
+            Linux用户与组管理详解
             <!-- 404 -->
             
         </h1>
@@ -258,7 +258,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">757</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1,508</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -386,43 +386,232 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="带你认识Linux中的通配符"><a href="#带你认识Linux中的通配符" class="headerlink" title="带你认识Linux中的通配符"></a>带你认识Linux中的通配符</h2><blockquote>
-<p>所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
+        <h2 id="Linux用户与组管理详解"><a href="#Linux用户与组管理详解" class="headerlink" title="Linux用户与组管理详解"></a>Linux用户与组管理详解</h2><blockquote>
+<p>在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：</p>
 </blockquote>
-<p>通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
-<p>常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）</p>
-<h4 id="1-表示任意长度的任意字符"><a href="#1-表示任意长度的任意字符" class="headerlink" title="1. * 表示任意长度的任意字符"></a>1. * 表示任意长度的任意字符</h4><p>例：     <code>ls -d /etc/a*</code>    </p>
-<p>显示/etc目录下所有以a开头的文件与目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%98%9F%E5%8F%B7.png" alt="enter image description here"></p>
-<h4 id="2-表示任意单个字符"><a href="#2-表示任意单个字符" class="headerlink" title="2. ? 表示任意单个字符"></a>2. ? 表示任意单个字符</h4><p>例：<code>ls  a?b</code></p>
-<p>显示当前目录下所有以a开头中间有一个字符b结尾的文件<br>a10b 中间夹2个字符，因此不显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%97%AE%E5%8F%B7.png" alt="enter image description here"></p>
-<h4 id="3-匹配指定范围内任意单个字符"><a href="#3-匹配指定范围内任意单个字符" class="headerlink" title="3. [] 匹配指定范围内任意单个字符"></a>3. [] 匹配指定范围内任意单个字符</h4><p>例：<code>ls -d /etc/[mn]*</code></p>
-<p>显示/etc目录下所有以m开头或者n开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/3-2.png" alt="enter image description here"></p>
-<h4 id="4-a-Z-：表示任意一个单个字母"><a href="#4-a-Z-：表示任意一个单个字母" class="headerlink" title="4.[a-Z]：表示任意一个单个字母"></a>4.[a-Z]：表示任意一个单个字母</h4><p>例：<code>ls -d*[a-Z]</code></p>
-<p>显示目录下所有以字母开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D-2.png" alt="enter image description here"></p>
-<h4 id="5-0-9-：表示任意单个数字"><a href="#5-0-9-：表示任意单个数字" class="headerlink" title="5.[0-9]：表示任意单个数字"></a>5.[0-9]：表示任意单个数字</h4><p>例：<code>ls -d f[0-9]</code></p>
-<p>显示当前目录下所有以f开头后跟任意一个数字的文件和目录<br>f16因含两个数字，则不予显示</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97.png" alt="enter image description here"></p>
-<h4 id="6-匹配除指定范围以外的任意单个字符"><a href="#6-匹配除指定范围以外的任意单个字符" class="headerlink" title="6.[^]匹配除指定范围以外的任意单个字符"></a>6.[^]匹配除指定范围以外的任意单个字符</h4><p>例：<code>ls  -d   [^a]*</code></p>
-<p>显示当前目录下所有不是a开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%99%A4.png" alt="enter image description here"><br>注意：对字符集或数字集取反时，托字符^加在括号内；如：[^0-9], [^[:alpha:]]</p>
-<h4 id="7-alpha-表示所有的字母（不区分大小写）"><a href="#7-alpha-表示所有的字母（不区分大小写）" class="headerlink" title="7.[:alpha:]表示所有的字母（不区分大小写）"></a>7.[:alpha:]表示所有的字母（不区分大小写）</h4><p>例：<code>ls -d *[[:alpha:]]</code></p>
-<p>显示当前目录下所有以字母结尾（不区分大小写）的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="8-digit-表示任意单个数字，效果同-0-9"><a href="#8-digit-表示任意单个数字，效果同-0-9" class="headerlink" title="8.[:digit:]表示任意单个数字，效果同[0-9]"></a>8.[:digit:]表示任意单个数字，效果同[0-9]</h4><p>例：<code>ls f[[:digit:]]</code></p>
-<p>显示当前目录下所有f开头，单个数字结尾的文件，值得注意的是：[:digit:]只代表单个数字，f16文件因为f后跟两个数字，则不予显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="9-lower-表示任意单个小写字母"><a href="#9-lower-表示任意单个小写字母" class="headerlink" title="9.[:lower:]表示任意单个小写字母"></a>9.[:lower:]表示任意单个小写字母</h4><p>例：<code>ls -d [[:lower:]]*[[:lower:]]</code></p>
-<p>显示所有当前目录下以小字字母开头且以小写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="10-upper-表示任意单个大写字母"><a href="#10-upper-表示任意单个大写字母" class="headerlink" title="10.[:upper:]表示任意单个大写字母"></a>10.[:upper:]表示任意单个大写字母</h4><p>例：<code>ls -d a*[[:upper:]]</code></p>
-<p>显示当前目录下 所有以a开头并以一个大写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="11-alnum-表示任意单个字母或数字"><a href="#11-alnum-表示任意单个字母或数字" class="headerlink" title="11.[:alnum:]表示任意单个字母或数字"></a>11.[:alnum:]表示任意单个字母或数字</h4><p>例：<code>ls -d [[:alnum:]]</code></p>
-<p>显示当前目录下 所有以字母或数字结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/T2H17KYXSPA7ORCX5.png" alt="enter image description here"></p>
-<p>到此为止，常用的通配符使用方法就介绍到这里了，小伙伴们以后查找文件是不是更容易了呢？</p>
+<h4 id="安全3A"><a href="#安全3A" class="headerlink" title="安全3A"></a>安全3A</h4><p>Linux通过三个机制来保证用户的安全：</p>
+<ul>
+<li><p>Authentication：认证</p>
+</li>
+<li><p>Authorization：授权</p>
+</li>
+<li><p>Accouting|Audition：审计</p>
+</li>
+</ul>
+<h4 id="用户user"><a href="#用户user" class="headerlink" title="用户user"></a>用户user</h4><p>令牌：token</p>
+<p>Linux用户：Username</p>
+<p>管理员：root，UID=0（拥有对系统的最高操作权限）</p>
+<p>普通用户：</p>
+<ul>
+<li><p>系统用户：1-499,1-999（centos7）</p>
+</li>
+<li><p>登录用户：500+，1000+（centos7）</p>
+</li>
+</ul>
+<h4 id="组-group："><a href="#组-group：" class="headerlink" title="组 group："></a>组 group：</h4><p>Linux组：Groupname/GID</p>
+<p>管理员组：root，GID=0</p>
+<p>普通组：</p>
+<ul>
+<li><p>系统组：1-499,1-999（centos7）</p>
+</li>
+<li><p>普通组：500+，1000+（centos7）</p>
+</li>
+</ul>
+<p>在创建用户不指定组的情况下，默认创建一个与该用户名相同的组作为该用户的主组</p>
+<h4 id="组的类别："><a href="#组的类别：" class="headerlink" title="组的类别："></a>组的类别：</h4><p>用户的主要组：</p>
+<p>用户必须属于一个且只有一个主组</p>
+<p>组名同用户名，且仅包含一个用户，私有组</p>
+<p>用户的附加组：</p>
+<p>一个用户可以属于零个或多个附加组</p>
+<h4 id="安全上下文"><a href="#安全上下文" class="headerlink" title="安全上下文"></a>安全上下文</h4><p>进程所能够访问资源的权限取决于进程的运行者的身份</p>
+<h4 id="用户和组的配置文件"><a href="#用户和组的配置文件" class="headerlink" title="用户和组的配置文件"></a>用户和组的配置文件</h4><ul>
+<li><p>/etc/passwd：        存放用户及其属性信息</p>
+</li>
+<li><p>/etc/shadow：       存放用户密码及其相关信息</p>
+</li>
+<li><p>/etc/group：  存放组及属性信息</p>
+</li>
+<li><p>/etc/gshadow：     存放组密码及其相关信息</p>
+</li>
+<li><p>/etc/default/useradd：新建账户模板信息</p>
+</li>
+</ul>
+<h4 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/passwd.png" alt="enter image description here"></p>
+<p>name：password:UID:GID:GECEO:directory:shell</p>
+<ol>
+<li><p>用户名</p>
+</li>
+<li><p>密码：显示为x</p>
+</li>
+<li><p>UID：用户ID</p>
+</li>
+<li><p>GID：组ID</p>
+</li>
+<li><p>描述信息：GECOS，可添加用户描述信息</p>
+</li>
+<li><p>家目录：用户家目录</p>
+</li>
+<li><p>shell类型：用户shell类型</p>
+<h4 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/shadow.png" alt="enter image description here"></p>
+</li>
+<li><p>用户名</p>
+</li>
+<li><p>密码加密：算法$6；!!表示账户锁定</p>
+</li>
+<li><p>上次修改密码时间：距离1970.1.1的天数</p>
+</li>
+<li><p>密码最小修改时间：距离下次修改密码至少需间隔的天数（0表示随时可变更）</p>
+</li>
+<li><p>密码最大修改时间：距离本次密码修改时间最多可间隔的天数（99999表示永不过期）</p>
+</li>
+<li><p>密码提醒时间：距离密码即将到期提前警告的天数</p>
+</li>
+<li><p>密码到期后宽限时间：密码到期后账户还能使用的天数</p>
+</li>
+<li><p>账户有效期：该账户可使用的日期</p>
+</li>
+<li><p>保留区域：保留将来可能增加的区域</p>
+</li>
+</ol>
+<h4 id="etc-group"><a href="#etc-group" class="headerlink" title="/etc/group"></a>/etc/group</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/group.png" alt="enter image description here"></p>
+<p>group_name:password:GID:user_list</p>
+<ol>
+<li><p>组名</p>
+</li>
+<li><p>组密码：普通用户加入某个组时需要的密码（不推荐设置密码）</p>
+</li>
+<li><p>GID：组ID</p>
+</li>
+<li><p>组成员：“,”作为分隔符</p>
+</li>
+</ol>
+<h4 id="etc-gshadow"><a href="#etc-gshadow" class="headerlink" title="/etc/gshadow"></a>/etc/gshadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/gshadow.png" alt="enter image description here"></p>
+<p>group_name:encrypted_password:administrators:members</p>
+<ol>
+<li><p>组名</p>
+</li>
+<li><p>组密码</p>
+</li>
+<li><p>组管理员（组长）</p>
+</li>
+<li><p>组成员：“,”作为分隔符</p>
+</li>
+</ol>
+<h4 id="etc-default-useradd"><a href="#etc-default-useradd" class="headerlink" title="/etc/default/useradd"></a>/etc/default/useradd</h4><ol>
+<li><p>GROUP=100                     创建用户无指定组时默认所属的组users</p>
+</li>
+<li><p>HOME=/home                          创建用户默认家目录路径</p>
+</li>
+<li><p>INACTIVE=-1                    创建用户时默认没有宽限时间</p>
+</li>
+<li><p>EXPIRE=                             创建用户时默认有效期</p>
+</li>
+<li><p>SHELL=/bin/bash                      创建用户时默认shell类型</p>
+</li>
+<li><p>SKEL=/etc/skel                          创建用户时家目录模板</p>
+</li>
+<li><p>CREATE_MAIL_SPOOL=yes             创建用户时默认创建邮箱</p>
+</li>
+</ol>
+<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><ul>
+<li><p>vipw         等同于vi /etc/passwd</p>
+</li>
+<li><p>vigr           等同于vi /etc/group</p>
+</li>
+<li><p>pwck        检查passwd文件格式错误</p>
+</li>
+<li><p>grpck        检查group文件格式错误</p>
+</li>
+</ul>
+<h3 id="用户与组的管理命令"><a href="#用户与组的管理命令" class="headerlink" title="用户与组的管理命令"></a>用户与组的管理命令</h3><p>用户管理命令及常用选项：</p>
+<h4 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h4><p>etc/default/useradd存放创建用户时的默认信息</p>
+<ul>
+<li><p>-u     指定uid（生产环境中多台服务器保证程序是同一UID）</p>
+</li>
+<li><p>-o     不检查UID的唯一性，需配合-u使用（不建议UID一样）</p>
+</li>
+<li><p>-g     创建用户时指定主组</p>
+</li>
+<li><p>-c  创建用户时添加描述</p>
+</li>
+<li><p>-d     创建用户时指定家目录路径，二层目录（生产环境中创建给服务用的账户可能会用到）</p>
+</li>
+<li><p>-s      创建用户时指定shell类型/etc/shells</p>
+</li>
+<li><p>-r      创建系统用户（默认不创建家目录）</p>
+</li>
+<li><p>-m    强行创建家目录，用于系统用户，配合-r使用（生产环境中为服务生成系统用户）-M         强行不创建家目录，用于普通用户</p>
+</li>
+<li><p>-G     创建用户时加入到多个辅助组里，多个辅助组用“，”分开</p>
+</li>
+<li><p>-N   创建一个用户名和主组名不同的用户，默认users作为主组</p>
+</li>
+<li><p>-p    创建用户添加密码（不建议此种方式添加口令，口令会在shadow文件中明文）</p>
+</li>
+</ul>
+<h4 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h4><ul>
+<li><p>-u     修改UID</p>
+</li>
+<li><p>-g     修改GID（组需存在）</p>
+</li>
+<li><p>-G     修改辅助组（会将原来的辅助组覆盖），如果要保留原辅助组配合-a使用</p>
+</li>
+<li><p>-s      新的默认shell</p>
+</li>
+<li><p>-c     新的注释信息</p>
+</li>
+<li><p>-d     新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项（-m -d有顺序）</p>
+</li>
+<li><p>-l      新的用户名</p>
+</li>
+<li><p>-L     用户加锁</p>
+</li>
+<li><p>-U    用户解锁（centos6以后禁止此方式解锁）</p>
+</li>
+</ul>
+<h4 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h4><ul>
+<li>-r      删除用户的所有文件，家目录及邮箱（工作中不建议用，建议保留数据）</li>
+</ul>
+<h3 id="组帐号维护命令及常用选项"><a href="#组帐号维护命令及常用选项" class="headerlink" title="组帐号维护命令及常用选项"></a>组帐号维护命令及常用选项</h3><h4 id="groupadd"><a href="#groupadd" class="headerlink" title="groupadd"></a>groupadd</h4><ul>
+<li><p>-g     指明GID号创建组</p>
+</li>
+<li><p>-r      创建系统组group（centos6：ID&lt;500、centos7：ID&lt;1000）</p>
+</li>
+</ul>
+<h4 id="groupmod"><a href="#groupmod" class="headerlink" title="groupmod"></a>groupmod</h4><ul>
+<li><p>-n     新的组名</p>
+</li>
+<li><p>-g     新的GID</p>
+</li>
+</ul>
+<h4 id="groupdel-删除组（前提没有用户以此组为主组）"><a href="#groupdel-删除组（前提没有用户以此组为主组）" class="headerlink" title="groupdel 删除组（前提没有用户以此组为主组）"></a>groupdel 删除组（前提没有用户以此组为主组）</h4><h4 id="groupmems-查看指定组的成员"><a href="#groupmems-查看指定组的成员" class="headerlink" title="groupmems     查看指定组的成员"></a>groupmems     查看指定组的成员</h4><ul>
+<li><p>-g     更改为指定组（只有root）</p>
+</li>
+<li><p>-a     指定用户加入组</p>
+</li>
+<li><p>-d     从组中删除用户</p>
+</li>
+<li><p>-p     从组中清除所有成员</p>
+</li>
+<li><p>-l      显示组成员列表（读取的/etc/group文件中对应组的最后一个字段的全部内容）</p>
+</li>
+</ul>
+<h4 id="gpasswd-给组添加口令"><a href="#gpasswd-给组添加口令" class="headerlink" title="gpasswd           给组添加口令"></a>gpasswd           给组添加口令</h4><ul>
+<li><p>-a user     将user添加至指定组中</p>
+</li>
+<li><p>-d user     从指定组中移除用户user</p>
+</li>
+<li><p>-A user1，user2…  设置有管理权限的用户列表（设置组管理员）</p>
+</li>
+</ul>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">隔壁小翔</a>
-            <p>原文链接: <a href="http://yoursite.com/2018/06/03/带你认识Linux中的通配符/">http://yoursite.com/2018/06/03/带你认识Linux中的通配符/</a>
-            <p>发表日期: <a href="http://yoursite.com/2018/06/03/带你认识Linux中的通配符/">June 3rd 2018, 6:46:42</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">http://yoursite.com/2018/06/03/Linux用户与组管理详解/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/06/03/Linux用户与组管理详解/">June 3rd 2018, 7:00:19</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -430,17 +619,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/06/03/Linux用户与组管理详解/" title= Linux用户与组管理详解 >
-                    <div class="nextTitle">Linux用户与组管理详解</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/06/03/Linux文件系统简介/" title= Linux文件系统简介 >
-                    <div class="prevTitle">Linux文件系统简介</div>
+                <a href= "/2018/06/03/带你认识Linux中的通配符/" title= 带你认识Linux中的通配符 >
+                    <div class="prevTitle">带你认识Linux中的通配符</div>
                 </a>
             
         </li>
@@ -553,7 +737,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#带你认识Linux中的通配符"><span class="toc-number">1.</span> <span class="toc-text">带你认识Linux中的通配符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-表示任意长度的任意字符"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. * 表示任意长度的任意字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-表示任意单个字符"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. ? 表示任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-匹配指定范围内任意单个字符"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. [] 匹配指定范围内任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-a-Z-：表示任意一个单个字母"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.[a-Z]：表示任意一个单个字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-0-9-：表示任意单个数字"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.[0-9]：表示任意单个数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-匹配除指定范围以外的任意单个字符"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.[^]匹配除指定范围以外的任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-alpha-表示所有的字母（不区分大小写）"><span class="toc-number">1.0.7.</span> <span class="toc-text">7.[:alpha:]表示所有的字母（不区分大小写）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-digit-表示任意单个数字，效果同-0-9"><span class="toc-number">1.0.8.</span> <span class="toc-text">8.[:digit:]表示任意单个数字，效果同[0-9]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-lower-表示任意单个小写字母"><span class="toc-number">1.0.9.</span> <span class="toc-text">9.[:lower:]表示任意单个小写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-upper-表示任意单个大写字母"><span class="toc-number">1.0.10.</span> <span class="toc-text">10.[:upper:]表示任意单个大写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-alnum-表示任意单个字母或数字"><span class="toc-number">1.0.11.</span> <span class="toc-text">11.[:alnum:]表示任意单个字母或数字</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux用户与组管理详解"><span class="toc-number">1.</span> <span class="toc-text">Linux用户与组管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全3A"><span class="toc-number">1.0.1.</span> <span class="toc-text">安全3A</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户user"><span class="toc-number">1.0.2.</span> <span class="toc-text">用户user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组-group："><span class="toc-number">1.0.3.</span> <span class="toc-text">组 group：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组的类别："><span class="toc-number">1.0.4.</span> <span class="toc-text">组的类别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全上下文"><span class="toc-number">1.0.5.</span> <span class="toc-text">安全上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户和组的配置文件"><span class="toc-number">1.0.6.</span> <span class="toc-text">用户和组的配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-passwd"><span class="toc-number">1.0.7.</span> <span class="toc-text">/etc/passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-shadow"><span class="toc-number">1.0.8.</span> <span class="toc-text">/etc/shadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-group"><span class="toc-number">1.0.9.</span> <span class="toc-text">/etc/group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-gshadow"><span class="toc-number">1.0.10.</span> <span class="toc-text">/etc/gshadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-default-useradd"><span class="toc-number">1.0.11.</span> <span class="toc-text">/etc/default/useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件操作"><span class="toc-number">1.0.12.</span> <span class="toc-text">文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户与组的管理命令"><span class="toc-number">1.1.</span> <span class="toc-text">用户与组的管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useradd"><span class="toc-number">1.1.1.</span> <span class="toc-text">useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#usermod"><span class="toc-number">1.1.2.</span> <span class="toc-text">usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#userdel"><span class="toc-number">1.1.3.</span> <span class="toc-text">userdel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组帐号维护命令及常用选项"><span class="toc-number">1.2.</span> <span class="toc-text">组帐号维护命令及常用选项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#groupadd"><span class="toc-number">1.2.1.</span> <span class="toc-text">groupadd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmod"><span class="toc-number">1.2.2.</span> <span class="toc-text">groupmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupdel-删除组（前提没有用户以此组为主组）"><span class="toc-number">1.2.3.</span> <span class="toc-text">groupdel 删除组（前提没有用户以此组为主组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmems-查看指定组的成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">groupmems     查看指定组的成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gpasswd-给组添加口令"><span class="toc-number">1.2.5.</span> <span class="toc-text">gpasswd           给组添加口令</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
