@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Linux�ļ�ϵͳ��� · tangwei&#39;s Studio</title>
+    <title>Linux文件系统简介 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >tangwei&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Linux�ļ�ϵͳ���</a>
+                <a href="#" class="post-name">Linux文件系统简介</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Linux�ļ�ϵͳ���
+            Linux文件系统简介
             <!-- 404 -->
             
         </h1>
@@ -258,7 +258,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">198</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">1,060</span> / Reading time: <span class="post-count">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -386,179 +386,179 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="Linux�l�ϵͳ���"><a href="#Linux�l�ϵͳ���" class="headerlink" title="Linux�ļ�ϵͳ���"></a>Linux�ļ�ϵͳ���</h2><blockquote>
-<p>��һ�н����ļ�����Linux������ѧ˼��֮һ���ɼ��ļ�ϵͳ��linuxϵͳ�е���Ҫ�ԣ�ѧ���ļ�ϵͳ��Ϊ�Ժ������о���ѧϰLinuxϵͳ�춨���õĻ�����</p>
+        <h2 id="Linux文件系统简介"><a href="#Linux文件系统简介" class="headerlink" title="Linux文件系统简介"></a>Linux文件系统简介</h2><blockquote>
+<p>“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。</p>
 </blockquote>
-<p>####һ��Ŀ¼�ļ����� </p>
+<p>####一、目录文件管理 </p>
 <ul>
-<li><p>/                         ��Ŀ¼ÿ���ļ���Ŀ¼�������￪ʼ</p>
+<li><p>/                         根目录每个文件和目录都从这里开始</p>
 </li>
-<li><p>/bin                   ��������һ��Ϊ��ͨ�û���ִ�еĳ���</p>
+<li><p>/bin                   基本程序，一般为普通用户可执行的程序</p>
 </li>
-<li><p>/boot                 ��̬�ļ���ϵͳ�ļ�</p>
+<li><p>/boot                 静态文件，系统文件</p>
 </li>
-<li><p>/dev                  ���Ӳ���豸�ļ�</p>
+<li><p>/dev                  存放硬件设备文件</p>
 </li>
-<li><p>/etc                   ��������ļ�</p>
+<li><p>/etc                   存放配置文件</p>
 </li>
-<li><p>/lib64                ���ļ�</p>
+<li><p>/lib64                库文件</p>
 </li>
-<li><p>/media              ���ص�</p>
+<li><p>/media              挂载点</p>
 </li>
-<li><p>/mnt                 ����Ա�ֶ����ص�</p>
+<li><p>/mnt                 管理员手动挂载点</p>
 </li>
-<li><p>/opt                   �����������</p>
+<li><p>/opt                   第三方软件包</p>
 </li>
-<li><p>/sbin                 ����Ա���еĳ���</p>
+<li><p>/sbin                 管理员运行的程序</p>
 </li>
-<li><p>/srv                   �������������</p>
+<li><p>/srv                   服务器相关数据</p>
 </li>
-<li><p>/tmp                  �����ʱ�ļ�</p>
+<li><p>/tmp                  存放临时文件</p>
 </li>
-<li><p>/usr                   �ڶ���Ŀ¼�ṹ</p>
+<li><p>/usr                   第二层目录结构</p>
 </li>
-<li><p>/var                   ��ű仯���ļ�����/var/log�����־</p>
+<li><p>/var                   存放变化的文件，如/var/log存放日志</p>
 </li>
-<li><p>/home                ��Ŀ¼������û���Ϣ</p>
+<li><p>/home                家目录，存放用户信息</p>
 </li>
-<li><p>/root                  ����Ա�ļ�Ŀ¼����</p>
+<li><p>/root                  管理员的家目录‘’</p>
 </li>
-<li><p>/lost+found       ����Ϊext4���У���centos6��</p>
+<li><p>/lost+found       分区为ext4具有（如centos6）</p>
 </li>
-<li><p>/misc                  ʵ�ֹ��̵��Զ�����</p>
+<li><p>/misc                  实现光盘的自动挂载</p>
 </li>
-<li><p>/sys                    Ӳ�������Ϣ</p>
+<li><p>/sys                    硬件相关信息</p>
 </li>
-<li><p>/proc                  �洢�ڴ��е�״̬��Ϣ</p>
+<li><p>/proc                  存储内存中的状态信息</p>
 </li>
-<li><p>/selinux             ��ȫ���ԣ�����������һ����ã�</p>
+<li><p>/selinux             安全策略（生产环境中一般禁用）</p>
 </li>
 </ul>
-<p>####�����ļ���ɫ<br>Linuxϵͳͨ����ͬ����ɫ�����ļ������������У�</p>
+<p>####二、文件颜色<br>Linux系统通过不同的颜色来对文件进行区别，其中：</p>
 <ul>
-<li><p>��ɫ                   —����Ŀ¼</p>
+<li><p>蓝色                   —代表目录</p>
 </li>
-<li><p>��ɫ                   —��ִ�г���</p>
+<li><p>绿色                   —可执行程序</p>
 </li>
-<li><p>��ɫ                   —����ļ���ѹ���ļ�</p>
+<li><p>红色                   —打包文件，压缩文件</p>
 </li>
-<li><p>ǳ��ɫ               —�����ļ�����ݷ�ʽ��</p>
+<li><p>浅蓝色               —链接文件（快捷方式）</p>
 </li>
-<li><p>��ɫ                   —�׽����ļ�</p>
+<li><p>粉色                   —套接字文件</p>
 </li>
-<li><p>ǳ��ɫ               —�ܵ��ļ�</p>
+<li><p>浅黄色               —管道文件</p>
 </li>
 </ul>
-<p>####�����ļ�����</p>
+<p>####三、文件类型</p>
 <ul>
-<li><p>�C                         ��ͨ�ļ�</p>
+<li><p>–                         普通文件</p>
 </li>
-<li><p>d                         Ŀ¼�ļ�</p>
+<li><p>d                         目录文件</p>
 </li>
-<li><p>b                         ���豸</p>
+<li><p>b                         块设备</p>
 </li>
-<li><p>c                         �ַ��豸</p>
+<li><p>c                         字符设备</p>
 </li>
-<li><p>l                          ���������ļ�</p>
+<li><p>l                          符号链接文件</p>
 </li>
-<li><p>p                         �ܵ��ļ�pipe</p>
+<li><p>p                         管道文件pipe</p>
 </li>
-<li><p>s                         �׽����ļ�socket<br>####�ġ��ļ�ʱ���<br>ͨ��stat file ����鿴file�ļ�ʱ�����</p>
+<li><p>s                         套接字文件socket<br>####四、文件时间戳<br>通过stat file 命令查看file文件时间戳：</p>
 </li>
-<li><p>mtime               �ļ�����޸�ʱ��</p>
+<li><p>mtime               文件最后修改时间</p>
 </li>
-<li><p>atime                 �ļ�����ȡʱ��</p>
+<li><p>atime                 文件最后读取时间</p>
 </li>
-<li><p>ctime                 �ļ�Ԫ����������仯��ʱ�䣬��Ȩ�ޣ�������ı仯</p>
+<li><p>ctime                 文件元数据最后发生变化的时间，如权限，所有组的变化</p>
 </li>
 </ul>
-<p>####�塢�����ļ�ͨ���</p>
+<p>####五、常用文件通配符</p>
 <ul>
-<li><p>*                       ƥ����������ַ�</p>
+<li><p>*                       匹配零个或多个字符</p>
 </li>
-<li><p>��                       ƥ���κε����ַ�</p>
+<li><p>？                       匹配任何单个字符</p>
 </li>
-<li><p>~                         ��ǰ�û���Ŀ¼</p>
+<li><p>~                         当前用户家目录</p>
 </li>
-<li><p>[0-9]                  ��ʾ����</p>
+<li><p>[0-9]                  表示数字</p>
 </li>
-<li><p>[^0-9]               ����������</p>
+<li><p>[^0-9]               除数字以外</p>
 </li>
-<li><p>[a-z]                   Сд��ĸ</p>
+<li><p>[a-z]                   小写字母</p>
 </li>
-<li><p>[A-Z]                 ��д��ĸ</p>
+<li><p>[A-Z]                 大写字母</p>
 </li>
-<li><p>[:digit:]              ��������</p>
+<li><p>[:digit:]              任意数字</p>
 </li>
-<li><p>[:lower:]            ����Сд��ĸ</p>
+<li><p>[:lower:]            任意小写字母</p>
 </li>
-<li><p>[:upper:]           �����д��ĸ</p>
+<li><p>[:upper:]           任意大写字母</p>
 </li>
-<li><p>[:alpha:]            �����Сд��ĸ</p>
+<li><p>[:alpha:]            任意大小写字母</p>
 </li>
-<li><p>[:alnum:]          �������ֻ���ĸ</p>
+<li><p>[:alnum:]          任意数字或字母</p>
 </li>
 </ul>
-<p>####�����ڵ���inode<br>Linuxϵͳ���ļ����ݶ������ڿ飨block�������⻹���и��ط��������ļ���Ԫ��Ϣ�������ļ�Ȩ�ޡ������ߡ��������ڵȡ����ִ����ļ�Ԫ��Ϣ������ͽ���inode��</p>
-<p>�ڵ���Ҳ�Ǳ������Դ���鿴ָ��ڵ�ռ�������df -i</p>
-<p>ÿ���ڵ���ռ4�ֽ�</p>
+<p>####六、节点编号inode<br>Linux系统的文件数据都储存在块（block），此外还需有个地方来储存文件的元信息，比如文件权限、创建者、创建日期等。这种储存文件元信息的区域就叫做inode。</p>
+<p>节点编号也是宝贵的资源，查看指针节点占用情况：df -i</p>
+<p>每个节点编号占4字节</p>
 <ul>
-<li><p>ֱ��ָ�룺ǰ12��ָ��Ϊֱ��ָ��</p>
+<li><p>直接指针：前12个指针为直接指针</p>
 </li>
-<li><p>һ��ָ�룺�ɱ���4096/4=1024��ָ�룬�ɴ洢�ļ���С1024*4096=4MB</p>
+<li><p>一级指针：可保存4096/4=1024个指针，可存储文件大小1024*4096=4MB</p>
 </li>
-<li><p>����ָ�룺�ɴ洢�ļ���С1024<em>1024</em>4096=4GB</p>
+<li><p>二级指针：可存储文件大小1024<em>1024</em>4096=4GB</p>
 </li>
-<li><p>����ָ�룺�ɴ洢�ļ���С1024<em>1024</em>1024*4096=4TB</p>
+<li><p>三级指针：可存储文件大小1024<em>1024</em>1024*4096=4TB</p>
 </li>
 </ul>
-<p>####�ߡ������ļ���������</p>
+<p>####七、常用文件管理命令</p>
 <ol>
-<li><p>ls ��ʾ�ļ���Ϣ</p>
-<p> -a ���������ļ�</p>
-<p> -l ��ʾ�ļ���ϸ��Ϣ����дΪll</p>
-<p> -s �Ӵ�С����</p>
-<p> -r ��������</p>
-<p> -d ֻ��ʾĿ¼��������</p>
-<p> -d */ ֻ��ʾ��ǰĿ¼���ļ���</p>
-<p> -m MODE: ����Ŀ¼ʱֱ��ָ��Ȩ��</p>
+<li><p>ls 显示文件信息</p>
+<p> -a 包含隐藏文件</p>
+<p> -l 显示文件详细信息，可写为ll</p>
+<p> -s 从大到小排列</p>
+<p> -r 倒序排列</p>
+<p> -d 只显示目录自身属性</p>
+<p> -d */ 只显示当前目录下文件夹</p>
+<p> -m MODE: 创建目录时直接指定权限</p>
 </li>
-<li><p>touch �����ļ�</p>
-<p> -a ���ı�atime��ctime</p>
-<p> -m ���ı�mtime��ctime</p>
-<p> -t[[CC]YY]MMDDhhmm[.ss] ָ��atime��mtime��ʱ���</p>
-<p> -c ����ļ������ڣ����贴��</p>
+<li><p>touch 创建文件</p>
+<p> -a 仅改变atime和ctime</p>
+<p> -m 仅改变mtime和ctime</p>
+<p> -t[[CC]YY]MMDDhhmm[.ss] 指定atime和mtime的时间戳</p>
+<p> -c 如果文件不存在，则不予创建</p>
 </li>
 </ol>
 <ol start="3">
-<li><p>mkdir ����Ŀ¼</p>
-<p> -p �����ڲ������ҿ��Զ���������ĸ�Ŀ¼</p>
-<p> -v ��ʾ����</p>
+<li><p>mkdir 创建目录</p>
+<p> -p 存在于不报错，且可自动创建所需的各目录</p>
+<p> -v 显示过程</p>
 </li>
 </ol>
 <ol start="4">
-<li><p>cp ����</p>
-<p> -a ����ȫ����Ϣ�����ڱ��ݣ��ɸ��������ļ����ַ��ļ������ļ�</p>
-<p> -i ����ǰ��ʾ</p>
-<p> -r �ݹ鸴��</p>
-<p> -v ��ʾ����</p>
-<p> -u ֻ����Դ��Ŀ������ļ���Ŀ�겻���ڵ��ļ�</p>
-<p> �Cbackup=numbered Ŀ����ڣ�����ǰ�ȱ��ݼ����ֺ�׺������ӱ�����</p>
+<li><p>cp 复制</p>
+<p> -a 复制全部信息，用于备份；可复制特殊文件如字符文件，块文件</p>
+<p> -i 覆盖前提示</p>
+<p> -r 递归复制</p>
+<p> -v 显示过程</p>
+<p> -u 只复制源比目标更新文件或目标不存在的文件</p>
+<p> –backup=numbered 目标存在，覆盖前先备份加数字后缀（建议加别名）</p>
 </li>
-<li><p>mv �ƶ����������ļ���mvֻ֧�ֵ����ļ���������rename������������</p>
-<p> -i �ƶ�ǰ��ʾ</p>
-<p> -r �ݹ�</p>
-<p> -v ��ʾ����</p>
+<li><p>mv 移动或重命名文件（mv只支持单个文件重命名，rename可批量改名）</p>
+<p> -i 移动前提示</p>
+<p> -r 递归</p>
+<p> -v 显示过程</p>
 </li>
 </ol>
 <ol start="6">
-<li><p>rm ɾ��</p>
-<p> -f ��ȥѯ��ֱ��ɾ��</p>
-<p> -i ɾ��ǰ������ʾ</p>
-<p> -r �ݹ�</p>
+<li><p>rm 删除</p>
+<p> -f 不去询问直接删除</p>
+<p> -i 删除前交互提示</p>
+<p> -r 递归</p>
 </li>
 </ol>
-<p>���ˣ����ſ�����Щ������Linux���ļ�ϵͳ�Ѿ�����һ�����˽⣬�Ƿ�ԡ�һ�н����ļ��������Լ�������أ�</p>
+<p>好了，相信看完这些，您对Linux的文件系统已经有了一定的了解，是否对“一切皆是文件”有了自己的理解呢？</p>
 
     </article>
     <!-- license  -->
@@ -576,11 +576,6 @@ height:50vh;
             
         </li>
         <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/06/03/hello-world/" title= Hello World >
-                    <div class="prevTitle">Hello World</div>
-                </a>
             
         </li>
     </ul>
@@ -692,7 +687,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux�l�ϵͳ���"><span class="toc-number">1.</span> <span class="toc-text">Linux�ļ�ϵͳ���</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件系统简介"><span class="toc-number">1.</span> <span class="toc-text">Linux文件系统简介</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -716,40 +711,19 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 2 </div>
+    <div class="total-archive"> Total : 1 </div>
     
     <div class="post-archive">
     
     
     
     
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/hello-world/" >Hello World</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/03/Linux文件系统简介/" >Linux�ļ�ϵͳ���</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/03/Linux文件系统简介/" >Linux文件系统简介</a>
         </li>
     
     </div>
