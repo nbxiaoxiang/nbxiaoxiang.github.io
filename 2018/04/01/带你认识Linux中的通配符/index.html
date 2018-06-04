@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Linux文件系统简介 · tangwei&#39;s Studio</title>
+    <title>带你认识Linux中的通配符 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -204,14 +204,14 @@
     
     <div class="banner">
             <div class="blog-title">
-                <a href="/" >tangwei&#39;s Studio</a>
+                <a href="/" >主页</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Linux文件系统简介</a>
+                <a href="#" class="post-name">带你认识Linux中的通配符</a>
             </div>
     </div>
     
-    <a class="home-link" href=/>tangwei's Studio</a>
+    <a class="home-link" href=/>主页</a>
 </header>
     <div class="wrapper">
         <div class="site-intro" style=
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Linux文件系统简介
+            带你认识Linux中的通配符
             <!-- 404 -->
             
         </h1>
@@ -258,18 +258,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,060</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">757</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/03/26</span>
+                    <span class="post-intro-time">2018/04/01</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -392,176 +392,35 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="Linux文件系统简介"><a href="#Linux文件系统简介" class="headerlink" title="Linux文件系统简介"></a>Linux文件系统简介</h2><blockquote>
-<p>“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。</p>
+        <h2 id="带你认识Linux中的通配符"><a href="#带你认识Linux中的通配符" class="headerlink" title="带你认识Linux中的通配符"></a>带你认识Linux中的通配符</h2><blockquote>
+<p>所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
 </blockquote>
-<h4 id="一、目录文件管理"><a href="#一、目录文件管理" class="headerlink" title="一、目录文件管理"></a>一、目录文件管理</h4><ul>
-<li><p>/                         根目录每个文件和目录都从这里开始</p>
-</li>
-<li><p>/bin                   基本程序，一般为普通用户可执行的程序</p>
-</li>
-<li><p>/boot                 静态文件，系统文件</p>
-</li>
-<li><p>/dev                  存放硬件设备文件</p>
-</li>
-<li><p>/etc                   存放配置文件</p>
-</li>
-<li><p>/lib64                库文件</p>
-</li>
-<li><p>/media              挂载点</p>
-</li>
-<li><p>/mnt                 管理员手动挂载点</p>
-</li>
-<li><p>/opt                   第三方软件包</p>
-</li>
-<li><p>/sbin                 管理员运行的程序</p>
-</li>
-<li><p>/srv                   服务器相关数据</p>
-</li>
-<li><p>/tmp                  存放临时文件</p>
-</li>
-<li><p>/usr                   第二层目录结构</p>
-</li>
-<li><p>/var                   存放变化的文件，如/var/log存放日志</p>
-</li>
-<li><p>/home                家目录，存放用户信息</p>
-</li>
-<li><p>/root                  管理员的家目录‘’</p>
-</li>
-<li><p>/lost+found       分区为ext4具有（如centos6）</p>
-</li>
-<li><p>/misc                  实现光盘的自动挂载</p>
-</li>
-<li><p>/sys                    硬件相关信息</p>
-</li>
-<li><p>/proc                  存储内存中的状态信息</p>
-</li>
-<li><p>/selinux             安全策略（生产环境中一般禁用）</p>
-</li>
-</ul>
-<h4 id="二、文件颜色"><a href="#二、文件颜色" class="headerlink" title="二、文件颜色"></a>二、文件颜色</h4><p>Linux系统通过不同的颜色来对文件进行区别，其中：</p>
-<ul>
-<li><p>蓝色                   —代表目录</p>
-</li>
-<li><p>绿色                   —可执行程序</p>
-</li>
-<li><p>红色                   —打包文件，压缩文件</p>
-</li>
-<li><p>浅蓝色               —链接文件（快捷方式）</p>
-</li>
-<li><p>粉色                   —套接字文件</p>
-</li>
-<li><p>浅黄色               —管道文件</p>
-</li>
-</ul>
-<h4 id="三、文件类型"><a href="#三、文件类型" class="headerlink" title="三、文件类型"></a>三、文件类型</h4><ul>
-<li><p>–                         普通文件</p>
-</li>
-<li><p>d                         目录文件</p>
-</li>
-<li><p>b                         块设备</p>
-</li>
-<li><p>c                         字符设备</p>
-</li>
-<li><p>l                          符号链接文件</p>
-</li>
-<li><p>p                         管道文件pipe</p>
-</li>
-<li><p>s                         套接字文件socket</p>
-<h4 id="四、文件时间戳"><a href="#四、文件时间戳" class="headerlink" title="四、文件时间戳"></a>四、文件时间戳</h4><p>通过stat file 命令查看file文件时间戳：</p>
-</li>
-<li><p>mtime               文件最后修改时间</p>
-</li>
-<li><p>atime                 文件最后读取时间</p>
-</li>
-<li><p>ctime                 文件元数据最后发生变化的时间，如权限，所有组的变化</p>
-</li>
-</ul>
-<h4 id="五、常用文件通配符"><a href="#五、常用文件通配符" class="headerlink" title="五、常用文件通配符"></a>五、常用文件通配符</h4><ul>
-<li><p>*                       匹配零个或多个字符</p>
-</li>
-<li><p>？                       匹配任何单个字符</p>
-</li>
-<li><p>~                         当前用户家目录</p>
-</li>
-<li><p>[0-9]                  表示数字</p>
-</li>
-<li><p>[^0-9]               除数字以外</p>
-</li>
-<li><p>[a-z]                   小写字母</p>
-</li>
-<li><p>[A-Z]                 大写字母</p>
-</li>
-<li><p>[:digit:]              任意数字</p>
-</li>
-<li><p>[:lower:]            任意小写字母</p>
-</li>
-<li><p>[:upper:]           任意大写字母</p>
-</li>
-<li><p>[:alpha:]            任意大小写字母</p>
-</li>
-<li><p>[:alnum:]          任意数字或字母</p>
-</li>
-</ul>
-<h4 id="六、节点编号inode"><a href="#六、节点编号inode" class="headerlink" title="六、节点编号inode"></a>六、节点编号inode</h4><p>Linux系统的文件数据都储存在块（block），此外还需有个地方来储存文件的元信息，比如文件权限、创建者、创建日期等。这种储存文件元信息的区域就叫做inode。</p>
-<p>节点编号也是宝贵的资源，查看指针节点占用情况：df -i</p>
-<p>每个节点编号占4字节</p>
-<ul>
-<li><p>直接指针：前12个指针为直接指针</p>
-</li>
-<li><p>一级指针：可保存4096/4=1024个指针，可存储文件大小1024*4096=4MB</p>
-</li>
-<li><p>二级指针：可存储文件大小1024<em>1024</em>4096=4GB</p>
-</li>
-<li><p>三级指针：可存储文件大小1024<em>1024</em>1024*4096=4TB</p>
-</li>
-</ul>
-<h4 id="七、常用文件管理命令"><a href="#七、常用文件管理命令" class="headerlink" title="七、常用文件管理命令"></a>七、常用文件管理命令</h4><ol>
-<li><p>ls 显示文件信息</p>
-<p> -a 包含隐藏文件</p>
-<p> -l 显示文件详细信息，可写为ll</p>
-<p> -s 从大到小排列</p>
-<p> -r 倒序排列</p>
-<p> -d 只显示目录自身属性</p>
-<p> -d */ 只显示当前目录下文件夹</p>
-<p> -m MODE: 创建目录时直接指定权限</p>
-</li>
-<li><p>touch 创建文件</p>
-<p> -a 仅改变atime和ctime</p>
-<p> -m 仅改变mtime和ctime</p>
-<p> -t[[CC]YY]MMDDhhmm[.ss] 指定atime和mtime的时间戳</p>
-<p> -c 如果文件不存在，则不予创建</p>
-</li>
-</ol>
-<ol start="3">
-<li><p>mkdir 创建目录</p>
-<p> -p 存在于不报错，且可自动创建所需的各目录</p>
-<p> -v 显示过程</p>
-</li>
-</ol>
-<ol start="4">
-<li><p>cp 复制</p>
-<p> -a 复制全部信息，用于备份；可复制特殊文件如字符文件，块文件</p>
-<p> -i 覆盖前提示</p>
-<p> -r 递归复制</p>
-<p> -v 显示过程</p>
-<p> -u 只复制源比目标更新文件或目标不存在的文件</p>
-<p> –backup=numbered 目标存在，覆盖前先备份加数字后缀（建议加别名）</p>
-</li>
-<li><p>mv 移动或重命名文件（mv只支持单个文件重命名，rename可批量改名）</p>
-<p> -i 移动前提示</p>
-<p> -r 递归</p>
-<p> -v 显示过程</p>
-</li>
-</ol>
-<ol start="6">
-<li><p>rm 删除</p>
-<p> -f 不去询问直接删除</p>
-<p> -i 删除前交互提示</p>
-<p> -r 递归</p>
-</li>
-</ol>
-<p>好了，相信看完这些，您对Linux的文件系统已经有了一定的了解，是否对“一切皆是文件”有了自己的理解呢？</p>
+<p>通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
+<p>常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）</p>
+<h4 id="1-表示任意长度的任意字符"><a href="#1-表示任意长度的任意字符" class="headerlink" title="1. * 表示任意长度的任意字符"></a>1. * 表示任意长度的任意字符</h4><p>例：     <code>ls -d /etc/a*</code>    </p>
+<p>显示/etc目录下所有以a开头的文件与目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%98%9F%E5%8F%B7.png" alt="enter image description here"></p>
+<h4 id="2-表示任意单个字符"><a href="#2-表示任意单个字符" class="headerlink" title="2. ? 表示任意单个字符"></a>2. ? 表示任意单个字符</h4><p>例：<code>ls  a?b</code></p>
+<p>显示当前目录下所有以a开头中间有一个字符b结尾的文件<br>a10b 中间夹2个字符，因此不显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%97%AE%E5%8F%B7.png" alt="enter image description here"></p>
+<h4 id="3-匹配指定范围内任意单个字符"><a href="#3-匹配指定范围内任意单个字符" class="headerlink" title="3. [] 匹配指定范围内任意单个字符"></a>3. [] 匹配指定范围内任意单个字符</h4><p>例：<code>ls -d /etc/[mn]*</code></p>
+<p>显示/etc目录下所有以m开头或者n开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/3-2.png" alt="enter image description here"></p>
+<h4 id="4-a-Z-：表示任意一个单个字母"><a href="#4-a-Z-：表示任意一个单个字母" class="headerlink" title="4.[a-Z]：表示任意一个单个字母"></a>4.[a-Z]：表示任意一个单个字母</h4><p>例：<code>ls -d*[a-Z]</code></p>
+<p>显示目录下所有以字母开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D-2.png" alt="enter image description here"></p>
+<h4 id="5-0-9-：表示任意单个数字"><a href="#5-0-9-：表示任意单个数字" class="headerlink" title="5.[0-9]：表示任意单个数字"></a>5.[0-9]：表示任意单个数字</h4><p>例：<code>ls -d f[0-9]</code></p>
+<p>显示当前目录下所有以f开头后跟任意一个数字的文件和目录<br>f16因含两个数字，则不予显示</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97.png" alt="enter image description here"></p>
+<h4 id="6-匹配除指定范围以外的任意单个字符"><a href="#6-匹配除指定范围以外的任意单个字符" class="headerlink" title="6.[^]匹配除指定范围以外的任意单个字符"></a>6.[^]匹配除指定范围以外的任意单个字符</h4><p>例：<code>ls  -d   [^a]*</code></p>
+<p>显示当前目录下所有不是a开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%99%A4.png" alt="enter image description here"><br>注意：对字符集或数字集取反时，托字符^加在括号内；如：[^0-9], [^[:alpha:]]</p>
+<h4 id="7-alpha-表示所有的字母（不区分大小写）"><a href="#7-alpha-表示所有的字母（不区分大小写）" class="headerlink" title="7.[:alpha:]表示所有的字母（不区分大小写）"></a>7.[:alpha:]表示所有的字母（不区分大小写）</h4><p>例：<code>ls -d *[[:alpha:]]</code></p>
+<p>显示当前目录下所有以字母结尾（不区分大小写）的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
+<h4 id="8-digit-表示任意单个数字，效果同-0-9"><a href="#8-digit-表示任意单个数字，效果同-0-9" class="headerlink" title="8.[:digit:]表示任意单个数字，效果同[0-9]"></a>8.[:digit:]表示任意单个数字，效果同[0-9]</h4><p>例：<code>ls f[[:digit:]]</code></p>
+<p>显示当前目录下所有f开头，单个数字结尾的文件，值得注意的是：[:digit:]只代表单个数字，f16文件因为f后跟两个数字，则不予显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
+<h4 id="9-lower-表示任意单个小写字母"><a href="#9-lower-表示任意单个小写字母" class="headerlink" title="9.[:lower:]表示任意单个小写字母"></a>9.[:lower:]表示任意单个小写字母</h4><p>例：<code>ls -d [[:lower:]]*[[:lower:]]</code></p>
+<p>显示所有当前目录下以小字字母开头且以小写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
+<h4 id="10-upper-表示任意单个大写字母"><a href="#10-upper-表示任意单个大写字母" class="headerlink" title="10.[:upper:]表示任意单个大写字母"></a>10.[:upper:]表示任意单个大写字母</h4><p>例：<code>ls -d a*[[:upper:]]</code></p>
+<p>显示当前目录下 所有以a开头并以一个大写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
+<h4 id="11-alnum-表示任意单个字母或数字"><a href="#11-alnum-表示任意单个字母或数字" class="headerlink" title="11.[:alnum:]表示任意单个字母或数字"></a>11.[:alnum:]表示任意单个字母或数字</h4><p>例：<code>ls -d [[:alnum:]]</code></p>
+<p>显示当前目录下 所有以字母或数字结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/T2H17KYXSPA7ORCX5.png" alt="enter image description here"></p>
+<p>到此为止，常用的通配符使用方法就介绍到这里了，小伙伴们以后查找文件是不是更容易了呢？</p>
 
     </article>
     <!-- license  -->
@@ -571,12 +430,17 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/03/27/带你认识Linux中的通配符/" title= 带你认识Linux中的通配符 >
-                    <div class="nextTitle">带你认识Linux中的通配符</div>
+                <a href= "/2018/04/02/Linux用户与组管理详解/" title= Linux用户与组管理详解 >
+                    <div class="nextTitle">Linux用户与组管理详解</div>
                 </a>
             
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/30/Linux文件系统简介/" title= Linux文件系统简介 >
+                    <div class="prevTitle">Linux文件系统简介</div>
+                </a>
             
         </li>
     </ul>
@@ -692,7 +556,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件系统简介"><span class="toc-number">1.</span> <span class="toc-text">Linux文件系统简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、目录文件管理"><span class="toc-number">1.0.1.</span> <span class="toc-text">一、目录文件管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、文件颜色"><span class="toc-number">1.0.2.</span> <span class="toc-text">二、文件颜色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、文件类型"><span class="toc-number">1.0.3.</span> <span class="toc-text">三、文件类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、文件时间戳"><span class="toc-number">1.0.4.</span> <span class="toc-text">四、文件时间戳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#五、常用文件通配符"><span class="toc-number">1.0.5.</span> <span class="toc-text">五、常用文件通配符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#六、节点编号inode"><span class="toc-number">1.0.6.</span> <span class="toc-text">六、节点编号inode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#七、常用文件管理命令"><span class="toc-number">1.0.7.</span> <span class="toc-text">七、常用文件管理命令</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#带你认识Linux中的通配符"><span class="toc-number">1.</span> <span class="toc-text">带你认识Linux中的通配符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-表示任意长度的任意字符"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. * 表示任意长度的任意字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-表示任意单个字符"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. ? 表示任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-匹配指定范围内任意单个字符"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. [] 匹配指定范围内任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-a-Z-：表示任意一个单个字母"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.[a-Z]：表示任意一个单个字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-0-9-：表示任意单个数字"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.[0-9]：表示任意单个数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-匹配除指定范围以外的任意单个字符"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.[^]匹配除指定范围以外的任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-alpha-表示所有的字母（不区分大小写）"><span class="toc-number">1.0.7.</span> <span class="toc-text">7.[:alpha:]表示所有的字母（不区分大小写）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-digit-表示任意单个数字，效果同-0-9"><span class="toc-number">1.0.8.</span> <span class="toc-text">8.[:digit:]表示任意单个数字，效果同[0-9]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-lower-表示任意单个小写字母"><span class="toc-number">1.0.9.</span> <span class="toc-text">9.[:lower:]表示任意单个小写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-upper-表示任意单个大写字母"><span class="toc-number">1.0.10.</span> <span class="toc-text">10.[:upper:]表示任意单个大写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-alnum-表示任意单个字母或数字"><span class="toc-number">1.0.11.</span> <span class="toc-text">11.[:alnum:]表示任意单个字母或数字</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -761,7 +625,26 @@ top:50vh;
     
     
     
-    <div class="total-archive"> Total : 6 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 7 </div>
     
     <div class="post-archive">
     
@@ -773,32 +656,37 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Linux文件权限详解/" >Linux文件权限详解</a>
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/文本三剑客之grep及正则表达式用法/" >文本三剑客之grep及正则表达式用法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/31</span><a class="archive-post-title" href= "/2018/03/31/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
+            <span class="archive-post-date">04/05</span><a class="archive-post-title" href= "/2018/04/05/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/Linux文件权限详解/" >Linux文件权限详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
+            <span class="archive-post-date">04/03</span><a class="archive-post-title" href= "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Linux文件系统简介/" >Linux文件系统简介</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/Linux文件系统简介/" >Linux文件系统简介</a>
         </li>
     
     </div>
@@ -815,6 +703,10 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
     
         <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+        <span class="sidebar-tag-name" data-tags="grep"><span class="iconfont-archer">&#xe606;</span>grep</span>
+    
+        <span class="sidebar-tag-name" data-tags="正则表达式"><span class="iconfont-archer">&#xe606;</span>正则表达式</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
