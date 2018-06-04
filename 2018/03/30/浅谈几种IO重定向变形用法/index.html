@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>tangwei&#39;s Studio</title>
+    <title>浅谈几种IO重定向变形用法 · tangwei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >tangwei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">浅谈几种IO重定向变形用法</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>tangwei's Studio</a>
 </header>
@@ -210,24 +223,74 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            浅谈几种IO重定向变形用法
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "IO重定向">IO重定向</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,101</span> / Reading time: <span class="post-count">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/03/30</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,247 +390,126 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/Linux文件权限详解/" >
-                
-                    <span>Linux文件权限详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件权限详解
-Linux系统中不仅是对用户与组根据UID,GID进行了管理，还对Linux系统中的文件，按照用户与组进行分类，针对不同的群体进行了权限管理，用他来确定谁能通过何种方式对文件和目录进行访问和操作。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="浅谈几种IO重定向变形用法"><a href="#浅谈几种IO重定向变形用法" class="headerlink" title="浅谈几种IO重定向变形用法"></a>浅谈几种IO重定向变形用法</h2><h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><p>首先，我们来认识一下linux系统中的几种标准输入和输出</p>
+<p>什么是标准输入和输出呢？</p>
+<p>Linux给程序提供了三种I/O设备，即：</p>
+<ul>
+<li><p>标准输入（STDIN）  0            默认接受来自键盘的输入</p>
+</li>
+<li><p>标准输出（STDOUT） 1      默认输出到终端窗口</p>
+</li>
+<li><p>标准错误（STDERR） 2       默认输出到终端窗口</p>
+</li>
+</ul>
+<p>同时linux中使用“&gt;”和“&gt;&gt;”将标准输出和标准错误重新定向到文件中：</p>
+<ul>
+<li><p>“&gt;”后跟重定向文件，文件内容会被覆盖</p>
+</li>
+<li><p>>       把标准输出重定向到文件</p>
+</li>
+<li><p>2&gt;    把标准错误重定向到文件</p>
+</li>
+<li><p>&amp;&gt;    把标准输出和错误都定向到文件</p>
+</li>
+<li><p>1&gt;&amp;2        把标准输出定向到标准错误（简单来讲，对的变成错的）</p>
+</li>
+<li><p>2&gt;&amp;1        把标准错误定向到标准标准输出（错的变成对的）</p>
+</li>
+</ul>
+<ul>
+<li><p>“&gt;&gt;”后跟重定向文件，是在原有内容基础上，追加内容</p>
+</li>
+<li><p>>&gt;    追加标准输出重定向到文件</p>
+</li>
+<li><p>2&gt;&gt;  追加标准错误重定向到文件</p>
+</li>
+<li><p>&amp;&gt;&gt; 追加标准输出和错误都定向到文件</p>
+</li>
+</ul>
+<p>那么下面我们来讨论下几种重定向的变形用法：</p>
+<p>首先我们先建file1-6的6个空文件<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%88%9B%E5%BB%BA%E7%A9%BA%E6%96%87%E4%BB%B6.png" alt="enter image description here"><br>这里我们看到:</p>
+<p><code>ll /data/f1</code> 显示标准输出（f1文件详细信息）；</p>
+<p><code>ll /erorr</code> 显示标准错误（提示无此目录）；<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E7%A1%AE%E4%B8%8E%E9%94%99%E8%AF%AF.png" alt="enter image description here"></p>
+<h3 id="二、实验"><a href="#二、实验" class="headerlink" title="二、实验"></a>二、实验</h3><h4 id="实验1"><a href="#实验1" class="headerlink" title="实验1"></a>实验1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr &gt; /data/file1 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file1.png" alt="enter image description here"></p>
+<p>结果:屏幕无显示，标准输出和标准错误输入到file1文件中</p>
+<h4 id="实验2"><a href="#实验2" class="headerlink" title="实验2"></a>实验2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr 2&gt;&amp;1 &gt; /data/file2</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file2.png" alt="enter image description here"></p>
+<p>结果:屏幕显示标准错误，标准输出输入到file2文件中</p>
+<h4 id="实验3"><a href="#实验3" class="headerlink" title="实验3"></a>实验3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr 2&gt; /data/file3 1&gt;&amp;2</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file3.png" alt="enter image description here"></p>
+<p>结果:屏幕无显示，标准输出和标准错误输入到file3文件中</p>
+<h4 id="实验4"><a href="#实验4" class="headerlink" title="实验4"></a>实验4</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr 1&gt;&amp;2 &gt; /data/file4</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file4.png" alt="enter image description here"></p>
+<p>结果:屏幕显示标准错误，标准输出输入到file4文件中</p>
+<h4 id="实验5"><a href="#实验5" class="headerlink" title="实验5"></a>实验5</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr &gt; /data/file5</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file5.png" alt="enter image description here"></p>
+<p>结果:屏幕显示标准错误，标准输出输入到file5文件中</p>
+<h4 id="实验6"><a href="#实验6" class="headerlink" title="实验6"></a>实验6</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr &gt; /data/file6 1&gt;&amp;2</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/file6.png" alt="enter image description here"></p>
+<p>结果:屏幕显示标准输出和标准错误，file6文件为空</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>观察6个小实验我们发现:</p>
+<p>实验1,3得出的结果完全相同，屏幕无显示，标准输出和标准错误输入到file文件中。得出此结果也有两种</p>
+<p>执行顺序的可能性：</p>
+<ul>
+<li><p>可能性1：实验1可看做，标准输出先重定向到file文件中，标准错误然后重定向为标准输出再次重定向到file文件中；实验3可看做，标准错误先重定向到file文件中，标准输出然后重定向为标准错误再次重定向到file文件中，所以file文件中既有标准输入又有标准输出。</p>
+</li>
+<li><p>可能性2：实验1可看做，标准输出和错误都经过2&gt;&amp;1的重定向后，全变为标准输出，再输入进file1件中；实验3可看做，标准输出和错误都经过1&gt;&amp;2的重定向后，全变为标准错误，再输入file3文件中。于是我们有了实验6，ll /data/f1 /erorr &gt; /data/file6 1&gt;&amp;2，得出结果屏幕显示标准输出和标准错误，file6文件为空，由此可认为实验6执行了可能性2的执行过程。</p>
+</li>
+</ul>
+<p>结论1:当有1&gt;&amp;2或2&gt;&amp;1处于重定向组合命令结尾时，输出结果全部先执行1&gt;&amp;2或2&gt;&amp;1，再执行前面的重定向。</p>
+<p>实验2,4,5得出的结果完全相同，即屏幕显示标准错误，标准输出输入到file5文件中</p>
+<p>三条命令分别为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr 2&gt;&amp;1 &gt; /data/file2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr 1&gt;&amp;2 &gt; /data/file4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /data/f1 /erorr &gt; /data/file5</span><br></pre></td></tr></table></figure>
+<p>我们是否可以这样认为:</p>
+<p>结论2:当2&gt;&amp;1或1&gt;&amp;2处在重定向组合命令中间位置时，2&gt;&amp;1或1&gt;&amp;2是不起作用的，可以忽略掉（此结论待定）</p>
+<p>现在再来看这个问题</p>
+<p>下列哪个标准输出结果与其他选项不同：（   ）</p>
+<p>A.cmd &gt;log 2&gt;&amp;1</p>
+<p>B.cmd 2&gt;&amp;1 &gt;log</p>
+<p>C.cmd &amp;&gt; log</p>
+<p>D,cmd 2&gt;log 1&gt;&amp;2</p>
+<p>小伙伴们，现在用以上结论去做这道题，是不是很easy了呢</p>
 
-一、文件权限1.文件的权限针对三类对象进行定义
-r：读取文件内容
-
-w：修改文件内容
-
-x：执行权限对除二进制程序以外的文件没什么意义
-
-
-2.每个文件针对每类访问者定义了三种主要权限
-r：Read      读
-
-w：Write      写
-
-x：eXecute      执行
-
-
-另 X：针对目录加执行权限，文件不加执行权限（因文件具备执行权限有安全隐患）
-注意...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件权限">文件权限</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/31/Linux用户与组管理命令的易混淆点和重合点/" >
-                
-                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理命令的易混淆点和重合点
-Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
-
-一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
-
-[root@CentOS6 ~]#id wangx
-
-uid=1666(wangx...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/31</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/浅谈几种IO重定向变形用法/" >
-                
-                    <span>浅谈几种IO重定向变形用法</span>
-            </a>
-            <div class="abstract-content">
-                浅谈几种IO重定向变形用法一、简介首先，我们来认识一下linux系统中的几种标准输入和输出
-什么是标准输入和输出呢？
-Linux给程序提供了三种I/O设备，即：
-
-标准输入（STDIN）  0            默认接受来自键盘的输入
-
-标准输出（STDOUT） 1      默认输出到终端窗口
-
-标准错误（STDERR） 2       默认输出到终端窗口
-
-
-同时linux中使用“&gt;”和“&gt;&gt;”将标准输出和标准错误重新定向到文件中：
-
-“&gt;”后跟重定向文件，文件内容会被覆盖
-
->       把标准输出重定向到文件
-
-2&gt;    把标准错误重定向到文...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "IO重定向">IO重定向</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/28/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
-
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/27/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/03/31/Linux用户与组管理命令的易混淆点和重合点/" title= Linux用户与组管理命令的易混淆点和重合点 >
+                    <div class="nextTitle">Linux用户与组管理命令的易混淆点和重合点</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/28/Linux用户与组管理详解/" title= Linux用户与组管理详解 >
+                    <div class="prevTitle">Linux用户与组管理详解</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -651,6 +593,24 @@ Linux用户：Username
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浅谈几种IO重定向变形用法"><span class="toc-number">1.</span> <span class="toc-text">浅谈几种IO重定向变形用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、简介"><span class="toc-number">1.1.</span> <span class="toc-text">一、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、实验"><span class="toc-number">1.2.</span> <span class="toc-text">二、实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实验1"><span class="toc-number">1.2.1.</span> <span class="toc-text">实验1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实验2"><span class="toc-number">1.2.2.</span> <span class="toc-text">实验2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实验3"><span class="toc-number">1.2.3.</span> <span class="toc-text">实验3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实验4"><span class="toc-number">1.2.4.</span> <span class="toc-text">实验4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实验5"><span class="toc-number">1.2.5.</span> <span class="toc-text">实验5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实验6"><span class="toc-number">1.2.6.</span> <span class="toc-text">实验6</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -836,6 +796,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

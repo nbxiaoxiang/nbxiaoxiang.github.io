@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="头皮发麻">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="头皮发麻">
+    <meta name="keywords" content=" | 头皮发麻">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Linux用户与组管理详解 · tangwei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >tangwei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux用户与组管理详解</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>tangwei's Studio</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Linux用户与组管理详解
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,508</span> / Reading time: <span class="post-count">6 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/03/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="Linux用户与组管理详解"><a href="#Linux用户与组管理详解" class="headerlink" title="Linux用户与组管理详解"></a>Linux用户与组管理详解</h2><blockquote>
+<p>在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：</p>
+</blockquote>
+<h4 id="安全3A"><a href="#安全3A" class="headerlink" title="安全3A"></a>安全3A</h4><p>Linux通过三个机制来保证用户的安全：</p>
+<ul>
+<li><p>Authentication：认证</p>
+</li>
+<li><p>Authorization：授权</p>
+</li>
+<li><p>Accouting|Audition：审计</p>
+</li>
+</ul>
+<h4 id="用户user"><a href="#用户user" class="headerlink" title="用户user"></a>用户user</h4><p>令牌：token</p>
+<p>Linux用户：Username</p>
+<p>管理员：root，UID=0（拥有对系统的最高操作权限）</p>
+<p>普通用户：</p>
+<ul>
+<li><p>系统用户：1-499,1-999（centos7）</p>
+</li>
+<li><p>登录用户：500+，1000+（centos7）</p>
+</li>
+</ul>
+<h4 id="组-group："><a href="#组-group：" class="headerlink" title="组 group："></a>组 group：</h4><p>Linux组：Groupname/GID</p>
+<p>管理员组：root，GID=0</p>
+<p>普通组：</p>
+<ul>
+<li><p>系统组：1-499,1-999（centos7）</p>
+</li>
+<li><p>普通组：500+，1000+（centos7）</p>
+</li>
+</ul>
+<p>在创建用户不指定组的情况下，默认创建一个与该用户名相同的组作为该用户的主组</p>
+<h4 id="组的类别："><a href="#组的类别：" class="headerlink" title="组的类别："></a>组的类别：</h4><p>用户的主要组：</p>
+<p>用户必须属于一个且只有一个主组</p>
+<p>组名同用户名，且仅包含一个用户，私有组</p>
+<p>用户的附加组：</p>
+<p>一个用户可以属于零个或多个附加组</p>
+<h4 id="安全上下文"><a href="#安全上下文" class="headerlink" title="安全上下文"></a>安全上下文</h4><p>进程所能够访问资源的权限取决于进程的运行者的身份</p>
+<h4 id="用户和组的配置文件"><a href="#用户和组的配置文件" class="headerlink" title="用户和组的配置文件"></a>用户和组的配置文件</h4><ul>
+<li><p>/etc/passwd：        存放用户及其属性信息</p>
+</li>
+<li><p>/etc/shadow：       存放用户密码及其相关信息</p>
+</li>
+<li><p>/etc/group：  存放组及属性信息</p>
+</li>
+<li><p>/etc/gshadow：     存放组密码及其相关信息</p>
+</li>
+<li><p>/etc/default/useradd：新建账户模板信息</p>
+</li>
+</ul>
+<h4 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/passwd.png" alt="enter image description here"></p>
+<p>name：password:UID:GID:GECEO:directory:shell</p>
+<ol>
+<li><p>用户名</p>
+</li>
+<li><p>密码：显示为x</p>
+</li>
+<li><p>UID：用户ID</p>
+</li>
+<li><p>GID：组ID</p>
+</li>
+<li><p>描述信息：GECOS，可添加用户描述信息</p>
+</li>
+<li><p>家目录：用户家目录</p>
+</li>
+<li><p>shell类型：用户shell类型</p>
+<h4 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/shadow.png" alt="enter image description here"></p>
+</li>
+<li><p>用户名</p>
+</li>
+<li><p>密码加密：算法$6；!!表示账户锁定</p>
+</li>
+<li><p>上次修改密码时间：距离1970.1.1的天数</p>
+</li>
+<li><p>密码最小修改时间：距离下次修改密码至少需间隔的天数（0表示随时可变更）</p>
+</li>
+<li><p>密码最大修改时间：距离本次密码修改时间最多可间隔的天数（99999表示永不过期）</p>
+</li>
+<li><p>密码提醒时间：距离密码即将到期提前警告的天数</p>
+</li>
+<li><p>密码到期后宽限时间：密码到期后账户还能使用的天数</p>
+</li>
+<li><p>账户有效期：该账户可使用的日期</p>
+</li>
+<li><p>保留区域：保留将来可能增加的区域</p>
+</li>
+</ol>
+<h4 id="etc-group"><a href="#etc-group" class="headerlink" title="/etc/group"></a>/etc/group</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/group.png" alt="enter image description here"></p>
+<p>group_name:password:GID:user_list</p>
+<ol>
+<li><p>组名</p>
+</li>
+<li><p>组密码：普通用户加入某个组时需要的密码（不推荐设置密码）</p>
+</li>
+<li><p>GID：组ID</p>
+</li>
+<li><p>组成员：“,”作为分隔符</p>
+</li>
+</ol>
+<h4 id="etc-gshadow"><a href="#etc-gshadow" class="headerlink" title="/etc/gshadow"></a>/etc/gshadow</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/gshadow.png" alt="enter image description here"></p>
+<p>group_name:encrypted_password:administrators:members</p>
+<ol>
+<li><p>组名</p>
+</li>
+<li><p>组密码</p>
+</li>
+<li><p>组管理员（组长）</p>
+</li>
+<li><p>组成员：“,”作为分隔符</p>
+</li>
+</ol>
+<h4 id="etc-default-useradd"><a href="#etc-default-useradd" class="headerlink" title="/etc/default/useradd"></a>/etc/default/useradd</h4><ol>
+<li><p>GROUP=100                     创建用户无指定组时默认所属的组users</p>
+</li>
+<li><p>HOME=/home                          创建用户默认家目录路径</p>
+</li>
+<li><p>INACTIVE=-1                    创建用户时默认没有宽限时间</p>
+</li>
+<li><p>EXPIRE=                             创建用户时默认有效期</p>
+</li>
+<li><p>SHELL=/bin/bash                      创建用户时默认shell类型</p>
+</li>
+<li><p>SKEL=/etc/skel                          创建用户时家目录模板</p>
+</li>
+<li><p>CREATE_MAIL_SPOOL=yes             创建用户时默认创建邮箱</p>
+</li>
+</ol>
+<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><ul>
+<li><p>vipw         等同于vi /etc/passwd</p>
+</li>
+<li><p>vigr           等同于vi /etc/group</p>
+</li>
+<li><p>pwck        检查passwd文件格式错误</p>
+</li>
+<li><p>grpck        检查group文件格式错误</p>
+</li>
+</ul>
+<h3 id="用户与组的管理命令"><a href="#用户与组的管理命令" class="headerlink" title="用户与组的管理命令"></a>用户与组的管理命令</h3><p>用户管理命令及常用选项：</p>
+<h4 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h4><p>etc/default/useradd存放创建用户时的默认信息</p>
+<ul>
+<li><p>-u     指定uid（生产环境中多台服务器保证程序是同一UID）</p>
+</li>
+<li><p>-o     不检查UID的唯一性，需配合-u使用（不建议UID一样）</p>
+</li>
+<li><p>-g     创建用户时指定主组</p>
+</li>
+<li><p>-c  创建用户时添加描述</p>
+</li>
+<li><p>-d     创建用户时指定家目录路径，二层目录（生产环境中创建给服务用的账户可能会用到）</p>
+</li>
+<li><p>-s      创建用户时指定shell类型/etc/shells</p>
+</li>
+<li><p>-r      创建系统用户（默认不创建家目录）</p>
+</li>
+<li><p>-m    强行创建家目录，用于系统用户，配合-r使用（生产环境中为服务生成系统用户）-M         强行不创建家目录，用于普通用户</p>
+</li>
+<li><p>-G     创建用户时加入到多个辅助组里，多个辅助组用“，”分开</p>
+</li>
+<li><p>-N   创建一个用户名和主组名不同的用户，默认users作为主组</p>
+</li>
+<li><p>-p    创建用户添加密码（不建议此种方式添加口令，口令会在shadow文件中明文）</p>
+</li>
+</ul>
+<h4 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h4><ul>
+<li><p>-u     修改UID</p>
+</li>
+<li><p>-g     修改GID（组需存在）</p>
+</li>
+<li><p>-G     修改辅助组（会将原来的辅助组覆盖），如果要保留原辅助组配合-a使用</p>
+</li>
+<li><p>-s      新的默认shell</p>
+</li>
+<li><p>-c     新的注释信息</p>
+</li>
+<li><p>-d     新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项（-m -d有顺序）</p>
+</li>
+<li><p>-l      新的用户名</p>
+</li>
+<li><p>-L     用户加锁</p>
+</li>
+<li><p>-U    用户解锁（centos6以后禁止此方式解锁）</p>
+</li>
+</ul>
+<h4 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h4><ul>
+<li>-r      删除用户的所有文件，家目录及邮箱（工作中不建议用，建议保留数据）</li>
+</ul>
+<h3 id="组帐号维护命令及常用选项"><a href="#组帐号维护命令及常用选项" class="headerlink" title="组帐号维护命令及常用选项"></a>组帐号维护命令及常用选项</h3><h4 id="groupadd"><a href="#groupadd" class="headerlink" title="groupadd"></a>groupadd</h4><ul>
+<li><p>-g     指明GID号创建组</p>
+</li>
+<li><p>-r      创建系统组group（centos6：ID&lt;500、centos7：ID&lt;1000）</p>
+</li>
+</ul>
+<h4 id="groupmod"><a href="#groupmod" class="headerlink" title="groupmod"></a>groupmod</h4><ul>
+<li><p>-n     新的组名</p>
+</li>
+<li><p>-g     新的GID</p>
+</li>
+</ul>
+<h4 id="groupdel-删除组（前提没有用户以此组为主组）"><a href="#groupdel-删除组（前提没有用户以此组为主组）" class="headerlink" title="groupdel 删除组（前提没有用户以此组为主组）"></a>groupdel 删除组（前提没有用户以此组为主组）</h4><h4 id="groupmems-查看指定组的成员"><a href="#groupmems-查看指定组的成员" class="headerlink" title="groupmems     查看指定组的成员"></a>groupmems     查看指定组的成员</h4><ul>
+<li><p>-g     更改为指定组（只有root）</p>
+</li>
+<li><p>-a     指定用户加入组</p>
+</li>
+<li><p>-d     从组中删除用户</p>
+</li>
+<li><p>-p     从组中清除所有成员</p>
+</li>
+<li><p>-l      显示组成员列表（读取的/etc/group文件中对应组的最后一个字段的全部内容）</p>
+</li>
+</ul>
+<h4 id="gpasswd-给组添加口令"><a href="#gpasswd-给组添加口令" class="headerlink" title="gpasswd           给组添加口令"></a>gpasswd           给组添加口令</h4><ul>
+<li><p>-a user     将user添加至指定组中</p>
+</li>
+<li><p>-d user     从指定组中移除用户user</p>
+</li>
+<li><p>-A user1，user2…  设置有管理权限的用户列表（设置组管理员）</p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/03/30/浅谈几种IO重定向变形用法/" title= 浅谈几种IO重定向变形用法 >
+                    <div class="nextTitle">浅谈几种IO重定向变形用法</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/27/带你认识Linux中的通配符/" title= 带你认识Linux中的通配符 >
+                    <div class="prevTitle">带你认识Linux中的通配符</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nbxiaoxiang/nbxiaoxiang.github.io" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/weixin.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux用户与组管理详解"><span class="toc-number">1.</span> <span class="toc-text">Linux用户与组管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全3A"><span class="toc-number">1.0.1.</span> <span class="toc-text">安全3A</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户user"><span class="toc-number">1.0.2.</span> <span class="toc-text">用户user</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组-group："><span class="toc-number">1.0.3.</span> <span class="toc-text">组 group：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组的类别："><span class="toc-number">1.0.4.</span> <span class="toc-text">组的类别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全上下文"><span class="toc-number">1.0.5.</span> <span class="toc-text">安全上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户和组的配置文件"><span class="toc-number">1.0.6.</span> <span class="toc-text">用户和组的配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-passwd"><span class="toc-number">1.0.7.</span> <span class="toc-text">/etc/passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-shadow"><span class="toc-number">1.0.8.</span> <span class="toc-text">/etc/shadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-group"><span class="toc-number">1.0.9.</span> <span class="toc-text">/etc/group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-gshadow"><span class="toc-number">1.0.10.</span> <span class="toc-text">/etc/gshadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#etc-default-useradd"><span class="toc-number">1.0.11.</span> <span class="toc-text">/etc/default/useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件操作"><span class="toc-number">1.0.12.</span> <span class="toc-text">文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户与组的管理命令"><span class="toc-number">1.1.</span> <span class="toc-text">用户与组的管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useradd"><span class="toc-number">1.1.1.</span> <span class="toc-text">useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#usermod"><span class="toc-number">1.1.2.</span> <span class="toc-text">usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#userdel"><span class="toc-number">1.1.3.</span> <span class="toc-text">userdel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组帐号维护命令及常用选项"><span class="toc-number">1.2.</span> <span class="toc-text">组帐号维护命令及常用选项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#groupadd"><span class="toc-number">1.2.1.</span> <span class="toc-text">groupadd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmod"><span class="toc-number">1.2.2.</span> <span class="toc-text">groupmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupdel-删除组（前提没有用户以此组为主组）"><span class="toc-number">1.2.3.</span> <span class="toc-text">groupdel 删除组（前提没有用户以此组为主组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupmems-查看指定组的成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">groupmems     查看指定组的成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gpasswd-给组添加口令"><span class="toc-number">1.2.5.</span> <span class="toc-text">gpasswd           给组添加口令</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 6 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Linux文件权限详解/" >Linux文件权限详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/31</span><a class="archive-post-title" href= "/2018/03/31/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/27</span><a class="archive-post-title" href= "/2018/03/27/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Linux文件系统简介/" >Linux文件系统简介</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="文件权限"><span class="iconfont-archer">&#xe606;</span>文件权限</span>
+    
+        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件系统"><span class="iconfont-archer">&#xe606;</span>文件系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: '头皮发麻'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+
