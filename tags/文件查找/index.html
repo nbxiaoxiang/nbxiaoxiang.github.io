@@ -332,73 +332,36 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
+            <a class="abstract-title" href = "/2018/04/12/Linux系统文件查找与解压缩方法/" >
                 
-                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
+                    <span>Linux系统文件查找与解压缩方法</span>
             </a>
             <div class="abstract-content">
-                Linux用户与组管理命令的易混淆点和重合点
-Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
+                Linux系统文件查找与解压缩方法
+如同我们平时在操作 Windows系统时，文件查找与解压缩文件是经常要使用到的操作，Linux系统中也要经常用到相同的操作，今天我们就来介绍Linux系统中的一些文件查找与解压缩时使用到的工具。
 
-一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
+一、文件查找1.locate命令
+优点：搜索速度快，节省系统性能（生产环境适合使用locate）
 
-[root@CentOS6 ~]#id wangx
+缺点：不能即时更新（文件索引数据库在每次开机后更新），要想搜索最新文件需手动输入命令updatedb更新文件索引数据库，模糊搜索；
 
-uid=1666(wangx...
+
+Locate命令适合搜索不经常变化的文件，如系统文件
+查询系统上预建的文件索引数据库：
+/var/lib/mlocate/m...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/03</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件查找">文件查找</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
-
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "解压缩">解压缩</a>
     
 </div>
                 
