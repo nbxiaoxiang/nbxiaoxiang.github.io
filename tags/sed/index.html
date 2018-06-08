@@ -332,73 +332,34 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
+            <a class="abstract-title" href = "/2018/04/15/文本三剑客之sed/" >
                 
-                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
+                    <span>文本三剑客之sed</span>
             </a>
             <div class="abstract-content">
-                Linux用户与组管理命令的易混淆点和重合点
-Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
+                
+我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。
 
-一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
+强大的处理文本的工具sed我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。
+一.sed，英文全称Stream EDitor，翻译过来就是行编辑器1.用法1sed[option]…’script’ inputfile…
+其中‘script’可表示为’地址定界+编辑命令’
+2.option
+-n  取消默认打印内容到屏幕（示例1）
 
-[root@CentOS6 ~]#id wangx
-
-uid=1666(wangx...
+-e     多点编...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/03</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/15</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sed">sed</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
-
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文本">文本</a>
     
 </div>
                 

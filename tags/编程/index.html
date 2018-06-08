@@ -332,73 +332,35 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
+            <a class="abstract-title" href = "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >
                 
-                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
+                    <span>shell脚本编程基础（2）——新手注意事项及技巧16条</span>
             </a>
             <div class="abstract-content">
-                Linux用户与组管理命令的易混淆点和重合点
-Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
+                总结了一些shell编程初学者常犯的错误、注意事项及技巧：1.判断变量是否加$
+（1）赋值变量时不加$
 
-一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
+（2）如果命令能识别变量就不加\$,如果命令不能识别变量加$
 
-[root@CentOS6 ~]#id wangx
 
-uid=1666(wangx...
+2.存放多行字符时”$name”变量外加双引号可保留换行格式
+3.{}和（）中执行命令的区别（）中使用的命令为一次性的，小括号中相当于在子进程中执行命令,小括号继承括号外变量，但不会影响括号外变量
+注：小括号中所说的子进程与常规的子进程不是一回事
+而{ }中使用命令是在当前shell环境中执行，不会不开启子进程，会影响当前shell环境
+例1：x=1;echo $$;(echo $$;echo $x;x=2);echo...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/03</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/14</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
-
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
     
 </div>
                 

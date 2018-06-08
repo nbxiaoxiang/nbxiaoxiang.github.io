@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>带你认识Linux中的通配符 · TangWei&#39;s Studio</title>
+    <title>文本三剑客之sed · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >TangWei&#39;s Studio</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">带你认识Linux中的通配符</a>
+                <a href="#" class="post-name">文本三剑客之sed</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            带你认识Linux中的通配符
+            文本三剑客之sed
             <!-- 404 -->
             
         </h1>
@@ -258,18 +258,20 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sed">sed</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文本">文本</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">757</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1,076</span> / Reading time: <span class="post-count">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/04/01</span>
+                    <span class="post-intro-time">2018/04/15</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -392,35 +394,95 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="带你认识Linux中的通配符"><a href="#带你认识Linux中的通配符" class="headerlink" title="带你认识Linux中的通配符"></a>带你认识Linux中的通配符</h2><blockquote>
-<p>所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
+        <blockquote>
+<p>我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。</p>
 </blockquote>
-<p>通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。</p>
-<p>常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）</p>
-<h4 id="1-表示任意长度的任意字符"><a href="#1-表示任意长度的任意字符" class="headerlink" title="1. * 表示任意长度的任意字符"></a>1. * 表示任意长度的任意字符</h4><p>例：     <code>ls -d /etc/a*</code>    </p>
-<p>显示/etc目录下所有以a开头的文件与目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%98%9F%E5%8F%B7.png" alt="enter image description here"></p>
-<h4 id="2-表示任意单个字符"><a href="#2-表示任意单个字符" class="headerlink" title="2. ? 表示任意单个字符"></a>2. ? 表示任意单个字符</h4><p>例：<code>ls  a?b</code></p>
-<p>显示当前目录下所有以a开头中间有一个字符b结尾的文件<br>a10b 中间夹2个字符，因此不显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%97%AE%E5%8F%B7.png" alt="enter image description here"></p>
-<h4 id="3-匹配指定范围内任意单个字符"><a href="#3-匹配指定范围内任意单个字符" class="headerlink" title="3. [] 匹配指定范围内任意单个字符"></a>3. [] 匹配指定范围内任意单个字符</h4><p>例：<code>ls -d /etc/[mn]*</code></p>
-<p>显示/etc目录下所有以m开头或者n开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/3-2.png" alt="enter image description here"></p>
-<h4 id="4-a-Z-：表示任意一个单个字母"><a href="#4-a-Z-：表示任意一个单个字母" class="headerlink" title="4.[a-Z]：表示任意一个单个字母"></a>4.[a-Z]：表示任意一个单个字母</h4><p>例：<code>ls -d*[a-Z]</code></p>
-<p>显示目录下所有以字母开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D-2.png" alt="enter image description here"></p>
-<h4 id="5-0-9-：表示任意单个数字"><a href="#5-0-9-：表示任意单个数字" class="headerlink" title="5.[0-9]：表示任意单个数字"></a>5.[0-9]：表示任意单个数字</h4><p>例：<code>ls -d f[0-9]</code></p>
-<p>显示当前目录下所有以f开头后跟任意一个数字的文件和目录<br>f16因含两个数字，则不予显示</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97.png" alt="enter image description here"></p>
-<h4 id="6-匹配除指定范围以外的任意单个字符"><a href="#6-匹配除指定范围以外的任意单个字符" class="headerlink" title="6.[^]匹配除指定范围以外的任意单个字符"></a>6.[^]匹配除指定范围以外的任意单个字符</h4><p>例：<code>ls  -d   [^a]*</code></p>
-<p>显示当前目录下所有不是a开头的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E9%99%A4.png" alt="enter image description here"><br>注意：对字符集或数字集取反时，托字符^加在括号内；如：[^0-9], [^[:alpha:]]</p>
-<h4 id="7-alpha-表示所有的字母（不区分大小写）"><a href="#7-alpha-表示所有的字母（不区分大小写）" class="headerlink" title="7.[:alpha:]表示所有的字母（不区分大小写）"></a>7.[:alpha:]表示所有的字母（不区分大小写）</h4><p>例：<code>ls -d *[[:alpha:]]</code></p>
-<p>显示当前目录下所有以字母结尾（不区分大小写）的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="8-digit-表示任意单个数字，效果同-0-9"><a href="#8-digit-表示任意单个数字，效果同-0-9" class="headerlink" title="8.[:digit:]表示任意单个数字，效果同[0-9]"></a>8.[:digit:]表示任意单个数字，效果同[0-9]</h4><p>例：<code>ls f[[:digit:]]</code></p>
-<p>显示当前目录下所有f开头，单个数字结尾的文件，值得注意的是：[:digit:]只代表单个数字，f16文件因为f后跟两个数字，则不予显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="9-lower-表示任意单个小写字母"><a href="#9-lower-表示任意单个小写字母" class="headerlink" title="9.[:lower:]表示任意单个小写字母"></a>9.[:lower:]表示任意单个小写字母</h4><p>例：<code>ls -d [[:lower:]]*[[:lower:]]</code></p>
-<p>显示所有当前目录下以小字字母开头且以小写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="10-upper-表示任意单个大写字母"><a href="#10-upper-表示任意单个大写字母" class="headerlink" title="10.[:upper:]表示任意单个大写字母"></a>10.[:upper:]表示任意单个大写字母</h4><p>例：<code>ls -d a*[[:upper:]]</code></p>
-<p>显示当前目录下 所有以a开头并以一个大写字母结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%AD%97%E7%AC%A6%E9%9B%86.png" alt="enter image description here"></p>
-<h4 id="11-alnum-表示任意单个字母或数字"><a href="#11-alnum-表示任意单个字母或数字" class="headerlink" title="11.[:alnum:]表示任意单个字母或数字"></a>11.[:alnum:]表示任意单个字母或数字</h4><p>例：<code>ls -d [[:alnum:]]</code></p>
-<p>显示当前目录下 所有以字母或数字结尾的文件和目录<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/T2H17KYXSPA7ORCX5.png" alt="enter image description here"></p>
-<p>到此为止，常用的通配符使用方法就介绍到这里了，小伙伴们以后查找文件是不是更容易了呢？</p>
+<h2 id="强大的处理文本的工具sed"><a href="#强大的处理文本的工具sed" class="headerlink" title="强大的处理文本的工具sed"></a>强大的处理文本的工具sed</h2><p>我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。</p>
+<h3 id="一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器"><a href="#一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器" class="headerlink" title="一.sed，英文全称Stream EDitor，翻译过来就是行编辑器"></a>一.sed，英文全称Stream EDitor，翻译过来就是行编辑器</h3><h4 id="1-用法"><a href="#1-用法" class="headerlink" title="1.用法"></a>1.用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed[option]…’script’ inputfile…</span><br></pre></td></tr></table></figure>
+<p>其中‘script’可表示为’地址定界+编辑命令’</p>
+<h4 id="2-option"><a href="#2-option" class="headerlink" title="2.option"></a>2.option</h4><ul>
+<li><p>-n  取消默认打印内容到屏幕（示例1）</p>
+</li>
+<li><p>-e     多点编辑,表达且关系，与grep的-e不同，grep -e表达或关系（示例2）</p>
+</li>
+<li><p>-f      从指定文件中读取编辑脚本（示例3）</p>
+</li>
+<li><p>-r      支持使用扩展正则表达式</p>
+</li>
+<li><p>-i.bak       原处编辑，并备份文件file.bak（示例4）</p>
+</li>
+</ul>
+<h4 id="3-地址定界："><a href="#3-地址定界：" class="headerlink" title="3.地址定界："></a>3.地址定界：</h4><ul>
+<li>（1）不给地址：对全文进行处理</li>
+<li><p>（2）单地址：#：指定的行，$：最后一行<br>/pattern/：支持正则表达式，被此模式所能匹配到的每一行</p>
+</li>
+<li><p>（3）地址范围：<br>#，#                         （示例5）<br>#，+#<br>/pat1/,/pat2/          （示例6）<br>/pat1/, #                  （示例7）</p>
+</li>
+<li><p>（4）~：步进<br>1~2  奇数行              （示例5）<br>2~2  偶数行</p>
+</li>
+</ul>
+<h4 id="4-编辑命令："><a href="#4-编辑命令：" class="headerlink" title="4.编辑命令："></a>4.编辑命令：</h4><ul>
+<li><p>d       删除模式空间匹配的行（示例4）</p>
+</li>
+<li><p>p       打印当前模式空间内容，追加到默认输出之后（示例1）</p>
+</li>
+<li><p>a[]text   在指定行后面追加文本（示例4）<br>如要实现插入内容空格开头可先追加\再输入空格<br>支持使用\n实现多行追加（示例8）</p>
+</li>
+<li><p>i[]text     在指定行前面插入文本（示例9）</p>
+</li>
+<li><p>c[]text    替换指定行尾单行或多行文本（示例10）</p>
+</li>
+<li><p>w /path/somefile   保存模式匹配的行到指定文件（示例11）</p>
+</li>
+<li><p>r /path/somefile     读取指定文件的文本匹配的行后（示例12）</p>
+</li>
+</ul>
+<p>注意：w，r后跟文件一定要加空格</p>
+<p>可利用此命令定义别名到.bashrc</p>
+<ul>
+<li><p>=       为模式空间中的行打印行号</p>
+</li>
+<li><p>! 取反，!需加载地址定界和编辑命令中间，如’2！d’（示例13）</p>
+</li>
+<li><p>s///：查找替换，支持使用其他分隔符；s###；s@@@（示例14）</p>
+</li>
+</ul>
+<h3 id="二-示例"><a href="#二-示例" class="headerlink" title="二.示例"></a>二.示例</h3><p>以下我们创建文件test进行示例：</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6test.png" alt="enter image description here"></p>
+<h4 id="示例1：sed-‘1-10p’-data-test-sed"><a href="#示例1：sed-‘1-10p’-data-test-sed" class="headerlink" title="示例1：sed   ‘1,10p’ /data/test.sed"></a>示例1：<code>sed   ‘1,10p’ /data/test.sed</code></h4><p>sed命令默认将文本内容打印到屏幕，由于执行命令p，文本内容被打印了两遍</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%B8%8D%E5%8A%A0-n.png" alt="enter image description here"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed  -n  ‘1,10p’ /data/test.sed</span><br></pre></td></tr></table></figure>
+<p>sed   -n选项将取消默认输出到屏幕，仅显示p的执行结果</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%8A%A0-n.png" alt="enter image description here"></p>
+<h4 id="示例2：sed-n-e-‘1p’-e-‘3p’"><a href="#示例2：sed-n-e-‘1p’-e-‘3p’" class="headerlink" title="示例2：sed -n -e ‘1p’  -e  ‘3p’"></a>示例2：<code>sed -n -e ‘1p’  -e  ‘3p’</code></h4><p>显示第一行和第三行，-e表示且的关系</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/e-1.png" alt="enter image description here"></p>
+<h4 id="示例3：sed-n-f-sedscripts-txt-data-test-sed"><a href="#示例3：sed-n-f-sedscripts-txt-data-test-sed" class="headerlink" title="示例3：sed -n -f sedscripts.txt  /data/test.sed"></a>示例3：<code>sed -n -f sedscripts.txt  /data/test.sed</code></h4><p>将2,5p写入sedscripts.txt文件，-f选项读取sedscripts.txt，并执行文件中内容</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/f-%E5%BC%95%E7%94%A8%E6%96%87%E4%BB%B6.png" alt="enter image description here"></p>
+<h4 id="示例4：sed-i-‘1-10a-’-data-test-sed"><a href="#示例4：sed-i-‘1-10a-’-data-test-sed" class="headerlink" title="示例4：sed -i  ‘1,10a#’   /data/test.sed"></a>示例4：<code>sed -i  ‘1,10a#’   /data/test.sed</code></h4><p>表示在第1至第10行内容后插入#，-i选项直接编辑了test.sed的文本内容</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i-a.png" alt="enter image description here"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i  ‘/#/d’  /data/test.sed</span><br></pre></td></tr></table></figure>
+<p>表示将所有带#的行删掉并编辑文本</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i-d.png" alt="enter image description here"></p>
+<p>示例5：<code>sed -n  ‘3p’</code>     打印第3行内容</p>
+<p><code>sed  -n ‘2,5p’</code>                打印第2至第五行</p>
+<p><code>sed  -n ‘2,+3p’</code>              打印第2至第5行</p>
+<p><code>sed  -n  ‘1~2p’</code>              打印奇数行</p>
+<p><code>sed  -n  ‘2~2p’</code>              打印偶数行</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
+<h4 id="示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"><a href="#示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行" class="headerlink" title="示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"></a>示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
+<h4 id="示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"><a href="#示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容" class="headerlink" title="示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"></a>示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E6%95%B0%E5%AD%97%E6%B7%B7%E5%90%88%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
+<h4 id="示例8：多行插入，将aaa-nbbb插入到每行后面"><a href="#示例8：多行插入，将aaa-nbbb插入到每行后面" class="headerlink" title="示例8：多行插入，将aaa\nbbb插入到每行后面"></a>示例8：多行插入，将aaa\nbbb插入到每行后面</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/a%E5%A4%9A%E8%A1%8C.png" alt="enter image description here"></p>
+<h4 id="示例9：sed-‘1-10i-’-data-test-sed"><a href="#示例9：sed-‘1-10i-’-data-test-sed" class="headerlink" title="示例9：sed  ‘1,10i#’  /data/test.sed"></a>示例9：<code>sed  ‘1,10i#’  /data/test.sed</code></h4><p>在每一行上面插入#</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i%E4%B8%8A%E6%96%B9%E6%8F%92%E5%85%A5.png" alt="enter image description here"></p>
+<h4 id="示例10：sed-‘1-5c’-data-test-sed"><a href="#示例10：sed-‘1-5c’-data-test-sed" class="headerlink" title="示例10：sed  ‘1,5c’  /data/test.sed"></a>示例10：<code>sed  ‘1,5c’  /data/test.sed</code></h4><p>将test.sed文件中1到5行替换为一个#</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/c%E6%9B%BF%E6%8D%A2%E5%8C%B9%E9%85%8D.png" alt="enter image description here"></p>
+<h4 id="示例11：sed-‘2-5w-f1’-data-test-sed"><a href="#示例11：sed-‘2-5w-f1’-data-test-sed" class="headerlink" title="示例11：sed  ‘2,5w  f1’  /data/test.sed"></a>示例11：<code>sed  ‘2,5w  f1’  /data/test.sed</code></h4><p>将test.sed文件中第2到第5行内容打印到f1文件中<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/w-%E5%B0%86%E5%8C%B9%E9%85%8D%E5%86%85%E5%AE%B9%E8%BE%93%E5%87%BA%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6.png" alt="enter image description here"></p>
+<h4 id="示例12：sed-‘2-5r-f1’-data-test-sed"><a href="#示例12：sed-‘2-5r-f1’-data-test-sed" class="headerlink" title="示例12：sed  ‘2,5r  f1’  /data/test.sed"></a>示例12：<code>sed  ‘2,5r  f1’  /data/test.sed</code></h4><p>将f1的内容插入到第2至第5行</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/r-%E8%B7%9F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E5%8C%B9%E9%85%8D%E8%A1%8C.png" alt="enter image description here"></p>
+<h4 id="示例13：sed-n-‘2-5-p’-data-test-sed"><a href="#示例13：sed-n-‘2-5-p’-data-test-sed" class="headerlink" title="示例13：sed  -n  ‘2,5!  p’  /data/test.sed"></a>示例13：<code>sed  -n  ‘2,5!  p’  /data/test.sed</code></h4><p>打印除了第2至第5行的内容</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%EF%BC%81%E9%99%A4%E4%BA%86.png" alt="enter image description here"></p>
+<h4 id="示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”"><a href="#示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”" class="headerlink" title="示例14：ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”"></a>示例14：<code>ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”</code></h4><p>利用搜索替代，我们可以将任意段字符串定义成方法，然后表示出整行，再利用后向引用即可取出该字符串。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E5%8F%96IP.png" alt="enter image description here"></p>
 
     </article>
     <!-- license  -->
@@ -429,17 +491,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/02/Linux用户与组管理详解/" title= Linux用户与组管理详解 >
-                    <div class="nextTitle">Linux用户与组管理详解</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/30/Linux文件系统简介/" title= Linux文件系统简介 >
-                    <div class="prevTitle">Linux文件系统简介</div>
+                <a href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" title= shell脚本编程基础（2）——新手注意事项及技巧16条 >
+                    <div class="prevTitle">shell脚本编程基础（2）——新手注意事项及技巧16条</div>
                 </a>
             
         </li>
@@ -542,7 +599,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#带你认识Linux中的通配符"><span class="toc-number">1.</span> <span class="toc-text">带你认识Linux中的通配符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-表示任意长度的任意字符"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. * 表示任意长度的任意字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-表示任意单个字符"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. ? 表示任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-匹配指定范围内任意单个字符"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. [] 匹配指定范围内任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-a-Z-：表示任意一个单个字母"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.[a-Z]：表示任意一个单个字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-0-9-：表示任意单个数字"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.[0-9]：表示任意单个数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-匹配除指定范围以外的任意单个字符"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.[^]匹配除指定范围以外的任意单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-alpha-表示所有的字母（不区分大小写）"><span class="toc-number">1.0.7.</span> <span class="toc-text">7.[:alpha:]表示所有的字母（不区分大小写）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-digit-表示任意单个数字，效果同-0-9"><span class="toc-number">1.0.8.</span> <span class="toc-text">8.[:digit:]表示任意单个数字，效果同[0-9]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-lower-表示任意单个小写字母"><span class="toc-number">1.0.9.</span> <span class="toc-text">9.[:lower:]表示任意单个小写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-upper-表示任意单个大写字母"><span class="toc-number">1.0.10.</span> <span class="toc-text">10.[:upper:]表示任意单个大写字母</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-alnum-表示任意单个字母或数字"><span class="toc-number">1.0.11.</span> <span class="toc-text">11.[:alnum:]表示任意单个字母或数字</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#强大的处理文本的工具sed"><span class="toc-number">1.</span> <span class="toc-text">强大的处理文本的工具sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器"><span class="toc-number">1.1.</span> <span class="toc-text">一.sed，英文全称Stream EDitor，翻译过来就是行编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-用法"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-option"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.option</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-地址定界："><span class="toc-number">1.1.3.</span> <span class="toc-text">3.地址定界：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-编辑命令："><span class="toc-number">1.1.4.</span> <span class="toc-text">4.编辑命令：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-示例"><span class="toc-number">1.2.</span> <span class="toc-text">二.示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例1：sed-‘1-10p’-data-test-sed"><span class="toc-number">1.2.1.</span> <span class="toc-text">示例1：sed   ‘1,10p’ /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例2：sed-n-e-‘1p’-e-‘3p’"><span class="toc-number">1.2.2.</span> <span class="toc-text">示例2：sed -n -e ‘1p’  -e  ‘3p’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例3：sed-n-f-sedscripts-txt-data-test-sed"><span class="toc-number">1.2.3.</span> <span class="toc-text">示例3：sed -n -f sedscripts.txt  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例4：sed-i-‘1-10a-’-data-test-sed"><span class="toc-number">1.2.4.</span> <span class="toc-text">示例4：sed -i  ‘1,10a#’   /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"><span class="toc-number">1.2.5.</span> <span class="toc-text">示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"><span class="toc-number">1.2.6.</span> <span class="toc-text">示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例8：多行插入，将aaa-nbbb插入到每行后面"><span class="toc-number">1.2.7.</span> <span class="toc-text">示例8：多行插入，将aaa\nbbb插入到每行后面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例9：sed-‘1-10i-’-data-test-sed"><span class="toc-number">1.2.8.</span> <span class="toc-text">示例9：sed  ‘1,10i#’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例10：sed-‘1-5c’-data-test-sed"><span class="toc-number">1.2.9.</span> <span class="toc-text">示例10：sed  ‘1,5c’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例11：sed-‘2-5w-f1’-data-test-sed"><span class="toc-number">1.2.10.</span> <span class="toc-text">示例11：sed  ‘2,5w  f1’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例12：sed-‘2-5r-f1’-data-test-sed"><span class="toc-number">1.2.11.</span> <span class="toc-text">示例12：sed  ‘2,5r  f1’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例13：sed-n-‘2-5-p’-data-test-sed"><span class="toc-number">1.2.12.</span> <span class="toc-text">示例13：sed  -n  ‘2,5!  p’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”"><span class="toc-number">1.2.13.</span> <span class="toc-text">示例14：ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

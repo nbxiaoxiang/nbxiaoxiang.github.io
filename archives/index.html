@@ -332,6 +332,81 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/15/文本三剑客之sed/" >
+                
+                    <span>文本三剑客之sed</span>
+            </a>
+            <div class="abstract-content">
+                
+我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。
+
+强大的处理文本的工具sed我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。
+一.sed，英文全称Stream EDitor，翻译过来就是行编辑器1.用法1sed[option]…’script’ inputfile…
+其中‘script’可表示为’地址定界+编辑命令’
+2.option
+-n  取消默认打印内容到屏幕（示例1）
+
+-e     多点编...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/15</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sed">sed</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文本">文本</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >
+                
+                    <span>shell脚本编程基础（2）——新手注意事项及技巧16条</span>
+            </a>
+            <div class="abstract-content">
+                总结了一些shell编程初学者常犯的错误、注意事项及技巧：1.判断变量是否加$
+（1）赋值变量时不加$
+
+（2）如果命令能识别变量就不加\$,如果命令不能识别变量加$
+
+
+2.存放多行字符时”$name”变量外加双引号可保留换行格式
+3.{}和（）中执行命令的区别（）中使用的命令为一次性的，小括号中相当于在子进程中执行命令,小括号继承括号外变量，但不会影响括号外变量
+注：小括号中所说的子进程与常规的子进程不是一回事
+而{ }中使用命令是在当前shell环境中执行，不会不开启子进程，会影响当前shell环境
+例1：x=1;echo $$;(echo $$;echo $x;x=2);echo...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/14</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/12/Linux系统文件查找与解压缩方法/" >
                 
                     <span>Linux系统文件查找与解压缩方法</span>
@@ -672,79 +747,11 @@ Linux用户：Username
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &#62;</a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -942,7 +949,21 @@ Linux用户：Username
     
     
     
-    <div class="total-archive"> Total : 10 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 12 </div>
     
     <div class="post-archive">
     
@@ -951,6 +972,16 @@ Linux用户：Username
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/文本三剑客之sed/" >文本三剑客之sed</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >shell脚本编程基础（2）——新手注意事项及技巧16条</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1011,15 +1042,13 @@ Linux用户：Username
     
         <span class="sidebar-tag-name" data-tags="文件系统"><span class="iconfont-archer">&#xe606;</span>文件系统</span>
     
-        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件查找"><span class="iconfont-archer">&#xe606;</span>文件查找</span>
-    
-        <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
-    
         <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
     
         <span class="sidebar-tag-name" data-tags="脚本编程"><span class="iconfont-archer">&#xe606;</span>脚本编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程"><span class="iconfont-archer">&#xe606;</span>编程</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
@@ -1027,11 +1056,19 @@ Linux用户：Username
     
         <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
     
+        <span class="sidebar-tag-name" data-tags="sed"><span class="iconfont-archer">&#xe606;</span>sed</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本"><span class="iconfont-archer">&#xe606;</span>文本</span>
+    
         <span class="sidebar-tag-name" data-tags="grep"><span class="iconfont-archer">&#xe606;</span>grep</span>
     
         <span class="sidebar-tag-name" data-tags="正则表达式"><span class="iconfont-archer">&#xe606;</span>正则表达式</span>
     
         <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件查找"><span class="iconfont-archer">&#xe606;</span>文件查找</span>
+    
+        <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
