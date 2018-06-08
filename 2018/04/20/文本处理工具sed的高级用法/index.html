@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>TangWei&#39;s Studio</title>
+    <title>文本处理工具sed的高级用法 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">文本处理工具sed的高级用法</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>TangWei's Studio</a>
 </header>
@@ -210,24 +223,76 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            文本处理工具sed的高级用法
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sed">sed</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文本">文本</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,409</span> / Reading time: <span class="post-count">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/04/20</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,162 +392,94 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
-                
-                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理命令的易混淆点和重合点
-Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、模式空间与保持空间："><a href="#一、模式空间与保持空间：" class="headerlink" title="一、模式空间与保持空间："></a>一、模式空间与保持空间：</h3><p>我们知道sed工作机制是每次读取一行文本至模式空间（pattern space）中，在模式空间中完成处理，将</p>
+<p>处理结果输出至标准输出设备；在模式空间中处理一行内容后会继续处理下一行，那么对于处理过的行可</p>
+<p>能还有其他的处理，因此可以把处理过的行传送至一个叫保持空间（hold space）中，然后在后续的处理中</p>
+<p>再次传送回模式空间中。这就类似加工车间和仓库的概念，好比模式空间是加工车间，保持空间就是仓</p>
+<p>库，不过这里的仓库存储的都是些半成品的产品。</p>
+<h3 id="二、sed高级用法："><a href="#二、sed高级用法：" class="headerlink" title="二、sed高级用法："></a>二、sed高级用法：</h3><p>Sed工具支持一些高级的命令来运用到保持空间中，这些高级命令有：</p>
+<ul>
+<li><p>P：打印模式空间开端至\n内容，并追加到默认输出之前 </p>
+</li>
+<li><p>h: 把模式空间中的内容覆盖至保持空间中 </p>
+</li>
+<li><p>H：把模式空间中的内容追加至保持空间中 </p>
+</li>
+<li><p>g: 从保持空间取出数据覆盖至模式空间 </p>
+</li>
+<li><p>G：从保持空间取出内容追加至模式空间 </p>
+</li>
+<li><p>x: 把模式空间中的内容与保持空间中的内容进行互换 </p>
+</li>
+<li><p>n: 读取匹配到的行的下一行覆盖至模式空间 </p>
+</li>
+<li><p>N：读取匹配到的行的下一行追加至模式空间 </p>
+</li>
+<li><p>d: 删除模式空间中的行 </p>
+</li>
+<li><p>D：如果模式空间包含换行符，则删除直到第一个换行符的模式空间中的文本，<br>并不会读取新的输入行，而使用合成的模式空间重新启动循环。如果模式空间<br>不包含换行符，则会像发出d命令那样启动正常的新循环。</p>
+</li>
+</ul>
+<h3 id="三、示例分析："><a href="#三、示例分析：" class="headerlink" title="三、示例分析："></a>三、示例分析：</h3><p>以下我们均以该文档为例：</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%96%87%E6%A1%A3.png" alt="enter image description here"></p>
+<h4 id="例1：cat-test2-sed-sed-‘G’"><a href="#例1：cat-test2-sed-sed-‘G’" class="headerlink" title="例1：cat test2.sed |sed ‘G’"></a>例1：<code>cat test2.sed |sed ‘G’</code></h4><p>解析：由于保持空间初始默认为空，所有将空行追加到每行的模式空间中输出，等同在每行的后面添加一个空行。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B6.png" alt="enter image description here"></p>
+<h4 id="例2：cat-test2-sed-sed-‘g’"><a href="#例2：cat-test2-sed-sed-‘g’" class="headerlink" title="例2：cat test2.sed |sed ‘g’"></a>例2：<code>cat test2.sed |sed ‘g’</code></h4><p>解析：g和G的区别在，g为覆盖模式空间，G为追加至模式空间，由于g默认为空，将每行的模式空间都覆盖为空行输出，所以表现为5个空行。<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B7.png" alt="enter image description here"></p>
+<h4 id="例3：cat-test2-sed-sed-‘-d’"><a href="#例3：cat-test2-sed-sed-‘-d’" class="headerlink" title="例3：cat test2.sed |sed ‘$!d’"></a>例3：<code>cat test2.sed |sed ‘$!d’</code></h4><p>解析：\$表示尾行，\$!d则表示除了尾行都执行删除。<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B5.png" alt="enter image description here"></p>
+<h4 id="例4：cat-test2-sed-sed-‘n-d’"><a href="#例4：cat-test2-sed-sed-‘n-d’" class="headerlink" title="例4：cat test2.sed |sed ‘n;d’"></a>例4：<code>cat test2.sed |sed ‘n;d’</code></h4><p>解析：n将第一行读入模式空间输出，并将下一行即第二行覆盖至模式空间并删除，如此循环，最终表现为只显示文本的奇数行。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B9.png" alt="enter image description here"></p>
+<h4 id="例5：cat-test2-sed-sed-‘N-D’"><a href="#例5：cat-test2-sed-sed-‘N-D’" class="headerlink" title="例5：cat test2.sed |sed ‘N;D’"></a>例5：<code>cat test2.sed |sed ‘N;D’</code></h4><p>解析：N将第二行追加至第一行的模式空间中，D删除模式空间内的第一行；对第二行执行命令，将第三行追加至第二行的模式空间内，并删除模式中的第一行；如此循环，最后只输出最后一行文本。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B3.png" alt="enter image description here"></p>
+<h4 id="例6：cat-test2-sed-sed-‘-N-D’"><a href="#例6：cat-test2-sed-sed-‘-N-D’" class="headerlink" title="例6：cat test2.sed |sed ‘$!N;$!D’"></a>例6：<code>cat test2.sed |sed ‘$!N;$!D’</code></h4><p>解析:’\$!N;\$!D’即对文本中除了最后一行支持’N;D’操作，由例外5可知，除了最后一行执行’N;D’操作，得出】结果为只输出倒数第二行，最后一行文本不处理，默认输出，所有最后结果输出倒数两行的文本。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B4.png" alt="enter image description here"></p>
+<h4 id="例7：cat-test2-sed-sed-n-‘n-p’"><a href="#例7：cat-test2-sed-sed-n-‘n-p’" class="headerlink" title="例7：cat test2.sed|sed -n ‘n;p’"></a>例7：<code>cat test2.sed|sed -n ‘n;p’</code></h4><p>解析：对第一行执行操作，n选项将第二行覆盖至模式空间，在第一行和第二行的默认输出后追加打印出来，-n取消默认输出，如此循环，最后得出文本的偶数行。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B1.png" alt="enter image description here"></p>
+<h4 id="例8：cat-test2-sed-sed-n-‘1-n-p’"><a href="#例8：cat-test2-sed-sed-n-‘1-n-p’" class="headerlink" title="例8：cat test2.sed|sed -n ‘1!n;p’"></a>例8：<code>cat test2.sed|sed -n ‘1!n;p’</code></h4><p>解析：与例7相比，例8为对除了第一行的其他行执行例7的操作，则最后的结果也为得出文本的奇数行。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%A5%87%E6%95%B0%E8%A1%8C.png" alt="enter image description here"></p>
+<h4 id="例9：cat-test2-sed-sed-‘-d-G’"><a href="#例9：cat-test2-sed-sed-‘-d-G’" class="headerlink" title="例9：cat test2.sed |sed ‘/^$/d;G’"></a>例9：<code>cat test2.sed |sed ‘/^$/d;G’</code></h4><p>解析：^$为表示地址定界匹配到的空行，d将空行删除，G在每行的文本后添加一个空行；最后的输出结果即：删除文本内的空行，并在每行后追加一行空行。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B8.png" alt="enter image description here"></p>
+<h4 id="例10：cat-test2-sed-sed-‘1-G-h-d’"><a href="#例10：cat-test2-sed-sed-‘1-G-h-d’" class="headerlink" title="例10：cat test2.sed |sed ‘1!G;h;$!d’"></a>例10：<code>cat test2.sed |sed ‘1!G;h;$!d’</code></h4><p>解析：1!G表示除了第一行，都执行将保持空间的内容追加至模式空间并输出，h命令使上一个模式空间内容将G覆盖，最后$!d只保留对最后一行的执行结果，具体表现为：</p>
+<p>对第1行只进入模式空间默认输出，第2行将上一个模式空间内容（即第1行文本）覆盖至保持空间，共同进入模式空间（包含第2至1行文本）并输出；第3行将上一个模式空间内容（即第2至1行文本）覆盖至保持空间，共同进入模式空间（包含第3至1行文本）并输出；如此循环…….对第5行将上一个模式空间内容（第4至1行）覆盖至保持空间，共同进入模式空间（包含5至1行）输出；最后$!d除了最后一行的其他行的模式空间内容都删除，最后只留最后一行的执行结果，即将文本倒序输出。<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B2.png" alt="enter image description here"></p>
+<h4 id="例11：cat-test2-sed-sed-n-‘1-G-h-p’"><a href="#例11：cat-test2-sed-sed-n-‘1-G-h-p’" class="headerlink" title="例11：cat test2.sed |sed -n ‘1!G;h;$p’"></a>例11：<code>cat test2.sed |sed -n ‘1!G;h;$p’</code></h4><p>解析：与例10相比，最后的$p只打印最后一行的模式空间内容（第5至1行），-n取消所有默认输出，得出的结果与例10相同，倒序将文本输出。</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%BE%8B10.png" alt="enter image description here"></p>
 
-一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
-
-[root@CentOS6 ~]#id wangx
-
-uid=1666(wangx...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/03</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
-
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/20/Linux系统软件包管理介绍/" title= Linux系统软件包管理介绍 >
+                    <div class="nextTitle">Linux系统软件包管理介绍</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/15/文本三剑客之sed/" title= 文本三剑客之sed >
+                    <div class="prevTitle">文本三剑客之sed</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-    </nav>
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -552,6 +549,24 @@ Linux用户：Username
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、模式空间与保持空间："><span class="toc-number">1.</span> <span class="toc-text">一、模式空间与保持空间：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、sed高级用法："><span class="toc-number">2.</span> <span class="toc-text">二、sed高级用法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、示例分析："><span class="toc-number">3.</span> <span class="toc-text">三、示例分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#例1：cat-test2-sed-sed-‘G’"><span class="toc-number">3.1.</span> <span class="toc-text">例1：cat test2.sed |sed ‘G’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例2：cat-test2-sed-sed-‘g’"><span class="toc-number">3.2.</span> <span class="toc-text">例2：cat test2.sed |sed ‘g’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例3：cat-test2-sed-sed-‘-d’"><span class="toc-number">3.3.</span> <span class="toc-text">例3：cat test2.sed |sed ‘$!d’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例4：cat-test2-sed-sed-‘n-d’"><span class="toc-number">3.4.</span> <span class="toc-text">例4：cat test2.sed |sed ‘n;d’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例5：cat-test2-sed-sed-‘N-D’"><span class="toc-number">3.5.</span> <span class="toc-text">例5：cat test2.sed |sed ‘N;D’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例6：cat-test2-sed-sed-‘-N-D’"><span class="toc-number">3.6.</span> <span class="toc-text">例6：cat test2.sed |sed ‘$!N;$!D’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例7：cat-test2-sed-sed-n-‘n-p’"><span class="toc-number">3.7.</span> <span class="toc-text">例7：cat test2.sed|sed -n ‘n;p’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例8：cat-test2-sed-sed-n-‘1-n-p’"><span class="toc-number">3.8.</span> <span class="toc-text">例8：cat test2.sed|sed -n ‘1!n;p’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例9：cat-test2-sed-sed-‘-d-G’"><span class="toc-number">3.9.</span> <span class="toc-text">例9：cat test2.sed |sed ‘/^$/d;G’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例10：cat-test2-sed-sed-‘1-G-h-d’"><span class="toc-number">3.10.</span> <span class="toc-text">例10：cat test2.sed |sed ‘1!G;h;$!d’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例11：cat-test2-sed-sed-n-‘1-G-h-p’"><span class="toc-number">3.11.</span> <span class="toc-text">例11：cat test2.sed |sed -n ‘1!G;h;$p’</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -909,6 +924,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
