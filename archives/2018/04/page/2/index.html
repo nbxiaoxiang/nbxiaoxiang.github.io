@@ -332,6 +332,95 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/05/浅谈几种IO重定向变形用法/" >
+                
+                    <span>浅谈几种IO重定向变形用法</span>
+            </a>
+            <div class="abstract-content">
+                浅谈几种IO重定向变形用法一、简介首先，我们来认识一下linux系统中的几种标准输入和输出
+什么是标准输入和输出呢？
+Linux给程序提供了三种I/O设备，即：
+
+标准输入（STDIN）  0            默认接受来自键盘的输入
+
+标准输出（STDOUT） 1      默认输出到终端窗口
+
+标准错误（STDERR） 2       默认输出到终端窗口
+
+
+同时linux中使用“&gt;”和“&gt;&gt;”将标准输出和标准错误重新定向到文件中：
+
+“&gt;”后跟重定向文件，文件内容会被覆盖
+
+>       把标准输出重定向到文件
+
+2&gt;    把标准错误重定向到文...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/05</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "IO重定向">IO重定向</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/04/Linux文件权限详解/" >
+                
+                    <span>Linux文件权限详解</span>
+            </a>
+            <div class="abstract-content">
+                Linux文件权限详解
+Linux系统中不仅是对用户与组根据UID,GID进行了管理，还对Linux系统中的文件，按照用户与组进行分类，针对不同的群体进行了权限管理，用他来确定谁能通过何种方式对文件和目录进行访问和操作。
+
+一、文件权限1.文件的权限针对三类对象进行定义
+r：读取文件内容
+
+w：修改文件内容
+
+x：执行权限对除二进制程序以外的文件没什么意义
+
+
+2.每个文件针对每类访问者定义了三种主要权限
+r：Read      读
+
+w：Write      写
+
+x：eXecute      执行
+
+
+另 X：针对目录加执行权限，文件不加执行权限（因文件具备执行权限有安全隐患）
+注意...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件权限">文件权限</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
                 
                     <span>Linux用户与组管理命令的易混淆点和重合点</span>
@@ -683,7 +772,35 @@ Linux用户：Username
     
     
     
-    <div class="total-archive"> Total : 14 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 16 </div>
     
     <div class="post-archive">
     
@@ -692,6 +809,16 @@ Linux用户：Username
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -805,6 +932,8 @@ Linux用户：Username
         <span class="sidebar-tag-name" data-tags="rpm"><span class="iconfont-archer">&#xe606;</span>rpm</span>
     
         <span class="sidebar-tag-name" data-tags="yum"><span class="iconfont-archer">&#xe606;</span>yum</span>
+    
+        <span class="sidebar-tag-name" data-tags="磁盘"><span class="iconfont-archer">&#xe606;</span>磁盘</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

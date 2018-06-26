@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="头皮发麻">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="头皮发麻">
+    <meta name="keywords" content=" | 头皮发麻">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Linux系统磁盘及文件系统管理 · TangWei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux系统磁盘及文件系统管理</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>TangWei's Studio</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Linux系统磁盘及文件系统管理
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "磁盘">磁盘</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">3,060</span> / Reading time: <span class="post-count">12 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/04/20</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、磁盘基本概念"><a href="#一、磁盘基本概念" class="headerlink" title="一、磁盘基本概念"></a>一、磁盘基本概念</h3><h4 id="设备文件："><a href="#设备文件：" class="headerlink" title="设备文件："></a>设备文件：</h4><p>Linux中一切皆文件：open（），read（），write（），close（）</p>
+<h4 id="设备类型："><a href="#设备类型：" class="headerlink" title="设备类型："></a>设备类型：</h4><ul>
+<li><p>块设备：block，存储单位“块”，磁盘</p>
+</li>
+<li><p>字符设备：char，存储单位“字符”，键盘</p>
+</li>
+<li><p>设备文件：关联至一个设备驱动程序，进而能够跟与之对应硬件设备进行通信</p>
+</li>
+</ul>
+<h4 id="设备号码："><a href="#设备号码：" class="headerlink" title="设备号码："></a>设备号码：</h4><ul>
+<li><p>主设备号：maj，标识设备类型</p>
+</li>
+<li><p>次设备号：min，标识同一类型下的不同设备</p>
+</li>
+</ul>
+<h4 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h4><p>并行：</p>
+<ul>
+<li><p>IDE：133MB/s</p>
+</li>
+<li><p>SCSI：640MB/s</p>
+</li>
+</ul>
+<p>串口：</p>
+<ul>
+<li><p>SATA：6Gbps</p>
+</li>
+<li><p>SAS：6Gbps</p>
+</li>
+<li><p>USB：480MB/s</p>
+</li>
+</ul>
+<h4 id="硬盘："><a href="#硬盘：" class="headerlink" title="硬盘："></a>硬盘：</h4><p> 机械硬盘（HDD）：传统普通硬盘，主要由：盘片，磁头，马达等组成</p>
+<p>优势：相比固态硬盘，价格低，容量大，使用寿命长</p>
+<p>固态硬盘（SSD）：用固态电子存储芯片阵列而制成的硬盘。</p>
+<p>优势：相比机械硬盘，防震抗摔，传输速率，功率，噪音有优势，目前SSD不能完全取代HHD</p>
+<h4 id="磁盘设备文件命名："><a href="#磁盘设备文件命名：" class="headerlink" title="磁盘设备文件命名："></a>磁盘设备文件命名：</h4><ul>
+<li><p>/dev/DEV_FILE</p>
+</li>
+<li><p>SCSI,SATA,SAS,IDE,USB：      /dev/sd</p>
+</li>
+<li><p>虚拟磁盘：             /dev/vd</p>
+</li>
+<li><p>不同磁盘标识：            a-z，aa，ab…</p>
+</li>
+<li><p>/dev/sda,/dev/sdb</p>
+</li>
+<li><p>同一设备的不同分区：        1,2，…</p>
+</li>
+<li><p>/dev/sda1,/dev/sda5</p>
+</li>
+</ul>
+<p>注：在脚本中，尽量避免使用磁盘设备文件名诸如sda，名称不稳定，应使用UUID</p>
+<h4 id="磁盘存储术语："><a href="#磁盘存储术语：" class="headerlink" title="磁盘存储术语："></a>磁盘存储术语：</h4><ul>
+<li><p>head：磁头；                 8bit寻址 2**8=256</p>
+</li>
+<li><p>track：磁道；</p>
+</li>
+<li><p>ctlinder：柱面                 10bit寻址       2**10=1024</p>
+</li>
+<li><p>sector：扇区          6bit寻址 2**6=64</p>
+</li>
+</ul>
+<ul>
+<li>chs：磁盘三维。柱面、磁头、扇区</li>
+</ul>
+<p>一个扇区共有512Byte，CHS可定义255<em>63</em>1024个扇区信息</p>
+<p>echo 512<em>63</em>1024*255/1024/1024 | bc</p>
+<p>8032M</p>
+<p>CHS：老的命名方式，不超过8G</p>
+<p>LBA：逻辑的块寻址，超过8G</p>
+<h3 id="二、磁盘分区管理"><a href="#二、磁盘分区管理" class="headerlink" title="二、磁盘分区管理"></a>二、磁盘分区管理</h3><h4 id="我们知道使用磁盘有三个步骤："><a href="#我们知道使用磁盘有三个步骤：" class="headerlink" title="我们知道使用磁盘有三个步骤："></a>我们知道使用磁盘有三个步骤：</h4><ul>
+<li><p>1、创建分区</p>
+</li>
+<li><p>2、创建文件系统：格式化</p>
+</li>
+<li><p>3、挂载：分配目录名</p>
+</li>
+</ul>
+<h4 id="为什么要对磁盘进行分区？"><a href="#为什么要对磁盘进行分区？" class="headerlink" title="为什么要对磁盘进行分区？"></a>为什么要对磁盘进行分区？</h4><ul>
+<li><p>1、优化I/O性能</p>
+</li>
+<li><p>2、实现磁盘空间配额限制</p>
+</li>
+<li><p>3、提高修复速度</p>
+</li>
+<li><p>4、隔离系统和程序</p>
+</li>
+<li><p>5、安装多个OS</p>
+</li>
+<li><p>6、采用不同的文件系统</p>
+</li>
+</ul>
+<h4 id="分区类型"><a href="#分区类型" class="headerlink" title="分区类型"></a>分区类型</h4><p>两种分区方式：MBR，GPT</p>
+<h5 id="MBR：Master-Boot-Record"><a href="#MBR：Master-Boot-Record" class="headerlink" title="MBR：Master Boot Record"></a>MBR：Master Boot Record</h5><p>诞生于1982年，使用32位表示扇区数，分区不能超过2T</p>
+<p>MBR如何分区：按柱面</p>
+<p>0磁道0扇区：512bytes</p>
+<p>446bytes：boot loader</p>
+<p>64bytes：分区表</p>
+<p>16bytes：标识一个分区（最多4个分区）</p>
+<p>2bytes：55AA（分区标识位）</p>
+<p>支持4个主分区；3个主分区+1扩展分区（N个逻辑分区）</p>
+<p>注：生产中最好给MBR分区表进行备份</p>
+<p>BIOS+MBR</p>
+<p>传统BIOS运行流程：</p>
+<p>开机–&gt;BIOS初始化–&gt;BIOS自检–&gt;引导操作系统–&gt;进入系统</p>
+<h5 id="GPT：GUID（Globals-Unique-Identifiers）"><a href="#GPT：GUID（Globals-Unique-Identifiers）" class="headerlink" title="GPT：GUID（Globals Unique Identifiers）"></a>GPT：GUID（Globals Unique Identifiers）</h5><p>支持128个分区，使用64位，支持8Z（512Byte/block）,64Z（4096Byte/block）</p>
+<p>使用128位的通用唯一识别码UUID（Universally Unique Identifier）表示磁盘和</p>
+<p>分区表自动备份在头和尾两份，并有CRC校验位</p>
+<p>UEFI（同一扩展固件接口）：硬件支持GPT，使操作系统启动</p>
+<p>分区表</p>
+<p>MBR保护+GPT分区表+GPT划分数据+备份</p>
+<p>UEFI+GPT</p>
+<p>UERI运行流程</p>
+<p>开机–&gt;UEFI初始化–&gt;引导操作系统–&gt;进入系统</p>
+<h4 id="管理分区"><a href="#管理分区" class="headerlink" title="管理分区"></a>管理分区</h4><p>列出块设备：</p>
+<p>lsblk</p>
+<h4 id="创建分区使用："><a href="#创建分区使用：" class="headerlink" title="创建分区使用："></a>创建分区使用：</h4><ul>
+<li><p>fdisk                  创建MBR分区</p>
+</li>
+<li><p>gdisk                 创建GPT分区</p>
+</li>
+<li><p>parted              高级分区操作</p>
+</li>
+</ul>
+<h5 id="parted命令"><a href="#parted命令" class="headerlink" title="parted命令"></a>parted命令</h5><p>parted的操作都是实时生效的，小心使用</p>
+<p>格式：parted[option]…[设备[命令[参数]…]…]</p>
+<ul>
+<li><p>parted /dev/sdb mklabel gpt|msdos              设置分区类型GPT或MBR</p>
+</li>
+<li><p>parted /dev/sdb print                               打印sdb分区列表信息</p>
+</li>
+<li><p>parted /dev/sdb mkpart primary 1 200 （默认M）  设置sdb分区大小</p>
+</li>
+<li><p>parted /dev/sdb rm 1                                删除sdb1分区</p>
+</li>
+<li><p>parted -l                                     列出分区信息</p>
+</li>
+</ul>
+<h5 id="分区工具fdisk和gdisk"><a href="#分区工具fdisk和gdisk" class="headerlink" title="分区工具fdisk和gdisk"></a>分区工具fdisk和gdisk</h5><p>fdisk -l[-u][device…]       查看分区</p>
+<p>fdisk /dev/sdb                 管理分区（交互式）</p>
+<p>子命令：</p>
+<ul>
+<li><p>p               显示分区列表</p>
+</li>
+<li><p>t                更改分区类型（数据将丢失）</p>
+</li>
+<li><p>n               创建新分区</p>
+</li>
+<li><p>d               删除分区</p>
+</li>
+<li><p>t                添加设备标签</p>
+</li>
+<li><p>v                校验分区</p>
+</li>
+<li><p>u               转换单位</p>
+</li>
+<li><p>w              保存并退出</p>
+</li>
+<li><p>q               不保存并退出</p>
+</li>
+</ul>
+<p>注：可使用重定向和多行重定向echo -e “n\np\n\n\n+2G\nw\n” | fdisk /dev/sdc</p>
+<h4 id="同步分区表"><a href="#同步分区表" class="headerlink" title="同步分区表"></a>同步分区表</h4><ul>
+<li><p>cat/proc/partations        查看内核是否已经识别新的分区</p>
+</li>
+<li><p>partprobe                 同步分区表（centos5,7可用）</p>
+</li>
+<li><p>partx -a  /dev/sda         增加分区同步分区表（centos6可用）时使用；</p>
+</li>
+<li><p>partx -d –nr M-N /dev/sda    删除分区同步分区表（centos6可用）时使用；</p>
+</li>
+</ul>
+<h3 id="三、文件系统管理"><a href="#三、文件系统管理" class="headerlink" title="三、文件系统管理"></a>三、文件系统管理</h3><p>所谓文件系统，它是操作系统中藉以组织、存储和命名文件的结构。磁盘或分区和它所包括的文件系统的不同是很重要的，大部分应用程序都基于文件系统进行操作，在不同种文件系统上是不能工作的。</p>
+<h4 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h4><ul>
+<li><p>Linux文件系统：ext2，ext3，ext4，xfs，btrfs，reiserfs，jfs，swap</p>
+</li>
+<li><p>光盘：iso9660</p>
+</li>
+<li><p>Windows：FAT32,exFAT,NTFS</p>
+</li>
+<li><p>Unix：FFS（fast），UFS（unix），JFS2</p>
+</li>
+<li><p>网络文件系统：NFS，CIFS</p>
+</li>
+<li><p>集群文件系统：GFS2,OCFS2</p>
+</li>
+<li><p>分布式文件系统：fastfs,ceph,moosefs,mogilefs,glusterfs,Lustre</p>
+</li>
+<li><p>RAW：未经处理或者未经格式化产生的文件系统（性能好，但不便于管理）</p>
+</li>
+</ul>
+<p>根据文件系统是否支持“journal（日志）”功能可分为：</p>
+<ul>
+<li><p>日志型文件系统：ext3，ext4，xfs，…（牺牲读取性能，防止数据文件破坏）</p>
+</li>
+<li><p>非日志型文件系统：ext2，vfat（易造成数据文件破坏）</p>
+</li>
+</ul>
+<p>文件系统的组成部分：</p>
+<p>内核中的模块：ext4，xfs，vfat</p>
+<p>用户空间的管理工具：mkfs.ext4，mkfs.xfs，mkfs.vfat</p>
+<p>Linux的虚拟文件系统：VFS</p>
+<p>查看支持的文件系统：cat /proc/filesystems</p>
+<h4 id="创建文件系统："><a href="#创建文件系统：" class="headerlink" title="创建文件系统："></a>创建文件系统：</h4><p>mkfs命令两种用法：</p>
+<h5 id="mkfs-FS-TYPE-dev-DEVICE-建议使用此用法，直观不易出错"><a href="#mkfs-FS-TYPE-dev-DEVICE-建议使用此用法，直观不易出错" class="headerlink" title="mkfs.FS_TYPE  /dev/DEVICE 建议使用此用法，直观不易出错"></a>mkfs.FS_TYPE  /dev/DEVICE 建议使用此用法，直观不易出错</h5><ul>
+<li><p>ext4</p>
+</li>
+<li><p>xfs</p>
+</li>
+<li><p>btrfs</p>
+</li>
+<li><p>vfat</p>
+</li>
+</ul>
+<h5 id="mkfs-t-FS-TYPE-dev-DEVICE"><a href="#mkfs-t-FS-TYPE-dev-DEVICE" class="headerlink" title="mkfs -t FS_TYPE /dev/DEVICE"></a>mkfs -t FS_TYPE /dev/DEVICE</h5><p>-L ‘LABEL’                 设定卷标（分区标签）</p>
+<h5 id="mke2fs-ext系统文件系统专用的管理工具"><a href="#mke2fs-ext系统文件系统专用的管理工具" class="headerlink" title="mke2fs                                 ext系统文件系统专用的管理工具"></a>mke2fs                                 ext系统文件系统专用的管理工具</h5><ul>
+<li><p>-t{ext2|ext3|ext4} 创建文件系统类型</p>
+</li>
+<li><p>-b{1024|2048|4096}      设定block块的大小</p>
+</li>
+<li><p>-i #                     为数据空间每多少字节创建一个inode，此大小不应小于block大小</p>
+</li>
+<li><p>-L                       添加卷标签（建议使用挂载点作卷标）</p>
+</li>
+<li><p>-N #                   指定分区中创建#个inode</p>
+</li>
+<li><p>-l                        一个inode记录占用磁盘空间的大小，128-4096</p>
+</li>
+<li><p>-m #                          默认5%，管理员用户预留空间占总空间百分百</p>
+</li>
+</ul>
+<p>文件系统标签LABEL</p>
+<p>它是指向设备的另一种方法，与设备无关</p>
+<h5 id="blkid-块设备属性信息查看"><a href="#blkid-块设备属性信息查看" class="headerlink" title="blkid                                   块设备属性信息查看"></a>blkid                                   块设备属性信息查看</h5><p>格式：blkid [option]…[DEVICE]</p>
+<ul>
+<li><p>-U UUID                    根据指定UUID来查找对应设备</p>
+</li>
+<li><p>-L LABEL           根据指定卷标来查找对应设备</p>
+</li>
+</ul>
+<h5 id="e2label：管理ext系列文件系统的LABEL卷标"><a href="#e2label：管理ext系列文件系统的LABEL卷标" class="headerlink" title="e2label：管理ext系列文件系统的LABEL卷标"></a>e2label：管理ext系列文件系统的LABEL卷标</h5><p>格式：e2label DEVICE[LABEL]</p>
+<h5 id="findfs-查找分区"><a href="#findfs-查找分区" class="headerlink" title="findfs                                  查找分区"></a>findfs                                  查找分区</h5><p>格式：findfs [option] LABEL = <label> 根据卷标查找</label></p>
+<p>   findfs [option] UUID  = <uuid>        根据UUID查找</uuid></p>
+<h5 id="tune2fs-重新设定ext系列文件系统可调整参数的值"><a href="#tune2fs-重新设定ext系列文件系统可调整参数的值" class="headerlink" title="tune2fs                              重新设定ext系列文件系统可调整参数的值"></a>tune2fs                              重新设定ext系列文件系统可调整参数的值</h5><ul>
+<li><p>-l                        查看指定文件系统超级块信息</p>
+</li>
+<li><p>-L ‘LABEL’                 修改卷标</p>
+</li>
+<li><p>-m #                  修改预留给管理员空间的百分百</p>
+</li>
+<li><p>-j                        将ext2升级到ext3</p>
+</li>
+<li><p>-O                      文件系统属性启用或禁用，-O ^has_journal</p>
+</li>
+<li><p>-o                      调整文件系统的默认挂载选项，-o^acl</p>
+</li>
+<li><p>-U UUID                    修改UUID号</p>
+</li>
+</ul>
+<h5 id="dumpe2fs"><a href="#dumpe2fs" class="headerlink" title="dumpe2fs"></a>dumpe2fs</h5><p>块分组管理，32768</p>
+<p>超级块（superblock）<br>dumpe2fs       /dev/sda1        查看分区下所有超级块</p>
+<p>-h              查看超级块信息</p>
+<p>tune2fs             -l               查看超级块信息</p>
+<p>超级块时存储文件系统的大小、有多少是空的和已经填满的占多少，以及它们各自的总数和其他诸如此类的信息。</p>
+<p>要使用一个分区来进行数据访问，那么第一个要访问的就是超级块，由此可见超级块的重要性。</p>
+<p>超级块占用第一号物理块，是文件系统的控制块。超级块包括：文件系统的大小、空闲块数目、空闲块索引表、空</p>
+<p>闲i节点数目、空闲i节点索引表、封锁标记等。超级块时系统为文件分配存储空间、回收存储空间的依据。</p>
+<p>所以，为了防止超级块数据损坏，就需要对超级块数据进行备份，以便于损坏时进行修复。</p>
+<h4 id="文件系统检测和修复"><a href="#文件系统检测和修复" class="headerlink" title="文件系统检测和修复"></a>文件系统检测和修复</h4><p>常发生于死机或者非正常关机之后</p>
+<p>挂载为文件系统标记为”no clean”</p>
+<p>注意：一定不要在挂载状态下修复或检测，否则数据将破坏！</p>
+<h5 id="fsck-文件系统检查"><a href="#fsck-文件系统检查" class="headerlink" title="fsck                                   文件系统检查"></a>fsck                                   文件系统检查</h5><p>fsck.FS_type</p>
+<ul>
+<li><p>fsck -t FS_type</p>
+</li>
+<li><p>-p                       自动修复错误</p>
+</li>
+<li><p>-r                       交互式修复错误</p>
+</li>
+</ul>
+<p>注：FS_TYPE一定要与分区上已设置的文件系统类型相同</p>
+<h5 id="e2fsck-ext系列文件专用的检测修复工具"><a href="#e2fsck-ext系列文件专用的检测修复工具" class="headerlink" title="e2fsck                                ext系列文件专用的检测修复工具"></a>e2fsck                                ext系列文件专用的检测修复工具</h5><ul>
+<li><p>-y                       自动回答为yes</p>
+</li>
+<li><p>-f                       强制修</p>
+</li>
+</ul>
+<h3 id="四、设备挂载管理"><a href="#四、设备挂载管理" class="headerlink" title="四、设备挂载管理"></a>四、设备挂载管理</h3><p>挂载：把额外的文件系统与根文件系统现场的目录建立起关联关系，进而使得此目录</p>
+<p>作为其他文件访问入口的行为</p>
+<p>一个挂载点只能挂载一个设备，但一个设备可挂载多个挂载点</p>
+<p>挂载点建议要是空目录，否则该目录下原有文件将被隐藏，变为垃圾文件</p>
+<p>卸载：为解除此关联关系的过程</p>
+<p>把设备关联挂载点：mount Point</p>
+<p>   monut</p>
+<p>卸载时：可使用设备，也可使用挂载点</p>
+<p>   umount</p>
+<h4 id="挂载命令："><a href="#挂载命令：" class="headerlink" title="挂载命令："></a>挂载命令：</h4><p>通过查看/etc/mtab文件显示当前已挂载的所有设备</p>
+<p>mount</p>
+<p>格式：mount [-fnrsvw] [-t vfstype] [-o options] device  dir</p>
+<p>device                       指明要挂载的设备</p>
+<ul>
+<li><p>（1）设备文件：例如dev/sda2</p>
+</li>
+<li><p>（2）卷标：-L ‘LABEL’，例如-L ‘MYDATA’</p>
+</li>
+<li><p>（3）UUID，-U ‘UUID’，例如-U ’35bfb8f8-1c9a-4f67-b8fe-a7edb84c4780’</p>
+</li>
+<li><p>（4）伪文件系统名称：proc，sysfs，devtmpfs，configfs</p>
+</li>
+</ul>
+<p>dir                      挂载点</p>
+<p>事先存在；建议使用空目录</p>
+<p>进程正在使用中的设备无法被卸载</p>
+<p>option：</p>
+<ul>
+<li><p>-t                       指定要挂载的设备上的文件系统类型</p>
+</li>
+<li><p>-r                       readontlt，只读挂载</p>
+</li>
+<li><p>-w                      r+w，读写挂载（默认）</p>
+</li>
+<li><p>-n                       centos6隐藏挂载，不更新/etc/mtab,mount不可见，cat /proc/mounts可见</p>
+</li>
+<li><p>-a                       自动挂载所有支持自动挂载的设备</p>
+</li>
+<li><p>-L ‘LABEL’                 以卷标指定挂载设备</p>
+</li>
+<li><p>-U ‘UUID’                  以UUID指定要挂载的设备</p>
+</li>
+<li><p>-B，–bind                绑定目录到另一个设备上。类似于软连接</p>
+</li>
+</ul>
+<ul>
+<li><p>-o options：(挂载文件系统的选项)，多个选项使用逗号分隔</p>
+</li>
+<li><p>async                         异步模式（默认模式）</p>
+</li>
+<li><p>sync                  同步模式,内存更改时，同时写磁盘</p>
+</li>
+<li><p>atime/noatime                包含目录和文件（是否更新atime，默认更新）</p>
+</li>
+<li><p>diratime/nodiratime       目录的访问时间戳</p>
+</li>
+<li><p>auto/noauto            是否支持自动挂载,是否支持-a选项</p>
+</li>
+<li><p>exec/noexec            是否支持将文件系统上运行应用程序</p>
+</li>
+<li><p>dev/nodev                是否支持在此文件系统上使用设备文件</p>
+</li>
+<li><p>suid/nosuid              是否支持suid和sgid权限</p>
+</li>
+<li><p>remount                   重新挂载</p>
+</li>
+<li><p>ro                      只读</p>
+</li>
+<li><p>rw                      读写</p>
+</li>
+<li><p>user/nouser             是否允许普通用户挂载此设备，/etc/fstab使用</p>
+</li>
+<li><p>acl                     启用此文件系统上的acl功能</p>
+</li>
+<li><p>loop                使用loop设备，把文件挂载目录，模拟设备</p>
+</li>
+</ul>
+<p>默认：rw，suid，dev，exec，auto，nouser，async</p>
+<h4 id="卸载命令："><a href="#卸载命令：" class="headerlink" title="卸载命令："></a>卸载命令：</h4><p>查看挂载情况：</p>
+<p>findmnt   MOUNT_POINT|DEVICE</p>
+<p>查看正在访问指定文件系统的进程：</p>
+<p>lsof MONUT_POINT</p>
+<pre><code>fuser  -v  MOUNT_POINT
+</code></pre><p>终止所有在正访问指定的文件系统的进程</p>
+<p>   fuser  -km MONUT_POINT</p>
+<p>卸载：</p>
+<p>umount   DEVICE</p>
+<pre><code>umount   MOUNT_POINT
+</code></pre><p>挂载点和/etc/fstab<br>配置文件系统体系</p>
+<p>被mount、fsck和其他程序使用</p>
+<p>系统重启时保留文件系统体系</p>
+<p>可以在设备栏使用文件系统卷标</p>
+<p>使用mount -a 命令挂载/etc/fstab中的所有文件系统</p>
+<p>/etc/fstab        每行定义一个要挂载的文件系统<br>设备或伪文件系统    挂载点   文件系统类型   挂载选项   备份间隔时间{0|1|2}   文件系统检查{0|1}</p>
+<p>要挂载的设备或伪文件系统</p>
+<p>设备文件</p>
+<ul>
+<li><p>LABEL：LABEL=””</p>
+</li>
+<li><p>UUID：UUID=””</p>
+</li>
+</ul>
+<p>伪文件系统名称：proc，sysfs</p>
+<p>挂载点</p>
+<p>文件系统类型</p>
+<p>挂载选项：default</p>
+<p>转储频率：0：不做备份 ； 1：每条转储 ； 2：每隔一天转储 ；</p>
+<p>自检次序：0：不自检 ； 1：首先自检；一般只有rootfs才用1</p>
+<p>一些特殊文件设备的挂载永久生效的设置：<br>vim /etc/fstab</p>
+<ul>
+<li><p>/root/p1  /mnt/p1          ext4           loop            0    0         挂载普通文件</p>
+</li>
+<li><p>/mnt/cdrom    /mnt/cdrom    iso9660    defaults      0    0      挂载光盘</p>
+</li>
+<li><p>/boot                /mnt/boot      none          bind         0    0      挂载目录到目录下</p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/20/搭建自己的yum源服务器/" title= 搭建自己的yum源服务器 >
+                    <div class="nextTitle">搭建自己的yum源服务器</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/20/Linux系统软件包管理介绍/" title= Linux系统软件包管理介绍 >
+                    <div class="prevTitle">Linux系统软件包管理介绍</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nbxiaoxiang/nbxiaoxiang.github.io" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、磁盘基本概念"><span class="toc-number">1.</span> <span class="toc-text">一、磁盘基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#设备文件："><span class="toc-number">1.1.</span> <span class="toc-text">设备文件：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备类型："><span class="toc-number">1.2.</span> <span class="toc-text">设备类型：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备号码："><span class="toc-number">1.3.</span> <span class="toc-text">设备号码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#磁盘结构"><span class="toc-number">1.4.</span> <span class="toc-text">磁盘结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#硬盘："><span class="toc-number">1.5.</span> <span class="toc-text">硬盘：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#磁盘设备文件命名："><span class="toc-number">1.6.</span> <span class="toc-text">磁盘设备文件命名：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#磁盘存储术语："><span class="toc-number">1.7.</span> <span class="toc-text">磁盘存储术语：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、磁盘分区管理"><span class="toc-number">2.</span> <span class="toc-text">二、磁盘分区管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#我们知道使用磁盘有三个步骤："><span class="toc-number">2.1.</span> <span class="toc-text">我们知道使用磁盘有三个步骤：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要对磁盘进行分区？"><span class="toc-number">2.2.</span> <span class="toc-text">为什么要对磁盘进行分区？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分区类型"><span class="toc-number">2.3.</span> <span class="toc-text">分区类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MBR：Master-Boot-Record"><span class="toc-number">2.3.1.</span> <span class="toc-text">MBR：Master Boot Record</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GPT：GUID（Globals-Unique-Identifiers）"><span class="toc-number">2.3.2.</span> <span class="toc-text">GPT：GUID（Globals Unique Identifiers）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管理分区"><span class="toc-number">2.4.</span> <span class="toc-text">管理分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建分区使用："><span class="toc-number">2.5.</span> <span class="toc-text">创建分区使用：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#parted命令"><span class="toc-number">2.5.1.</span> <span class="toc-text">parted命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分区工具fdisk和gdisk"><span class="toc-number">2.5.2.</span> <span class="toc-text">分区工具fdisk和gdisk</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步分区表"><span class="toc-number">2.6.</span> <span class="toc-text">同步分区表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、文件系统管理"><span class="toc-number">3.</span> <span class="toc-text">三、文件系统管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件系统类型"><span class="toc-number">3.1.</span> <span class="toc-text">文件系统类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建文件系统："><span class="toc-number">3.2.</span> <span class="toc-text">创建文件系统：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#mkfs-FS-TYPE-dev-DEVICE-建议使用此用法，直观不易出错"><span class="toc-number">3.2.1.</span> <span class="toc-text">mkfs.FS_TYPE  /dev/DEVICE 建议使用此用法，直观不易出错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#mkfs-t-FS-TYPE-dev-DEVICE"><span class="toc-number">3.2.2.</span> <span class="toc-text">mkfs -t FS_TYPE /dev/DEVICE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#mke2fs-ext系统文件系统专用的管理工具"><span class="toc-number">3.2.3.</span> <span class="toc-text">mke2fs                                 ext系统文件系统专用的管理工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#blkid-块设备属性信息查看"><span class="toc-number">3.2.4.</span> <span class="toc-text">blkid                                   块设备属性信息查看</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e2label：管理ext系列文件系统的LABEL卷标"><span class="toc-number">3.2.5.</span> <span class="toc-text">e2label：管理ext系列文件系统的LABEL卷标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#findfs-查找分区"><span class="toc-number">3.2.6.</span> <span class="toc-text">findfs                                  查找分区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tune2fs-重新设定ext系列文件系统可调整参数的值"><span class="toc-number">3.2.7.</span> <span class="toc-text">tune2fs                              重新设定ext系列文件系统可调整参数的值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#dumpe2fs"><span class="toc-number">3.2.8.</span> <span class="toc-text">dumpe2fs</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件系统检测和修复"><span class="toc-number">3.3.</span> <span class="toc-text">文件系统检测和修复</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#fsck-文件系统检查"><span class="toc-number">3.3.1.</span> <span class="toc-text">fsck                                   文件系统检查</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e2fsck-ext系列文件专用的检测修复工具"><span class="toc-number">3.3.2.</span> <span class="toc-text">e2fsck                                ext系列文件专用的检测修复工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、设备挂载管理"><span class="toc-number">4.</span> <span class="toc-text">四、设备挂载管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#挂载命令："><span class="toc-number">4.1.</span> <span class="toc-text">挂载命令：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#卸载命令："><span class="toc-number">4.2.</span> <span class="toc-text">卸载命令：</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 16 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统软件包管理介绍/" >Linux系统软件包管理介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/文本处理工具sed的高级用法/" >文本处理工具sed的高级用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/文本三剑客之sed/" >文本三剑客之sed</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >shell脚本编程基础（2）——新手注意事项及技巧16条</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/Linux系统文件查找与解压缩方法/" >Linux系统文件查找与解压缩方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/shell脚本编程基础（1）/" >shell脚本编程基础（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2018/04/08/vim文本编辑器及文本处理常用命令/" >vim文本编辑器及文本处理常用命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/文本三剑客之grep及正则表达式用法/" >文本三剑客之grep及正则表达式用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/05</span><a class="archive-post-title" href= "/2018/04/05/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/Linux文件权限详解/" >Linux文件权限详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/03</span><a class="archive-post-title" href= "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/Linux文件系统简介/" >Linux文件系统简介</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="文件权限"><span class="iconfont-archer">&#xe606;</span>文件权限</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件系统"><span class="iconfont-archer">&#xe606;</span>文件系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="脚本编程"><span class="iconfont-archer">&#xe606;</span>脚本编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程"><span class="iconfont-archer">&#xe606;</span>编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本处理"><span class="iconfont-archer">&#xe606;</span>文本处理</span>
+    
+        <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
+    
+        <span class="sidebar-tag-name" data-tags="sed"><span class="iconfont-archer">&#xe606;</span>sed</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本"><span class="iconfont-archer">&#xe606;</span>文本</span>
+    
+        <span class="sidebar-tag-name" data-tags="grep"><span class="iconfont-archer">&#xe606;</span>grep</span>
+    
+        <span class="sidebar-tag-name" data-tags="正则表达式"><span class="iconfont-archer">&#xe606;</span>正则表达式</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件查找"><span class="iconfont-archer">&#xe606;</span>文件查找</span>
+    
+        <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
+    
+        <span class="sidebar-tag-name" data-tags="软件包"><span class="iconfont-archer">&#xe606;</span>软件包</span>
+    
+        <span class="sidebar-tag-name" data-tags="rpm"><span class="iconfont-archer">&#xe606;</span>rpm</span>
+    
+        <span class="sidebar-tag-name" data-tags="yum"><span class="iconfont-archer">&#xe606;</span>yum</span>
+    
+        <span class="sidebar-tag-name" data-tags="磁盘"><span class="iconfont-archer">&#xe606;</span>磁盘</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: '头皮发麻'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

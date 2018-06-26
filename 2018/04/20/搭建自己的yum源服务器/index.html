@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>文本三剑客之sed · TangWei&#39;s Studio</title>
+    <title>搭建自己的yum源服务器 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >TangWei&#39;s Studio</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">文本三剑客之sed</a>
+                <a href="#" class="post-name">搭建自己的yum源服务器</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            文本三剑客之sed
+            搭建自己的yum源服务器
             <!-- 404 -->
             
         </h1>
@@ -258,20 +258,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sed">sed</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文本">文本</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "yum">yum</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,076</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">613</span> / Reading time: <span class="post-count">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/04/15</span>
+                    <span class="post-intro-time">2018/04/20</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -395,94 +393,79 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <blockquote>
-<p>我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。</p>
+<p>通过yum安装程序包最重要的一步就是指定yum仓库，今天我来教大家如何搭建自己的yum源服务器。  </p>
 </blockquote>
-<h2 id="强大的处理文本的工具sed"><a href="#强大的处理文本的工具sed" class="headerlink" title="强大的处理文本的工具sed"></a>强大的处理文本的工具sed</h2><p>我们知道，sed被称为Linux中被称为文本处理三剑客之一，相比于grep命令匹配内容的功能，sed则能够做到对匹配到的文本内容对其进行编辑。</p>
-<h3 id="一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器"><a href="#一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器" class="headerlink" title="一.sed，英文全称Stream EDitor，翻译过来就是行编辑器"></a>一.sed，英文全称Stream EDitor，翻译过来就是行编辑器</h3><h4 id="1-用法"><a href="#1-用法" class="headerlink" title="1.用法"></a>1.用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed[option]…’script’ inputfile…</span><br></pre></td></tr></table></figure>
-<p>其中‘script’可表示为’地址定界+编辑命令’</p>
-<h4 id="2-option"><a href="#2-option" class="headerlink" title="2.option"></a>2.option</h4><ul>
-<li><p>-n  取消默认打印内容到屏幕（示例1）</p>
-</li>
-<li><p>-e     多点编辑,表达且关系，与grep的-e不同，grep -e表达或关系（示例2）</p>
-</li>
-<li><p>-f      从指定文件中读取编辑脚本（示例3）</p>
-</li>
-<li><p>-r      支持使用扩展正则表达式</p>
-</li>
-<li><p>-i.bak       原处编辑，并备份文件file.bak（示例4）</p>
-</li>
-</ul>
-<h4 id="3-地址定界："><a href="#3-地址定界：" class="headerlink" title="3.地址定界："></a>3.地址定界：</h4><ul>
-<li>（1）不给地址：对全文进行处理</li>
-<li><p>（2）单地址：#：指定的行，$：最后一行<br>/pattern/：支持正则表达式，被此模式所能匹配到的每一行</p>
-</li>
-<li><p>（3）地址范围：<br>#，#                         （示例5）<br>#，+#<br>/pat1/,/pat2/          （示例6）<br>/pat1/, #                  （示例7）</p>
-</li>
-<li><p>（4）~：步进<br>1~2  奇数行              （示例5）<br>2~2  偶数行</p>
-</li>
-</ul>
-<h4 id="4-编辑命令："><a href="#4-编辑命令：" class="headerlink" title="4.编辑命令："></a>4.编辑命令：</h4><ul>
-<li><p>d       删除模式空间匹配的行（示例4）</p>
-</li>
-<li><p>p       打印当前模式空间内容，追加到默认输出之后（示例1）</p>
-</li>
-<li><p>a[]text   在指定行后面追加文本（示例4）<br>如要实现插入内容空格开头可先追加\再输入空格<br>支持使用\n实现多行追加（示例8）</p>
-</li>
-<li><p>i[]text     在指定行前面插入文本（示例9）</p>
-</li>
-<li><p>c[]text    替换指定行尾单行或多行文本（示例10）</p>
-</li>
-<li><p>w /path/somefile   保存模式匹配的行到指定文件（示例11）</p>
-</li>
-<li><p>r /path/somefile     读取指定文件的文本匹配的行后（示例12）</p>
-</li>
-</ul>
-<p>注意：w，r后跟文件一定要加空格</p>
-<p>可利用此命令定义别名到.bashrc</p>
+<h3 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h3><p>准备两台Linux服务器，本文所用的服务器为CentOS6.9，及CentOS7.4服务器各一台，将演示CentOS7服务器作为yum源服务器，用CentOS6服务器进行yum访问。</p>
+<h3 id="二、开启CentOS7自动挂载光盘服务"><a href="#二、开启CentOS7自动挂载光盘服务" class="headerlink" title="二、开启CentOS7自动挂载光盘服务"></a>二、开启CentOS7自动挂载光盘服务</h3><p>我们知道在CentOS6版本系统中，有一个“神奇”的目录/misc可实现光盘的自动挂载，但在CentOS7版本中默认并不支持此服务，需要我们进行手动安装autofs服务</p>
 <ul>
-<li><p>=       为模式空间中的行打印行号</p>
+<li><p>yum install autofs                             安装autofs包</p>
 </li>
-<li><p>! 取反，!需加载地址定界和编辑命令中间，如’2！d’（示例13）</p>
+<li><p>systemctl start autofs                       开启自动挂载</p>
 </li>
-<li><p>s///：查找替换，支持使用其他分隔符；s###；s@@@（示例14）</p>
+<li><p>systemctl enable autofs                    下次开机默认开启自动挂载</p>
 </li>
 </ul>
-<h3 id="二-示例"><a href="#二-示例" class="headerlink" title="二.示例"></a>二.示例</h3><p>以下我们创建文件test进行示例：</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6test.png" alt="enter image description here"></p>
-<h4 id="示例1：sed-‘1-10p’-data-test-sed"><a href="#示例1：sed-‘1-10p’-data-test-sed" class="headerlink" title="示例1：sed   ‘1,10p’ /data/test.sed"></a>示例1：<code>sed   ‘1,10p’ /data/test.sed</code></h4><p>sed命令默认将文本内容打印到屏幕，由于执行命令p，文本内容被打印了两遍</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E4%B8%8D%E5%8A%A0-n.png" alt="enter image description here"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed  -n  ‘1,10p’ /data/test.sed</span><br></pre></td></tr></table></figure>
-<p>sed   -n选项将取消默认输出到屏幕，仅显示p的执行结果</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%8A%A0-n.png" alt="enter image description here"></p>
-<h4 id="示例2：sed-n-e-‘1p’-e-‘3p’"><a href="#示例2：sed-n-e-‘1p’-e-‘3p’" class="headerlink" title="示例2：sed -n -e ‘1p’  -e  ‘3p’"></a>示例2：<code>sed -n -e ‘1p’  -e  ‘3p’</code></h4><p>显示第一行和第三行，-e表示且的关系</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/e-1.png" alt="enter image description here"></p>
-<h4 id="示例3：sed-n-f-sedscripts-txt-data-test-sed"><a href="#示例3：sed-n-f-sedscripts-txt-data-test-sed" class="headerlink" title="示例3：sed -n -f sedscripts.txt  /data/test.sed"></a>示例3：<code>sed -n -f sedscripts.txt  /data/test.sed</code></h4><p>将2,5p写入sedscripts.txt文件，-f选项读取sedscripts.txt，并执行文件中内容</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/f-%E5%BC%95%E7%94%A8%E6%96%87%E4%BB%B6.png" alt="enter image description here"></p>
-<h4 id="示例4：sed-i-‘1-10a-’-data-test-sed"><a href="#示例4：sed-i-‘1-10a-’-data-test-sed" class="headerlink" title="示例4：sed -i  ‘1,10a#’   /data/test.sed"></a>示例4：<code>sed -i  ‘1,10a#’   /data/test.sed</code></h4><p>表示在第1至第10行内容后插入#，-i选项直接编辑了test.sed的文本内容</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i-a.png" alt="enter image description here"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i  ‘/#/d’  /data/test.sed</span><br></pre></td></tr></table></figure>
-<p>表示将所有带#的行删掉并编辑文本</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i-d.png" alt="enter image description here"></p>
-<p>示例5：<code>sed -n  ‘3p’</code>     打印第3行内容</p>
-<p><code>sed  -n ‘2,5p’</code>                打印第2至第五行</p>
-<p><code>sed  -n ‘2,+3p’</code>              打印第2至第5行</p>
-<p><code>sed  -n  ‘1~2p’</code>              打印奇数行</p>
-<p><code>sed  -n  ‘2~2p’</code>              打印偶数行</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%95%B0%E5%AD%97%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
-<h4 id="示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"><a href="#示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行" class="headerlink" title="示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"></a>示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
-<h4 id="示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"><a href="#示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容" class="headerlink" title="示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"></a>示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E6%95%B0%E5%AD%97%E6%B7%B7%E5%90%88%E5%AE%9A%E7%95%8C.png" alt="enter image description here"></p>
-<h4 id="示例8：多行插入，将aaa-nbbb插入到每行后面"><a href="#示例8：多行插入，将aaa-nbbb插入到每行后面" class="headerlink" title="示例8：多行插入，将aaa\nbbb插入到每行后面"></a>示例8：多行插入，将aaa\nbbb插入到每行后面</h4><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/a%E5%A4%9A%E8%A1%8C.png" alt="enter image description here"></p>
-<h4 id="示例9：sed-‘1-10i-’-data-test-sed"><a href="#示例9：sed-‘1-10i-’-data-test-sed" class="headerlink" title="示例9：sed  ‘1,10i#’  /data/test.sed"></a>示例9：<code>sed  ‘1,10i#’  /data/test.sed</code></h4><p>在每一行上面插入#</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/i%E4%B8%8A%E6%96%B9%E6%8F%92%E5%85%A5.png" alt="enter image description here"></p>
-<h4 id="示例10：sed-‘1-5c’-data-test-sed"><a href="#示例10：sed-‘1-5c’-data-test-sed" class="headerlink" title="示例10：sed  ‘1,5c’  /data/test.sed"></a>示例10：<code>sed  ‘1,5c’  /data/test.sed</code></h4><p>将test.sed文件中1到5行替换为一个#</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/c%E6%9B%BF%E6%8D%A2%E5%8C%B9%E9%85%8D.png" alt="enter image description here"></p>
-<h4 id="示例11：sed-‘2-5w-f1’-data-test-sed"><a href="#示例11：sed-‘2-5w-f1’-data-test-sed" class="headerlink" title="示例11：sed  ‘2,5w  f1’  /data/test.sed"></a>示例11：<code>sed  ‘2,5w  f1’  /data/test.sed</code></h4><p>将test.sed文件中第2到第5行内容打印到f1文件中<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/w-%E5%B0%86%E5%8C%B9%E9%85%8D%E5%86%85%E5%AE%B9%E8%BE%93%E5%87%BA%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6.png" alt="enter image description here"></p>
-<h4 id="示例12：sed-‘2-5r-f1’-data-test-sed"><a href="#示例12：sed-‘2-5r-f1’-data-test-sed" class="headerlink" title="示例12：sed  ‘2,5r  f1’  /data/test.sed"></a>示例12：<code>sed  ‘2,5r  f1’  /data/test.sed</code></h4><p>将f1的内容插入到第2至第5行</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/r-%E8%B7%9F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E5%8C%B9%E9%85%8D%E8%A1%8C.png" alt="enter image description here"></p>
-<h4 id="示例13：sed-n-‘2-5-p’-data-test-sed"><a href="#示例13：sed-n-‘2-5-p’-data-test-sed" class="headerlink" title="示例13：sed  -n  ‘2,5!  p’  /data/test.sed"></a>示例13：<code>sed  -n  ‘2,5!  p’  /data/test.sed</code></h4><p>打印除了第2至第5行的内容</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%EF%BC%81%E9%99%A4%E4%BA%86.png" alt="enter image description here"></p>
-<h4 id="示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”"><a href="#示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”" class="headerlink" title="示例14：ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”"></a>示例14：<code>ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”</code></h4><p>利用搜索替代，我们可以将任意段字符串定义成方法，然后表示出整行，再利用后向引用即可取出该字符串。</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%AD%A3%E5%88%99%E5%8F%96IP.png" alt="enter image description here"></p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AE%89%E8%A3%85autofs.png" alt="enter image description here"></p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E6%89%93%E5%BC%80autofs.png" alt="enter image description here"></p>
+<h3 id="三、关闭防火墙"><a href="#三、关闭防火墙" class="headerlink" title="三、关闭防火墙"></a>三、关闭防火墙</h3><p>要注意CentOS6版本与CentOS7版本关闭防火墙的命令有所不同：</p>
+<p>CentOS6：</p>
+<ul>
+<li><p>service iptables stop                      关闭防火墙</p>
+</li>
+<li><p>chkconfig iptables off                   下次启动时自动关闭防火墙</p>
+</li>
+</ul>
+<p>CentOS7：</p>
+<ul>
+<li><p>systemctl stop firewalld                关闭防火墙</p>
+</li>
+<li><p>systemctl disable firewalld          下次启动时自动关闭防火墙</p>
+</li>
+</ul>
+<h3 id="四、安装httpd服务"><a href="#四、安装httpd服务" class="headerlink" title="四、安装httpd服务"></a>四、安装httpd服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%AE%89%E8%A3%85httpd.png" alt="enter image description here"></p>
+<h3 id="五、开启httpd服务"><a href="#五、开启httpd服务" class="headerlink" title="五、开启httpd服务"></a>五、开启httpd服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service httpd start</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%BC%80%E5%90%AFhttpd%E6%9C%8D%E5%8A%A1.png" alt="enter image description here"></p>
+<p>将本机ip地址输入浏览器，不出意外就能访问我们搭建的测试页面啦！</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/httpd.png" alt="enter image description here"></p>
+<h3 id="六、创建网页目录"><a href="#六、创建网页目录" class="headerlink" title="六、创建网页目录"></a>六、创建网页目录</h3><p>打开httpd包的文件列表，我们看到/var/www/html的文件夹，这里就是存放网页内容的目录了</p>
+<ul>
+<li><p>rpm -ql httpd                        查看httpd包的文件列表</p>
+</li>
+<li><p>cd /var/www/html              进入html目录</p>
+</li>
+<li><p>mkdir -pv centos/{6,7}/os/x86_64/                    创建挂载6，7yum源的目录</p>
+</li>
+</ul>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9.png" alt="enter image description here"></p>
+<h3 id="七、挂载yum源"><a href="#七、挂载yum源" class="headerlink" title="七、挂载yum源"></a>七、挂载yum源</h3><ul>
+<li><p>mount      /dev/sr0       /var/www/centos/7/os/x86_64/           将6光盘挂载至6网络下</p>
+</li>
+<li><p>mount      /dev/sr1        /var/www/centos/6/os/x86_64/           将7光盘挂载至7目录下</p>
+</li>
+</ul>
+<p>此时，在浏览器输入：ipadress/centos/版本号/os/x86_64/  就能看到我们挂载的yum源了</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/6-10.png" alt="enter image description here"></p>
+<h3 id="八、在CentOS搭建yum仓库"><a href="#八、在CentOS搭建yum仓库" class="headerlink" title="八、在CentOS搭建yum仓库"></a>八、在CentOS搭建yum仓库</h3><ul>
+<li><p>[test]                     仓库名</p>
+</li>
+<li><p>name=test           描述名，不设置不影响包的安装，但会报错</p>
+</li>
+<li><p>baseurl=<a href="http://172.20.102.79/centos/6/os/x86_64/" target="_blank" rel="noopener">http://172.20.102.79/centos/6/os/x86_64/</a>                    设置仓库地址链接</p>
+</li>
+<li><p>gpgcheck=0         默认为1，表示数字密钥安全检查，0表示不进行安全检查</p>
+</li>
+</ul>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/%E5%A4%A7%E5%AE%B6yum%E5%BA%93.png" alt="enter image description here"></p>
+<p>九、更新yum仓库</p>
+<ul>
+<li><p>yum clean all          清空全部yum缓存</p>
+</li>
+<li><p>yum repolist           显示yum仓库列表</p>
+</li>
+</ul>
+<p>此时我们看到test仓库下已经更新出有6706个包列表，现在我们就可以通过自己搭建的yum源服务器来安装程序包了！</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/yum%E8%AE%BF%E9%97%AE.png" alt="enter image description here"></p>
 
     </article>
     <!-- license  -->
@@ -491,17 +474,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/20/文本处理工具sed的高级用法/" title= 文本处理工具sed的高级用法 >
-                    <div class="nextTitle">文本处理工具sed的高级用法</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" title= shell脚本编程基础（2）——新手注意事项及技巧16条 >
-                    <div class="prevTitle">shell脚本编程基础（2）——新手注意事项及技巧16条</div>
+                <a href= "/2018/04/20/Linux系统磁盘及文件系统管理/" title= Linux系统磁盘及文件系统管理 >
+                    <div class="prevTitle">Linux系统磁盘及文件系统管理</div>
                 </a>
             
         </li>
@@ -604,7 +582,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#强大的处理文本的工具sed"><span class="toc-number">1.</span> <span class="toc-text">强大的处理文本的工具sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-sed，英文全称Stream-EDitor，翻译过来就是行编辑器"><span class="toc-number">1.1.</span> <span class="toc-text">一.sed，英文全称Stream EDitor，翻译过来就是行编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-用法"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-option"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.option</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-地址定界："><span class="toc-number">1.1.3.</span> <span class="toc-text">3.地址定界：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-编辑命令："><span class="toc-number">1.1.4.</span> <span class="toc-text">4.编辑命令：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-示例"><span class="toc-number">1.2.</span> <span class="toc-text">二.示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例1：sed-‘1-10p’-data-test-sed"><span class="toc-number">1.2.1.</span> <span class="toc-text">示例1：sed   ‘1,10p’ /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例2：sed-n-e-‘1p’-e-‘3p’"><span class="toc-number">1.2.2.</span> <span class="toc-text">示例2：sed -n -e ‘1p’  -e  ‘3p’</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例3：sed-n-f-sedscripts-txt-data-test-sed"><span class="toc-number">1.2.3.</span> <span class="toc-text">示例3：sed -n -f sedscripts.txt  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例4：sed-i-‘1-10a-’-data-test-sed"><span class="toc-number">1.2.4.</span> <span class="toc-text">示例4：sed -i  ‘1,10a#’   /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行"><span class="toc-number">1.2.5.</span> <span class="toc-text">示例6：正则定界，表示ifconfig命令输出中开头eth2的行，至开头为lo的行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容"><span class="toc-number">1.2.6.</span> <span class="toc-text">示例7：正则数字混合定界，表示ifconfig命令输出中，eth2开头的行到第12行的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例8：多行插入，将aaa-nbbb插入到每行后面"><span class="toc-number">1.2.7.</span> <span class="toc-text">示例8：多行插入，将aaa\nbbb插入到每行后面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例9：sed-‘1-10i-’-data-test-sed"><span class="toc-number">1.2.8.</span> <span class="toc-text">示例9：sed  ‘1,10i#’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例10：sed-‘1-5c’-data-test-sed"><span class="toc-number">1.2.9.</span> <span class="toc-text">示例10：sed  ‘1,5c’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例11：sed-‘2-5w-f1’-data-test-sed"><span class="toc-number">1.2.10.</span> <span class="toc-text">示例11：sed  ‘2,5w  f1’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例12：sed-‘2-5r-f1’-data-test-sed"><span class="toc-number">1.2.11.</span> <span class="toc-text">示例12：sed  ‘2,5r  f1’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例13：sed-n-‘2-5-p’-data-test-sed"><span class="toc-number">1.2.12.</span> <span class="toc-text">示例13：sed  -n  ‘2,5!  p’  /data/test.sed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例14：ifconfig-sed-n-“2p”-sed-r-“s-addr-Bcast-1-”"><span class="toc-number">1.2.13.</span> <span class="toc-text">示例14：ifconfig |sed -n “2p”|sed -r “s@.*addr:(.*) Bcast.*@\1@”</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、前期准备"><span class="toc-number">1.</span> <span class="toc-text">一、前期准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、开启CentOS7自动挂载光盘服务"><span class="toc-number">2.</span> <span class="toc-text">二、开启CentOS7自动挂载光盘服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、关闭防火墙"><span class="toc-number">3.</span> <span class="toc-text">三、关闭防火墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、安装httpd服务"><span class="toc-number">4.</span> <span class="toc-text">四、安装httpd服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、开启httpd服务"><span class="toc-number">5.</span> <span class="toc-text">五、开启httpd服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、创建网页目录"><span class="toc-number">6.</span> <span class="toc-text">六、创建网页目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、挂载yum源"><span class="toc-number">7.</span> <span class="toc-text">七、挂载yum源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、在CentOS搭建yum仓库"><span class="toc-number">8.</span> <span class="toc-text">八、在CentOS搭建yum仓库</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
