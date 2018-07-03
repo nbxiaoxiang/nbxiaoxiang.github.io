@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="头皮发麻">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="头皮发麻">
+    <meta name="keywords" content=" | 头皮发麻">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Linux系统中RAID及LVM管理 · TangWei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux系统中RAID及LVM管理</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>TangWei's Studio</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Linux系统中RAID及LVM管理
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "RAID">RAID</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "LVM">LVM</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,770</span> / Reading time: <span class="post-count">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/04/26</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h4 id="一、RAID概念及管理"><a href="#一、RAID概念及管理" class="headerlink" title="一、RAID概念及管理"></a>一、RAID概念及管理</h4><p>RAID:Redundant Arrays of Inexpensive（Independent） Disks 廉价（独立）磁盘冗余阵列</p>
+<p>使用多个磁盘合成一个“阵列”来提供更好的性能、冗余，或者两种都提供。<br>RAID的作用：</p>
+<ul>
+<li><p>提高IO能力</p>
+</li>
+<li><p>磁盘并行读写</p>
+</li>
+<li><p>提高耐用性</p>
+</li>
+<li><p>磁盘冗余来实现</p>
+</li>
+</ul>
+<p>级别：多块磁盘组织在一起的工作方式有所不同</p>
+<p>RAID实现的方式：</p>
+<ul>
+<li><p>外接式磁盘阵列：通过扩展卡提供适配能力</p>
+</li>
+<li><p>内接式RAID：主板集成RAID控制器</p>
+</li>
+<li><p>安装OS前在BIOS里配置</p>
+</li>
+<li><p>软件RAID：通过OS实现（生产环境很少用，一般用来测试模拟）</p>
+</li>
+</ul>
+<p>RAID级别</p>
+<ul>
+<li><p>RAID-0              条带卷，strip</p>
+</li>
+<li><p>RAID-1              镜像卷，mirror</p>
+</li>
+<li><p>RAID-2</p>
+</li>
+</ul>
+<ul>
+<li><p>RAID-5</p>
+</li>
+<li><p>RAID-6</p>
+</li>
+<li><p>RAID-10</p>
+</li>
+<li><p>RAID-01</p>
+</li>
+<li><p>JBOD                 将多块磁盘的空间合并成一个连续空间使用</p>
+</li>
+</ul>
+<p>注：目前RAID2-4已基本淘汰，RAID0生产中也少用，RAID1,RAID5,RAID10,RAID01常见</p>
+<ul>
+<li><p>RAID0      条带卷，读写能力提升，但无容错能力，最少需2块磁盘组成，磁盘利用率100%</p>
+</li>
+<li><p>RAID1       镜像卷，具有一块硬盘的容错性，需要2,2N块磁盘组成，磁盘利用率50%</p>
+</li>
+<li><p>RAID4      牺牲了1块硬盘实现冗余，至少3块磁盘组成，磁盘利用率（n-1）n</p>
+</li>
+<li><p>RAID5      带奇偶校验的条带集，至少3块磁盘组成，磁盘利用率（n-1）n，一块硬盘损坏，将大幅消耗系统性能，造成宕机，应及时更换硬盘，性价比高</p>
+</li>
+<li><p>RAID6      牺牲了2块硬盘实现冗余，至少4块磁盘组成，磁盘利用率（n-2）n</p>
+</li>
+<li><p>RAID10    先做RAID1,再做RAID0，容错性相较于RAID01更强，至少4块磁盘组成，空间利用率50%。生产中有条件情况下建议使用RAID10</p>
+</li>
+<li><p>RAID01    先做RAID0,再做RAID1，至少4块磁盘组成，容错性较RAID10稍弱，空间利用率50%</p>
+</li>
+<li><p>RAID50    先做RAID5,再做RAID0，提供了接近RAID 10性能、可用性以及接近RAID 5成本的特性，具有较好的整体性价比，至少6块磁盘组成，空间利用率（n-2）n</p>
+</li>
+<li><p>JBOD        可用空间sum（S1,S2…），性能无提升，至少需要2块磁盘，磁盘利用率100%</p>
+</li>
+</ul>
+<p>常见RAID图形示意<br>RAID0      条带卷，读写能力提升，但无容错能力，最少需2块磁盘组成，磁盘利用率100%</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/0.jpg" alt="enter image description here"></p>
+<p>RAID1       镜像卷，读性能提升，写性能下降具有一块硬盘的容错性，需要2,2N块磁盘组成，磁盘利用率50%</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/1-5.jpg" alt="enter image description here"></p>
+<p>RAID5      带奇偶校验的条带集，与RAID4校验位固定在一个磁盘上相比，RAID5校验位在不同磁盘上不断更替；至少3块磁盘组成，磁盘利用率（n-1）n，一块硬盘损坏，将大幅消耗系统性能，造成宕机，应及时更换硬盘，性价比高</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/5-2.jpg" alt="enter image description here"></p>
+<p>RAID01    先做RAID0,再做RAID1，至少4块磁盘组成，容错性较RAID10稍弱，空间利用率50%</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/wKioL1bpX-KSDT33AAC2vBgWLfg951.jpg" alt="enter image description here"></p>
+<p>RAID10    先做RAID1,再做RAID0，容错性相较于RAID01更强，至少4块磁盘组成，空间利用率50%。生产中有条件情况下建议使用RAID10</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/10.jpg" alt="enter image description here"></p>
+<p>RAID50    先做RAID5,再做RAID0，提供了接近RAID 10性能、可用性以及接近RAID 5成本的特性，具有较好的整体性价比，至少6块磁盘组成，空间利用率（n-2）n</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/50.jpg" alt="enter image description here"></p>
+<p>JBOD        可用空间sum（S1,S2…），性能无提升，无冗余能力，至少需要2块磁盘，磁盘利用率100%</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/jb.jpg" alt="enter image description here"></p>
+<p>RAID按实现方式的不同一般分为硬件RAID和软件RAID，生产环境中多数使用硬件RAID，在下面的实</p>
+<p>验测试环境中我们使用软件RAID。</p>
+<p>软件RAID<br>mdadm 命令   为软RAID提供管理界面</p>
+<p>为空余磁盘添加冗余</p>
+<p>结合内核中的md（multi devices）</p>
+<p>RAID设备可命名为/dev/md0、/dev/md1、/dev/md2、/dev/md3等</p>
+<p><code>dd if=/dev/zero  of=/dev/sdb1</code>             破坏文件系统</p>
+<p><code>mdadm -C /dev/md0 -a yes  -l5 -n4 -x1  /dev/sd{b,c,d,e}1</code>     创建一个RAID5,包含4块硬盘，一块空闲盘</p>
+<p><code>mdadm -D /dev/md0</code>                   查看raid信息</p>
+<p><code>mkfs.ext4 /dev/md0 -L raid</code>     添加文件系统，添加卷标为raid</p>
+<p>停用</p>
+<p>umount /mnt/raid/</p>
+<p>mdadm    -S  /dev/md0         禁用raid</p>
+<p>-A              启用raid</p>
+<p>模拟损坏硬盘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdadm    /dev/md0 -f /dev/sdd1</span><br></pre></td></tr></table></figure>
+<p>移除损坏硬盘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdadm   /dev/md0 -r /dev/sdd1</span><br></pre></td></tr></table></figure>
+<p>更换一个新硬盘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdadm    /dev/md0 -a /dev/sda1</span><br></pre></td></tr></table></figure>
+<p>拓展RAID一个硬盘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdadm -G /dev/md0 -n4 -a /dev/sdb3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll /etc/mdadm/conf</span><br></pre></td></tr></table></figure>
+<p><code>mdadm -Ds /dev/md0 &gt; /etc/mdadm/conf</code>      保存配置文件</p>
+<p>将来重启或停止raid服务不会出现找不到配置文件的情况</p>
+<h4 id="二、LVM逻辑卷介绍及使用"><a href="#二、LVM逻辑卷介绍及使用" class="headerlink" title="二、LVM逻辑卷介绍及使用"></a>二、LVM逻辑卷介绍及使用</h4><p>   logical Volumes                                                  逻辑卷</p>
+<ul>
+<li>lvcreae  ↑                                                      创建逻辑卷  ↑</li>
+</ul>
+<p>Volime Group                                                     卷组</p>
+<ul>
+<li>vgcreate ↑                                                       创建卷组    ↑</li>
+</ul>
+<p>Physical Volumes                                              物理卷</p>
+<ul>
+<li>pvcreate ↑                                                     创建物理卷  ↑</li>
+</ul>
+<p>Linux Block Devices                                         Linux块设备</p>
+<h5 id="pv管理工具"><a href="#pv管理工具" class="headerlink" title="pv管理工具"></a>pv管理工具</h5><p>显示物理卷</p>
+<ul>
+<li><p>pvs            简要</p>
+</li>
+<li><p>pvdisplay 详细</p>
+</li>
+</ul>
+<p>创建卷组</p>
+<ul>
+<li>pvcreate  /dev/DEVICE</li>
+</ul>
+<h5 id="vg管理工具"><a href="#vg管理工具" class="headerlink" title="vg管理工具"></a>vg管理工具</h5><p>显示卷组</p>
+<ul>
+<li><p>vgs</p>
+</li>
+<li><p>vgdisplay</p>
+</li>
+</ul>
+<p>创建卷组</p>
+<ul>
+<li>vgcreate [-s #[kKmMgGtTpPeE]] 卷组名 各分区物理路径</li>
+</ul>
+<h5 id="lv管理工具"><a href="#lv管理工具" class="headerlink" title="lv管理工具"></a>lv管理工具</h5><p>显示逻辑卷</p>
+<ul>
+<li><p>lvs</p>
+</li>
+<li><p>Lvdisplay</p>
+</li>
+</ul>
+<p>创建逻辑卷</p>
+<ul>
+<li><p>lvcreate -L #[mMgGtT] -n 逻辑卷名 卷组名</p>
+</li>
+<li><p>lvcreate -l 60%VG -n mylv testvg</p>
+</li>
+<li><p>lvcreate -l 100%FREE -n yourlv testvg</p>
+</li>
+</ul>
+<p>lvcreate </p>
+<p>常用选项</p>
+<ul>
+<li><p>-c     指定chunk大小</p>
+</li>
+<li><p>-l      指定PE数创建逻辑卷，或[%{VG|FREE|ORIGIN}]</p>
+</li>
+<li><p>-L    指定大小创建逻辑卷</p>
+</li>
+<li><p>-n     指定逻辑卷名称</p>
+</li>
+<li><p>-p{r|rw}指定逻辑卷权限</p>
+</li>
+<li><p>-t      测试</p>
+</li>
+</ul>
+<p>删除逻辑卷</p>
+<ul>
+<li>lvremove /dev/VG_NAME/LV_NAME</li>
+</ul>
+<p>重设文件系统大小</p>
+<ul>
+<li><p>fsadm [options] resize device [new_size[BKMGTEP]]</p>
+</li>
+<li><p>resize2fs [-f] [-F] [-M] [-P] [-p] device [new_size]</p>
+</li>
+</ul>
+<p>LVM快照<br>快照是特殊的逻辑卷，它是在生成快照时存在的逻辑卷的准确拷贝</p>
+<p>要注意快照不能替代备份作用，但可用于测试环境，在特殊情况下可代替备份效果。</p>
+<p>快照生成时需要分配给它一定的空间，这些空间只有在原来的逻辑卷或者快照有所改变才会使用这些空间，建立快照的卷大小只需要原始逻辑卷的15%-20%就可以了，也可以使用lvextend放大快照空间要注意快照必须与被快照的LV在同一个卷组中，系统恢复时文件数量不能高于快照区的实际容量。</p>
+<p>为现有逻辑卷创建快照与添加逻辑卷命令相同</p>
+<p>lvcreate</p>
+<p>创建快照常用选项：</p>
+<ul>
+<li><p>-l      指定PE数创建快照，或[%{VG|FREE|ORIGIN}]</p>
+</li>
+<li><p>-L    指定大小创建快照逻辑卷</p>
+</li>
+<li><p>-n     指定快照名称</p>
+</li>
+<li><p>-p{r|rw}指定快照权限，一般设为只读</p>
+</li>
+</ul>
+<p>ext系列：</p>
+<ul>
+<li><p>lvcreate -n centoslv0-snapshot -s -L 1G -p r /dev/centos6lv0</p>
+</li>
+<li><p>lvdisplay</p>
+</li>
+<li><p>mkdir /mnt/snap</p>
+</li>
+<li><p>mount /dev/centos6vg0/centos6lv0-snapshot  /mnt/snap</p>
+</li>
+</ul>
+<p>xfs文件系统：</p>
+<ul>
+<li><p>lvcreate -n centoslv0-snapshot -s -L 1G -p r /dev/lv0</p>
+</li>
+<li><p>lvdisplay</p>
+</li>
+<li><p>mkdir /mnt/snap</p>
+</li>
+<li><p>xfs文件系统不予许相同UUID设备进行挂载</p>
+</li>
+<li><p>mount -o nouuid  /dev/vg0/lv0-snopshot /mnt/lv0-snap</p>
+</li>
+</ul>
+<p>恢复快照</p>
+<ul>
+<li><p>umount /mnt/snap/</p>
+</li>
+<li><p>umount /mnt/centos6lv0/</p>
+</li>
+<li><p>lvconvert  –merge  /dev/centos6vg0/centos6lv0-snapshot</p>
+</li>
+</ul>
+<p>注：快照会在合并恢复后自动删除</p>
+<p>删除快照</p>
+<ul>
+<li><p>umount /mnt/vg0/lv0</p>
+</li>
+<li><p>lvremove /dev/mnt/lv0-snap</p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" title= 在软件RAID搭建LVM逻辑卷进行管理 >
+                    <div class="nextTitle">在软件RAID搭建LVM逻辑卷进行管理</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/25/交换分区swap管理及特殊介质的使用/" title= 交换分区swap管理及特殊介质的使用 >
+                    <div class="prevTitle">交换分区swap管理及特殊介质的使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nbxiaoxiang/nbxiaoxiang.github.io" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、RAID概念及管理"><span class="toc-number">1.</span> <span class="toc-text">一、RAID概念及管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、LVM逻辑卷介绍及使用"><span class="toc-number">2.</span> <span class="toc-text">二、LVM逻辑卷介绍及使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#pv管理工具"><span class="toc-number">2.1.</span> <span class="toc-text">pv管理工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vg管理工具"><span class="toc-number">2.2.</span> <span class="toc-text">vg管理工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lv管理工具"><span class="toc-number">2.3.</span> <span class="toc-text">lv管理工具</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" >在软件RAID搭建LVM逻辑卷进行管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/Linux系统中RAID及LVM管理/" >Linux系统中RAID及LVM管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2018/04/25/交换分区swap管理及特殊介质的使用/" >交换分区swap管理及特殊介质的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统软件包管理介绍/" >Linux系统软件包管理介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/文本处理工具sed的高级用法/" >文本处理工具sed的高级用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/文本三剑客之sed/" >文本三剑客之sed</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >shell脚本编程基础（2）——新手注意事项及技巧16条</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/Linux系统文件查找与解压缩方法/" >Linux系统文件查找与解压缩方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/shell脚本编程基础（1）/" >shell脚本编程基础（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2018/04/08/vim文本编辑器及文本处理常用命令/" >vim文本编辑器及文本处理常用命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/文本三剑客之grep及正则表达式用法/" >文本三剑客之grep及正则表达式用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/05</span><a class="archive-post-title" href= "/2018/04/05/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/Linux文件权限详解/" >Linux文件权限详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/03</span><a class="archive-post-title" href= "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/Linux文件系统简介/" >Linux文件系统简介</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="文件权限"><span class="iconfont-archer">&#xe606;</span>文件权限</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件系统"><span class="iconfont-archer">&#xe606;</span>文件系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="脚本编程"><span class="iconfont-archer">&#xe606;</span>脚本编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程"><span class="iconfont-archer">&#xe606;</span>编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本处理"><span class="iconfont-archer">&#xe606;</span>文本处理</span>
+    
+        <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
+    
+        <span class="sidebar-tag-name" data-tags="sed"><span class="iconfont-archer">&#xe606;</span>sed</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本"><span class="iconfont-archer">&#xe606;</span>文本</span>
+    
+        <span class="sidebar-tag-name" data-tags="grep"><span class="iconfont-archer">&#xe606;</span>grep</span>
+    
+        <span class="sidebar-tag-name" data-tags="正则表达式"><span class="iconfont-archer">&#xe606;</span>正则表达式</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件查找"><span class="iconfont-archer">&#xe606;</span>文件查找</span>
+    
+        <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
+    
+        <span class="sidebar-tag-name" data-tags="软件包"><span class="iconfont-archer">&#xe606;</span>软件包</span>
+    
+        <span class="sidebar-tag-name" data-tags="rpm"><span class="iconfont-archer">&#xe606;</span>rpm</span>
+    
+        <span class="sidebar-tag-name" data-tags="yum"><span class="iconfont-archer">&#xe606;</span>yum</span>
+    
+        <span class="sidebar-tag-name" data-tags="磁盘"><span class="iconfont-archer">&#xe606;</span>磁盘</span>
+    
+        <span class="sidebar-tag-name" data-tags="swap"><span class="iconfont-archer">&#xe606;</span>swap</span>
+    
+        <span class="sidebar-tag-name" data-tags="分区"><span class="iconfont-archer">&#xe606;</span>分区</span>
+    
+        <span class="sidebar-tag-name" data-tags="RAID"><span class="iconfont-archer">&#xe606;</span>RAID</span>
+    
+        <span class="sidebar-tag-name" data-tags="LVM"><span class="iconfont-archer">&#xe606;</span>LVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="OSi"><span class="iconfont-archer">&#xe606;</span>OSi</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP/IP"><span class="iconfont-archer">&#xe606;</span>TCP/IP</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: '头皮发麻'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

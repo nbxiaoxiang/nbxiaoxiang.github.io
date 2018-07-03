@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="头皮发麻">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="头皮发麻">
+    <meta name="keywords" content=" | 头皮发麻">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>网络基本概念及OSI参考模型、TCP/IP协议简介 · TangWei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>TangWei's Studio</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            网络基本概念及OSI参考模型、TCP/IP协议简介
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "OSi">OSi</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2,473</span> / Reading time: <span class="post-count">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h4 id="一、网络概念"><a href="#一、网络概念" class="headerlink" title="一、网络概念"></a>一、网络概念</h4><p>什么是网络？</p>
+<p>网络是由节点和连线构成，表示诸多对象及其相互联系。在计算机领域中，网络是信息传输、接收、</p>
+<p>共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，从而实现这些资源的共享。</p>
+<p>网络是人类发展史来最重要的发明，提高了科技和人类社会的发展。</p>
+<p>网络应用程序：</p>
+<ul>
+<li><p>Web 浏览器（Chrome、IE、Firefox等）</p>
+</li>
+<li><p>即时消息（QQ、微信、钉钉等）</p>
+</li>
+<li><p>电子邮件（Outlook、foxmail 等）</p>
+</li>
+<li><p>协作（视频会议、VNC、Netmeeting、WebEx 等）</p>
+</li>
+<li><p>web网络服务（apache,nginx,IIS）</p>
+</li>
+<li><p>文件网络服务（ftp,nfs,samba）</p>
+</li>
+<li><p>数据库服务（ MySQL,MariaDB, MongoDB)</p>
+</li>
+<li><p>中间件服务（Tomcat，JBoss）</p>
+</li>
+<li><p>安全服务（ Netfilter）</p>
+</li>
+</ul>
+<p>网络的特征：</p>
+<ul>
+<li><p>速度</p>
+</li>
+<li><p>成本</p>
+</li>
+<li><p>安全性</p>
+</li>
+<li><p>可用性</p>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>可靠性</p>
+</li>
+<li><p>拓扑</p>
+</li>
+</ul>
+<p>拓扑结构：</p>
+<ul>
+<li><p>网络拓扑可分为物理拓扑和逻辑拓扑</p>
+</li>
+<li><p>物理拓扑描述了物理设备的布线方式</p>
+</li>
+<li><p>逻辑拓扑描述了信息在网络中的流动方式</p>
+</li>
+</ul>
+<p>物理拓扑中又分为多种拓扑结构，常见类型有：</p>
+<ul>
+<li><p>总线拓扑：所有设备均可接收信号</p>
+</li>
+<li><p>星型拓扑：通过中心点传输；单一故障点</p>
+</li>
+<li><p>拓展星型拓扑：比星型拓扑的复原能力更强</p>
+</li>
+<li><p>环拓扑：信号绕环传输；单一故障点</p>
+</li>
+<li><p>双环拓扑：信号沿相反方向传输；比单环复原能力更强</p>
+</li>
+<li><p>全网状拓扑：容错能力强；但实施成本高</p>
+</li>
+<li><p>部分网状拓扑：在容错能力与成本之间寻求平衡</p>
+</li>
+</ul>
+<p>三种通讯模式：</p>
+<ul>
+<li><p>单播unicast</p>
+</li>
+<li><p>广播broadcast</p>
+</li>
+<li><p>组播multicast</p>
+</li>
+</ul>
+<p>非屏蔽式双绞线UTP：交叉线，直通线</p>
+<p>UTP交叉线线序</p>
+<ul>
+<li><p>T568B：橙白 橙 绿白 蓝 蓝白 绿 棕白 棕</p>
+</li>
+<li><p>T568A：绿白 绿 橙白 蓝 蓝白 橙 棕白 棕</p>
+</li>
+</ul>
+<p>网络通讯传输模式</p>
+<ul>
+<li><p>单工：单词传播，如收音机，广播电台</p>
+</li>
+<li><p>双工：双向</p>
+</li>
+<li><p>全双工：同时双向，如手机</p>
+</li>
+<li><p>半双工：轮流双向，如对讲机</p>
+</li>
+</ul>
+<h4 id="二、OSI参考模型"><a href="#二、OSI参考模型" class="headerlink" title="二、OSI参考模型"></a>二、OSI参考模型</h4><p>OSI(Open System Interconnect）开放系统互连参考模型是国际标准化组织(ISO)和国际电报电话咨询委员会(CCITT)联合制定的开放系统互连参考模型，为开放式互连信息系统提供了一种功能结构的框架。它从低到高分别是：物理层、数据链路层、网络层、传输层、会话层、表示层和应用层。</p>
+<p>其目的是为异种计算机互连提供一个共同的基础和标准框架，并为保持相关标准的一致性和兼容性提供共同的参考。OSI参考模型如下图所示：<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/%E6%A8%A1%E5%9E%8B.gif" alt="enter image description here"></p>
+<p>OSI模型的七层结构：下层为相邻的上层提供服务</p>
+<p>应用层：</p>
+<ul>
+<li><p>作用：针对特定应用的协议</p>
+</li>
+<li><p>PDU：message</p>
+</li>
+<li><p>协议有：HTTP FTP TFTP SMTP SNMP DNS TELNET HTTPS POP3 DHCP</p>
+</li>
+<li><p>特性：网络进程访问应用层</p>
+</li>
+<li><p>为应用程序进行（如电子邮件、文件传输和终端仿真）提供网络服务</p>
+</li>
+<li><p>提供用户身份验证</p>
+</li>
+</ul>
+<p>表示层：</p>
+<ul>
+<li><p>作用：设备固有数据格式和网络标准数据格式的转换</p>
+</li>
+<li><p>PDU：message</p>
+</li>
+<li><p>格式有，JPEG、ASCll、DECOIC、加密格式等</p>
+</li>
+<li><p>特性：数据表示</p>
+</li>
+<li><p>确保接收系统可以读出该数据</p>
+</li>
+<li><p>格式化数据</p>
+</li>
+<li><p>构建数据</p>
+</li>
+<li><p>协商用于应用层的数据传输语法</p>
+</li>
+<li><p>提供加密</p>
+</li>
+</ul>
+<p>会话层：</p>
+<ul>
+<li><p>作用：通信管理。负责建立和断开通信连接（数据流动的逻辑通路）。管理传输层以下的分层</p>
+</li>
+<li><p>PDU：message</p>
+</li>
+<li><p>对应主机进程，指本地主机与远程主机正在进行的会话</p>
+</li>
+<li><p>特性：主机间通信</p>
+</li>
+<li><p>建立、管理和终止在应用程序之间的会话</p>
+</li>
+</ul>
+<p>传输层：</p>
+<ul>
+<li>作用：管理两个节点之间的数据传输，负责可靠传输（确保数据被可靠的传送到目</li>
+</ul>
+<p>的地址）。</p>
+<ul>
+<li><p>PDU：段segment</p>
+</li>
+<li><p>协议有：TCP UDP，数据包一旦离开网卡即进入网络传输层</p>
+</li>
+<li><p>特性：传输问题</p>
+</li>
+<li><p>确保数据传输的可靠性</p>
+</li>
+<li><p>建立、维护和终止虚拟电路</p>
+</li>
+<li><p>通过错误检测和恢复</p>
+</li>
+<li><p>信息流控制来保障可靠性</p>
+</li>
+</ul>
+<p>网络层：</p>
+<ul>
+<li><p>作用：地址管理与路由选择</p>
+</li>
+<li><p>PDU：包packet</p>
+</li>
+<li><p>逻辑地址：IP地址</p>
+</li>
+<li><p>协议有：ICMP IGMP IP（IPV4 IPV6） ARP RARP</p>
+</li>
+<li><p>特性：数据传输</p>
+</li>
+<li><p>路由数据包</p>
+</li>
+<li><p>选择传递数据的最佳路径</p>
+</li>
+<li><p>支持逻辑寻址和路径选择</p>
+</li>
+</ul>
+<p>数据链路层：</p>
+<ul>
+<li><p>作用：互连设备之间传送和识别数据帧</p>
+</li>
+<li><p>PDU：帧frame</p>
+</li>
+<li><p>物理地址：MAC地址</p>
+</li>
+<li><p>特性：访问介质</p>
+</li>
+<li><p>定义如何格式化数据以便进行传输以及如何控制对网络的访问</p>
+</li>
+<li><p>支持错误检测</p>
+</li>
+</ul>
+<p>物理层：</p>
+<ul>
+<li><p>作用：以“0”、“1”代表电压的高低、灯光的闪灭。界定连接器和网线的规格</p>
+</li>
+<li><p>PDU：节bit</p>
+</li>
+<li><p>特性：二进制传输</p>
+</li>
+<li><p>为启动、维护已经关闭物流链路定义了电气规范、机械规范、过程规范和功能规范</p>
+</li>
+<li><p>单位：位bit</p>
+</li>
+</ul>
+<p>PDU: Protocol Data Unit,协议数据单元是指对等层次之间传递的数据单位</p>
+<ul>
+<li><p>物理层的 PDU是数据位 bit</p>
+</li>
+<li><p>数据链路层的 PDU是数据帧 frame</p>
+</li>
+<li><p>网络层的PDU是数据包 packet</p>
+</li>
+<li><p>传输层的 PDU是数据段 segment</p>
+</li>
+<li><p>其他更高层次的PDU是消息 message</p>
+</li>
+</ul>
+<h4 id="三、TCP-IP协议"><a href="#三、TCP-IP协议" class="headerlink" title="三、TCP/IP协议"></a>三、TCP/IP协议</h4><p>TCP/IP也称”国际协议簇”， 即不仅指 TCP/IP协议本身，而且包括与其有关的协议。 TCP<br>为传输控制协议，IP为网际协议，是网络层最重要的协议。采用TCP/IP协议通过互联网传送信息可减少网络中的传输阻塞，方便大批量的数据在网上传输，从而提高网络的传输效率。</p>
+<p>TCP/IP协议簇的主要协议有TCP、IP、UDP、ICMP、RIP、TELNET、FTP、SMTP、ARP等</p>
+<p>TCP/IP模型共定义了四层，分别是应用层，和OSI参考模型的分层有对应关系：</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94.png" alt="enter image description here"></p>
+<p>网络访问层(Network Access Layer)与OSI模型中的物理层以及数据链路层对应，在TCP/IP参考模型中并没有详细描述，只是指出主机必须使用某种协议与网络相连。</p>
+<p>Internet层(Internet Layer)是整个体系结构的关键部分，其功能是使主机可以把分组发往任何网络，并使分组独立地传向目标。这些分组可能经由不同的网络，到达的顺序和发送的顺序也可能不同。高层如果需要顺序收发，那么就必须自行处理对分组的排序。互联网层使用因特网协议(IP，Internet Protocol)。TCP/IP参考模型的互联网层和OSI参考模型的网络层在功能上非常相似。</p>
+<p>传输层(Tramsport Layer)使源端和目的端机器上的对等实体可以进行会话。在这一层定义了两个端到端的协议：传输控制协议(TCP，Transmission Control Protocol)和用户数据报协议(UDP，User Datagram Protocol)。</p>
+<p>应用层(Application Layer)包含所有的高层协议，包括：虚拟终端协议(TELNET，TELecommunications NETwork)、文件传输协议(FTP，File Transfer Protocol)、电子邮件传输协议(SMTP，Simple，Mail Transfer Protocol)、域名服务(DNS，Domain Name Service)、网上新闻传输协议(NNTP，Net News Transfer Protocol)和超文本传送协议(HTTP，HyperText Transfer Protocol)等。<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/EQXYWBXAA8VXEEVTBN.png" alt="enter image description here"></p>
+<h4 id="四、常见网络设备"><a href="#四、常见网络设备" class="headerlink" title="四、常见网络设备"></a>四、常见网络设备</h4><p>Hub集线器</p>
+<p>Hub：多端口中继器，现已基本淘汰</p>
+<ul>
+<li>Hub并不记忆该信息包是由哪个MAC地址发出，哪个MAC地址在Hub的哪个端口</li>
+</ul>
+<p>Hub的特点：</p>
+<ul>
+<li><p>共享带宽</p>
+</li>
+<li><p>半双工</p>
+</li>
+</ul>
+<p>以太网桥</p>
+<ul>
+<li><p>交换式以太网的优势</p>
+</li>
+<li><p>扩展了网络带宽</p>
+</li>
+<li><p>分割了网络冲突域，使网络冲突被限制在最小的范围内</p>
+</li>
+<li><p>交换机作为更加智能的交换设备，能够提供更多用户所要求的功能：优先级、虚拟网、远程检测…</p>
+</li>
+</ul>
+<ul>
+<li><p>学习时源MAC地址，转发时目的MAC地址</p>
+</li>
+<li><p>网桥是不能隔断广播的</p>
+</li>
+<li><p>同一广播域主机数量越多，网络性能越差</p>
+</li>
+</ul>
+<p>交换机（switch）</p>
+<p>交换机是一种基于MAC（网卡的硬件地址）识别，能完成封装转发数据包功能的网络设备。交换机可以“学习”MAC地址，并把其存放在内部地址表中，通过在数据帧的始发者和目标接收者之间建立临时的交换路径，使数据帧直接由源地址到达目的地址。</p>
+<p>Hub和交换机区别</p>
+<p>集线器属于OSI的第一层物理层设备，而网桥属于OSI的第二层数据链路层设备</p>
+<p>从工作方式来看，集线器是一种广播模式，所有端口在一个冲突域里面。网桥</p>
+<p>的可以通过端口隔离冲突</p>
+<p>Hub是所有共享总线和共享带宽。网桥每个端口占一个带宽</p>
+<p>路由器（router）</p>
+<p>路由：把一个数据包从一个设备发送到不同网络里的另一个设备上去。这些工作</p>
+<p>依靠路由器来完成。路由器只关心网络的状态和决定网络中的最佳路径。路由的实</p>
+<p>现依靠路由器中的路由表来完成。为了实现路由,路由器需要做下列事情:</p>
+<ul>
+<li><p>分隔广播域</p>
+</li>
+<li><p>选择路由表中到达目标最好的路径</p>
+</li>
+<li><p>维护和检查路由信息</p>
+</li>
+<li><p>连接广域网</p>
+</li>
+</ul>
+<p>双绞线物理层</p>
+<ul>
+<li><p>wifi网络层</p>
+</li>
+<li><p>以太网数据链路层</p>
+</li>
+</ul>
+<p>搭建网络的分层网络架构：核心层、分布层、访问层</p>
+<ul>
+<li><p>核心层Core Layer：企业级应用快速转发</p>
+</li>
+<li><p>分布层Distribution Layer：广播域，路由，安全，远程接入，访问层汇聚</p>
+</li>
+<li><p>访问层AccessLayer：终端接入</p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" title= 在软件RAID搭建LVM逻辑卷进行管理 >
+                    <div class="prevTitle">在软件RAID搭建LVM逻辑卷进行管理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nbxiaoxiang/nbxiaoxiang.github.io" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、网络概念"><span class="toc-number">1.</span> <span class="toc-text">一、网络概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、OSI参考模型"><span class="toc-number">2.</span> <span class="toc-text">二、OSI参考模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、TCP-IP协议"><span class="toc-number">3.</span> <span class="toc-text">三、TCP/IP协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、常见网络设备"><span class="toc-number">4.</span> <span class="toc-text">四、常见网络设备</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" >在软件RAID搭建LVM逻辑卷进行管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/Linux系统中RAID及LVM管理/" >Linux系统中RAID及LVM管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2018/04/25/交换分区swap管理及特殊介质的使用/" >交换分区swap管理及特殊介质的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统软件包管理介绍/" >Linux系统软件包管理介绍</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/文本处理工具sed的高级用法/" >文本处理工具sed的高级用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/文本三剑客之sed/" >文本三剑客之sed</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/14</span><a class="archive-post-title" href= "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >shell脚本编程基础（2）——新手注意事项及技巧16条</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/Linux系统文件查找与解压缩方法/" >Linux系统文件查找与解压缩方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/shell脚本编程基础（1）/" >shell脚本编程基础（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2018/04/08/vim文本编辑器及文本处理常用命令/" >vim文本编辑器及文本处理常用命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2018/04/07/文本三剑客之grep及正则表达式用法/" >文本三剑客之grep及正则表达式用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/05</span><a class="archive-post-title" href= "/2018/04/05/浅谈几种IO重定向变形用法/" >浅谈几种IO重定向变形用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/Linux文件权限详解/" >Linux文件权限详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/03</span><a class="archive-post-title" href= "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >Linux用户与组管理命令的易混淆点和重合点</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2018/04/02/Linux用户与组管理详解/" >Linux用户与组管理详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/带你认识Linux中的通配符/" >带你认识Linux中的通配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/Linux文件系统简介/" >Linux文件系统简介</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="文件权限"><span class="iconfont-archer">&#xe606;</span>文件权限</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件系统"><span class="iconfont-archer">&#xe606;</span>文件系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="脚本编程"><span class="iconfont-archer">&#xe606;</span>脚本编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="用户与组"><span class="iconfont-archer">&#xe606;</span>用户与组</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程"><span class="iconfont-archer">&#xe606;</span>编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本处理"><span class="iconfont-archer">&#xe606;</span>文本处理</span>
+    
+        <span class="sidebar-tag-name" data-tags="通配符"><span class="iconfont-archer">&#xe606;</span>通配符</span>
+    
+        <span class="sidebar-tag-name" data-tags="sed"><span class="iconfont-archer">&#xe606;</span>sed</span>
+    
+        <span class="sidebar-tag-name" data-tags="文本"><span class="iconfont-archer">&#xe606;</span>文本</span>
+    
+        <span class="sidebar-tag-name" data-tags="grep"><span class="iconfont-archer">&#xe606;</span>grep</span>
+    
+        <span class="sidebar-tag-name" data-tags="正则表达式"><span class="iconfont-archer">&#xe606;</span>正则表达式</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO重定向"><span class="iconfont-archer">&#xe606;</span>IO重定向</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件查找"><span class="iconfont-archer">&#xe606;</span>文件查找</span>
+    
+        <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
+    
+        <span class="sidebar-tag-name" data-tags="软件包"><span class="iconfont-archer">&#xe606;</span>软件包</span>
+    
+        <span class="sidebar-tag-name" data-tags="rpm"><span class="iconfont-archer">&#xe606;</span>rpm</span>
+    
+        <span class="sidebar-tag-name" data-tags="yum"><span class="iconfont-archer">&#xe606;</span>yum</span>
+    
+        <span class="sidebar-tag-name" data-tags="磁盘"><span class="iconfont-archer">&#xe606;</span>磁盘</span>
+    
+        <span class="sidebar-tag-name" data-tags="swap"><span class="iconfont-archer">&#xe606;</span>swap</span>
+    
+        <span class="sidebar-tag-name" data-tags="分区"><span class="iconfont-archer">&#xe606;</span>分区</span>
+    
+        <span class="sidebar-tag-name" data-tags="RAID"><span class="iconfont-archer">&#xe606;</span>RAID</span>
+    
+        <span class="sidebar-tag-name" data-tags="LVM"><span class="iconfont-archer">&#xe606;</span>LVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="OSi"><span class="iconfont-archer">&#xe606;</span>OSi</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP/IP"><span class="iconfont-archer">&#xe606;</span>TCP/IP</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: '头皮发麻'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

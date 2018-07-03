@@ -347,6 +347,192 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >
+                
+                    <span>网络基本概念及OSI参考模型、TCP/IP协议简介</span>
+            </a>
+            <div class="abstract-content">
+                一、网络概念什么是网络？
+网络是由节点和连线构成，表示诸多对象及其相互联系。在计算机领域中，网络是信息传输、接收、
+共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，从而实现这些资源的共享。
+网络是人类发展史来最重要的发明，提高了科技和人类社会的发展。
+网络应用程序：
+
+Web 浏览器（Chrome、IE、Firefox等）
+
+即时消息（QQ、微信、钉钉等）
+
+电子邮件（Outlook、foxmail 等）
+
+协作（视频会议、VNC、Netmeeting、WebEx 等）
+
+web网络服务（apache,nginx,IIS）
+
+文件网络服务（ftp,nfs,samba）
+
+数据库服...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "OSi">OSi</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" >
+                
+                    <span>在软件RAID搭建LVM逻辑卷进行管理</span>
+            </a>
+            <div class="abstract-content">
+                实验预期：在CentOS6.9系统上搭建两个RAID级别，分别为RAID0,及RAID5，将两个RAID合并为卷组并创建逻辑卷，实现冗余、性能提升、及弹性拓展。
+实验准备环境：CentOS6.9服务器一台，3块硬盘，分别为40G,60G,80G，并在每块磁盘创建分区sdx1容量为1G，sdx2容量为2G，创建挂载用空目录/test。
+实验一：在软件RAID创建LVM逻辑卷
+1.mdadm -C   /dev/md1  -a  yes  -l5  -n3   /dev/sd{b1,c1,d1}
+将三个容量为1G的分区sdb1，sdc1，sdd1组成一个名称为md1的RAID5
+2.mdad...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/27</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "RAID">RAID</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "LVM">LVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/26/Linux系统中RAID及LVM管理/" >
+                
+                    <span>Linux系统中RAID及LVM管理</span>
+            </a>
+            <div class="abstract-content">
+                一、RAID概念及管理RAID:Redundant Arrays of Inexpensive（Independent） Disks 廉价（独立）磁盘冗余阵列
+使用多个磁盘合成一个“阵列”来提供更好的性能、冗余，或者两种都提供。RAID的作用：
+
+提高IO能力
+
+磁盘并行读写
+
+提高耐用性
+
+磁盘冗余来实现
+
+
+级别：多块磁盘组织在一起的工作方式有所不同
+RAID实现的方式：
+
+外接式磁盘阵列：通过扩展卡提供适配能力
+
+内接式RAID：主板集成RAID控制器
+
+安装OS前在BIOS里配置
+
+软件RAID：通过OS实现（生产环境很少用，一般用来测试模拟）
+
+
+RAID级别
+
+RAID-0 ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "RAID">RAID</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "LVM">LVM</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/25/交换分区swap管理及特殊介质的使用/" >
+                
+                    <span>交换分区swap管理及特殊介质的使用</span>
+            </a>
+            <div class="abstract-content">
+                一、交换分区swap管理：交换分区是系统RAM的补充，相当于Windows系统中的虚拟内存，当系统RAM不够用的时候将使用交换
+分区来代替内存使用。
+基本设置包括：
+
+创建交换分区或者文件
+
+使用mkswap写入特殊签名
+
+在/etc/fstab文件中添加适当的条目
+
+使用swapon -a激活交换分区
+
+
+swapon                     启用交换分区
+格式：swapon [OPTION]…[DEVICE]
+
+-a              激活所有交换分区
+
+-p priority        指定优先级
+
+/etc/fstab:pri=value
+
+
+swap...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/25</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "swap">swap</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "分区">分区</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/20/搭建自己的yum源服务器/" >
                 
                     <span>搭建自己的yum源服务器</span>
@@ -587,184 +773,6 @@ P：打印模式空间开端至\n内容，并...
         <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/Linux系统文件查找与解压缩方法/" >
-                
-                    <span>Linux系统文件查找与解压缩方法</span>
-            </a>
-            <div class="abstract-content">
-                Linux系统文件查找与解压缩方法
-如同我们平时在操作 Windows系统时，文件查找与解压缩文件是经常要使用到的操作，Linux系统中也要经常用到相同的操作，今天我们就来介绍Linux系统中的一些文件查找与解压缩时使用到的工具。
-
-一、文件查找1.locate命令
-优点：搜索速度快，节省系统性能（生产环境适合使用locate）
-
-缺点：不能即时更新（文件索引数据库在每次开机后更新），要想搜索最新文件需手动输入命令updatedb更新文件索引数据库，模糊搜索；
-
-
-Locate命令适合搜索不经常变化的文件，如系统文件
-查询系统上预建的文件索引数据库：
-/var/lib/mlocate/m...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件查找">文件查找</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "解压缩">解压缩</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/10/shell脚本编程基础（1）/" >
-                
-                    <span>shell脚本编程基础（1）</span>
-            </a>
-            <div class="abstract-content">
-                shell脚本编程基础（1）一、编程基础1.什么是程序？程序是指：指令+数据
-程序编程风格可分为：
-
-过程式：以指令为中心，数据服务于指令（关注过程，小软件开发）
-
-对象式：以数据为中心，指令服务于数据（关注结果，适合开发大型软件）
-
-
-2.程序的执行方式计算机：运行二进制命令
-编程语言：
-
-低级：汇编
-
-高级：
-
-
-编译：高级语言–&gt;编译器–&gt;目标代码 (由程序员完成编译器翻译过程，安全性相对好)
-
-java，C#
-
-解释：高级语言–&gt;解释器–&gt;机器代码 （由电脑完成解释器翻译过程，安全性不如编译型）
-
-shell，perl，python
-
-shell程序：提供...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "脚本编程">脚本编程</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/08/vim文本编辑器及文本处理常用命令/" >
-                
-                    <span>vim文本编辑器及文本处理常用命令</span>
-            </a>
-            <div class="abstract-content">
-                vim文本编辑器及文本处理常用命令
-Vim是从 vi发展出来的一个文本编辑器。代码补全、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。
-
-一、文本编辑器的种类主要有
-行编辑器：sed
-
-全屏编辑器：nano，vi
-
-vim – Vi Improved（vi文本编辑器的升级版）
-
-
-二、Vim文本编辑器相关命令：Vim是从 vi发展出来的一个文本编辑器。代码补全、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。
-1.vim打开文件：vim[option]…FILE…
-
-+#    打开文件后，让光标处于第#行行首
-
--o     后跟多个文件可水平显示多个窗口...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/08</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "vim">vim</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文本处理">文本处理</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/07/文本三剑客之grep及正则表达式用法/" >
-                
-                    <span>文本三剑客之grep及正则表达式用法</span>
-            </a>
-            <div class="abstract-content">
-                文本三剑客之grep及正则表达式用法一、文本三剑客之grep介绍
-grep （缩写来自Globally search a Regular Expression and Print）是一种强大的文本搜索工具，它能使用特定模式匹配（包括正则表达式）搜索文本，并默认输出匹配行。
-
-1.Linux文本处理三剑客：
-grep：文本过滤工具
-
-sed：文本编辑工具（传送门）
-
-awk：Linux上的实现gawk，文本报告生成器（传送门）
-
-
-grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FILE]…option：
-
--v     显示不被匹配到的行
-
--i ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "grep">grep</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "正则表达式">正则表达式</a>
     
 </div>
                 
@@ -1125,7 +1133,87 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
     
     
     
-    <div class="total-archive"> Total : 16 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
     
     <div class="post-archive">
     
@@ -1137,12 +1225,32 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/在软件RAID搭建LVM逻辑卷进行管理/" >在软件RAID搭建LVM逻辑卷进行管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/Linux系统中RAID及LVM管理/" >Linux系统中RAID及LVM管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2018/04/25/交换分区swap管理及特殊介质的使用/" >交换分区swap管理及特殊介质的使用</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
         </li>
     
     
@@ -1259,6 +1367,20 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
         <span class="sidebar-tag-name" data-tags="yum"><span class="iconfont-archer">&#xe606;</span>yum</span>
     
         <span class="sidebar-tag-name" data-tags="磁盘"><span class="iconfont-archer">&#xe606;</span>磁盘</span>
+    
+        <span class="sidebar-tag-name" data-tags="swap"><span class="iconfont-archer">&#xe606;</span>swap</span>
+    
+        <span class="sidebar-tag-name" data-tags="分区"><span class="iconfont-archer">&#xe606;</span>分区</span>
+    
+        <span class="sidebar-tag-name" data-tags="RAID"><span class="iconfont-archer">&#xe606;</span>RAID</span>
+    
+        <span class="sidebar-tag-name" data-tags="LVM"><span class="iconfont-archer">&#xe606;</span>LVM</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="OSi"><span class="iconfont-archer">&#xe606;</span>OSi</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP/IP"><span class="iconfont-archer">&#xe606;</span>TCP/IP</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
