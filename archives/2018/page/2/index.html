@@ -332,6 +332,44 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >
+                
+                    <span>shell脚本编程基础（2）——新手注意事项及技巧16条</span>
+            </a>
+            <div class="abstract-content">
+                总结了一些shell编程初学者常犯的错误、注意事项及技巧：1.判断变量是否加$
+（1）赋值变量时不加$
+
+（2）如果命令能识别变量就不加\$,如果命令不能识别变量加$
+
+
+2.存放多行字符时”$name”变量外加双引号可保留换行格式
+3.{}和（）中执行命令的区别（）中使用的命令为一次性的，小括号中相当于在子进程中执行命令,小括号继承括号外变量，但不会影响括号外变量
+注：小括号中所说的子进程与常规的子进程不是一回事
+而{ }中使用命令是在当前shell环境中执行，不会不开启子进程，会影响当前shell环境
+例1：x=1;echo $$;(echo $$;echo $x;x=2);echo...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/14</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/12/Linux系统文件查找与解压缩方法/" >
                 
                     <span>Linux系统文件查找与解压缩方法</span>
@@ -704,50 +742,10 @@ Linux用户：Username
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/archives/2018/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2018/page/3/">3</a><a class="extend next" rel="next" href="/archives/2018/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1098,7 +1096,22 @@ Linux用户：Username
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 21 </div>
     
     <div class="post-archive">
     
@@ -1111,6 +1124,11 @@ Linux用户：Username
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/Linux系统网络管理/" >Linux系统网络管理</a>
         </li>
     
     
@@ -1130,12 +1148,12 @@ Linux用户：Username
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
         </li>
     
     

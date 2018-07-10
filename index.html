@@ -347,6 +347,54 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/02/Linux系统网络管理/" >
+                
+                    <span>Linux系统网络管理</span>
+            </a>
+            <div class="abstract-content">
+                一、基本网络配置：将Linux主机接入网络，需要配置网络相关设置
+一般包括以下内容：
+
+主机名
+
+IP/netmask
+
+路由：默认网关
+
+DNS服务器：
+
+主DNS服务器
+
+次DNS服务器
+
+
+网络配置文件：IP、MASK、GW、DNS相关配置文件：/etc/sysconfig/networkscripts/ifcfg-IFACE：
+
+DEVICE=eth0                   针对网卡名称（必须有）
+
+ONTBOOT=yes                 yes表示开机自动启动网卡，默认yes
+
+BOOTPROTO=dhcp         自动获取，生产中一般改为...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >
                 
                     <span>网络基本概念及OSI参考模型、TCP/IP协议简介</span>
@@ -741,48 +789,10 @@ P：打印模式空间开端至\n内容，并...
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/14/shell脚本编程基础（2）——新手注意事项及技巧16条/" >
-                
-                    <span>shell脚本编程基础（2）——新手注意事项及技巧16条</span>
-            </a>
-            <div class="abstract-content">
-                总结了一些shell编程初学者常犯的错误、注意事项及技巧：1.判断变量是否加$
-（1）赋值变量时不加$
-
-（2）如果命令能识别变量就不加\$,如果命令不能识别变量加$
-
-
-2.存放多行字符时”$name”变量外加双引号可保留换行格式
-3.{}和（）中执行命令的区别（）中使用的命令为一次性的，小括号中相当于在子进程中执行命令,小括号继承括号外变量，但不会影响括号外变量
-注：小括号中所说的子进程与常规的子进程不是一回事
-而{ }中使用命令是在当前shell环境中执行，不会不开启子进程，会影响当前shell环境
-例1：x=1;echo $$;(echo $$;echo $x;x=2);echo...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/14</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1213,7 +1223,22 @@ P：打印模式空间开端至\n内容，并...
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 21 </div>
     
     <div class="post-archive">
     
@@ -1226,6 +1251,11 @@ P：打印模式空间开端至\n内容，并...
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/Linux系统网络管理/" >Linux系统网络管理</a>
         </li>
     
     
@@ -1245,12 +1275,12 @@ P：打印模式空间开端至\n内容，并...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/Linux系统磁盘及文件系统管理/" >Linux系统磁盘及文件系统管理</a>
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/搭建自己的yum源服务器/" >搭建自己的yum源服务器</a>
         </li>
     
     

@@ -191,8 +191,10 @@
 </head>
 
     
+        <body class="home-body">
     
-<header class="header">
+    
+<header class="header index-header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -210,21 +212,34 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            TangWei's Studio
+            <!-- 文章页  -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
+            
+            
+                生活并非没有给你选择，你可以选择放弃啊
+            
+            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -332,93 +347,37 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >
+            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
                 
-                    <span>网络基本概念及OSI参考模型、TCP/IP协议简介</span>
+                    <span>Linux文件系统简介</span>
             </a>
             <div class="abstract-content">
-                一、网络概念什么是网络？
-网络是由节点和连线构成，表示诸多对象及其相互联系。在计算机领域中，网络是信息传输、接收、
-共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，从而实现这些资源的共享。
-网络是人类发展史来最重要的发明，提高了科技和人类社会的发展。
-网络应用程序：
+                Linux文件系统简介
+“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
 
-Web 浏览器（Chrome、IE、Firefox等）
+一、目录文件管理
+/                         根目录每个文件和目录都从这里开始
 
-即时消息（QQ、微信、钉钉等）
+/bin                   基本程序，一般为普通用户可执行的程序
 
-电子邮件（Outlook、foxmail 等）
+/boot                 静态文件，系统文件
 
-协作（视频会议、VNC、Netmeeting、WebEx 等）
+/dev                  存放硬件设备文件
 
-web网络服务（apache,nginx,IIS）
+/etc                   存放配置文件
 
-文件网络服务（ftp,nfs,samba）
-
-数据库服...
+/lib64          ...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "OSi">OSi</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/02/Linux系统网络管理/" >
-                
-                    <span>Linux系统网络管理</span>
-            </a>
-            <div class="abstract-content">
-                一、基本网络配置：将Linux主机接入网络，需要配置网络相关设置
-一般包括以下内容：
-
-主机名
-
-IP/netmask
-
-路由：默认网关
-
-DNS服务器：
-
-主DNS服务器
-
-次DNS服务器
-
-
-网络配置文件：IP、MASK、GW、DNS相关配置文件：/etc/sysconfig/networkscripts/ifcfg-IFACE：
-
-DEVICE=eth0                   针对网卡名称（必须有）
-
-ONTBOOT=yes                 yes表示开机自动启动网卡，默认yes
-
-BOOTPROTO=dhcp         自动获取，生产中一般改为...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
     
 </div>
                 
@@ -427,8 +386,92 @@ BOOTPROTO=dhcp         自动获取，生产中一般改为...
     
     <!-- paginator  -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/page/2/">&#60; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+    
 </main>
             <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" src= /avatar/IMG.JPG >
+    <div class="profile-name">头皮发麻</div>
+    
+    <div class="profile-signature">
+        活着的每一天都是在输，但即便这样我仍然活着
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nbxiaoxiang/nbxiaoxiang.github.io" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href= //www.baidu.com target="_black">百度</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href= //www.google.com target="_black">谷歌</a>
+                    </span>
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href = "/about" >ABOUT ME</a>
+        </div>
+    
+</div>
             
         </div>
         <footer class="footer footer-unloaded">
