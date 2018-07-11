@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>TangWei&#39;s Studio</title>
+    <title>Linux进程监控管理工具详解 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux进程监控管理工具详解</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>TangWei's Studio</a>
 </header>
@@ -210,24 +223,74 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Linux进程监控管理工具详解
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2,302</span> / Reading time: <span class="post-count">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/05</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,129 +390,400 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、top——进程监控工具"><a href="#一、top——进程监控工具" class="headerlink" title="一、top——进程监控工具"></a>一、top——进程监控工具</h3><p>相对于ps而言，ps显示的是某个时间点的进程状态信息，top命令工具类似于windows系统的任务管理器，可以动态的持续监控进程的运行状态<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/top.png" alt="enter image description here"></p>
+<p>每一行的代表的含义为：</p>
+<p>第一行：</p>
+<ul>
+<li><p>1.当前系统时间</p>
+</li>
+<li><p>2.系统已启动的时间</p>
+</li>
+<li><p>3.当前登录用户数</p>
+</li>
+<li><p>4.系统平均负载（1min、5min、15min），超过1表示负载过高</p>
+</li>
+</ul>
+<p>第二行：</p>
+<p>当前进程的总量，以及处于各种状态的进程的数量，要注意最后的zombie，不为0</p>
+<p>要及时查看哪个进程处于僵死状态</p>
+<p>第三行：CPU的整体负载，多核CPU可按1切换不同CPU的负载率</p>
+<ul>
+<li><p>us：user space       用户运行程序占用CPU百分比</p>
+</li>
+<li><p>sy：system     用于运行内核占用CPU百分比</p>
+</li>
+<li><p>ni：nice用户进程空间所改变过优先级的进程占用CPU百分比</p>
+</li>
+<li><p>id：idle   空闲CPU百分比</p>
+</li>
+<li><p>wa：wait to   等待I/O花费时间</p>
+</li>
+<li><p>hi：hardware interrupt 硬件中断占用CPU的百分比</p>
+</li>
+<li><p>si：software interrupt 软件中断占用CPU的百分比</p>
+</li>
+<li><p>st：stolen       被偷走的CPU百分比，一般为虚拟机占用</p>
+</li>
+</ul>
+<p>第四行：表示物理内存的使用情况</p>
+<p>第五行：表示交换分区的使用情况</p>
+<p>第六行：这里默认显示空白，可以输入指令，包括：</p>
+<ul>
+<li><p>P       以占据的CPU百分比大小排序</p>
+</li>
+<li><p>M     以内存占比大小排序</p>
+</li>
+<li><p>T       CPU累加占用时间排序</p>
+</li>
+<li><p>l        是否显示系统负载行</p>
+</li>
+<li><p>t       是否显示进程摘要信息及CPU负载状态</p>
+</li>
+<li><p>1       数字1，平均或单独显示各CPU负载信息</p>
+</li>
+<li><p>m     是否显示内存相关状态信息</p>
+</li>
+<li><p>q       退出</p>
+</li>
+<li><p>s       修改延迟时长</p>
+</li>
+<li><p>k       终止指定进程</p>
+</li>
+</ul>
+<p>top输出下面的部分：</p>
+<ul>
+<li><p>PID   进程ID</p>
+</li>
+<li><p>USER        进程所有者</p>
+</li>
+<li><p>PR    进程优先级，越小优先级越高</p>
+</li>
+<li><p>NI     nice优先级，越小优先级越高</p>
+</li>
+<li><p>VIRT         进程需要占用的内存大小</p>
+</li>
+<li><p>RES  进程当前实际占用内存大小</p>
+</li>
+<li><p>SHR  进程与其他进程恭喜的内存大小</p>
+</li>
+<li><p>S       进程状态</p>
+</li>
+<li><p>%CPU       CPU占有率</p>
+</li>
+<li><p>%MEM     内存使用率</p>
+</li>
+<li><p>TIME+      进行CPU使用时间累加</p>
+</li>
+<li><p>COMMAND 进程或命令名称</p>
+</li>
+</ul>
+<p>二、htop——top增强版进程监控工具<br>htop是top命令工具的增强版，系统默认没有按照，需epel源进行安装<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/htop.png" alt="enter image description here"><br>交互式命令：</p>
+<ul>
+<li><p>u       选择显示指定用户的进程</p>
+</li>
+<li><p>l        显示光标所在进程缩打开的文件列表</p>
+</li>
+<li><p>s       显示光标所在进程执行的系统调用</p>
+</li>
+<li><p>a       绑定进程到指定cpu（退出htop失效）</p>
+</li>
+<li><p>#       快速定位光标至PID为#的进程上</p>
+</li>
+</ul>
+<p>htop支持的一些信息</p>
+<ul>
+<li><p>-d #  延迟时长</p>
+</li>
+<li><p>-u USERNAME：显示指定用户的进程</p>
+</li>
+<li><p>-s COLUMN：根据指定字段进行排序</p>
+</li>
+</ul>
+<h3 id="三、iotop、iostat——磁盘读写监控工具"><a href="#三、iotop、iostat——磁盘读写监控工具" class="headerlink" title="三、iotop、iostat——磁盘读写监控工具"></a>三、iotop、iostat——磁盘读写监控工具</h3><p>iotop命令是一个用来监视磁盘I/O使用状况的top类工具iotop具有与top相似的UI，其</p>
+<p>中包括PID、用户、I/O、进程等相关信息，可查看每个进程是如何使用IO\</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/iotop.png" alt="enter image description here"></p>
+<p>每一行的代表的含义为：</p>
+<p>第一行：Read和Write速率总计</p>
+<p>第二行：实际的Read和Write速率</p>
+<p>第三行：参数如下：</p>
+<ul>
+<li><p>TID                    线程ID（按p切换为进程ID）</p>
+</li>
+<li><p>PRIO                          优先级</p>
+</li>
+<li><p>USER                         用户</p>
+</li>
+<li><p>DISK READ                磁盘读速率</p>
+</li>
+<li><p>DISK WRITE              磁盘写速率</p>
+</li>
+<li><p>SWPIN                       swap交换百分比</p>
+</li>
+<li><p>IO&gt;                    IO等待所占的百分比</p>
+</li>
+<li><p>COMMAND                       线程/进程命令</p>
+</li>
+</ul>
+<p>交互按键</p>
+<p>left和right方向键：改变排序</p>
+<ul>
+<li><p>r：反向排序</p>
+</li>
+<li><p>o：切换至选项–only</p>
+</li>
+<li><p>p：切换至–processes选项</p>
+</li>
+<li><p>a：切换至–accumulated选项</p>
+</li>
+<li><p>q：退出</p>
+</li>
+<li><p>i：改变线程的优先级</p>
+</li>
+</ul>
+<p>iotop支持的选项：</p>
+<ul>
+<li><p>-o, –only         只显示正在产生I/O的进程或线程，除了传参，可以在运行过程中按o生效</p>
+</li>
+<li><p>-b, –batch                非交互模式，一般用来记录日志</p>
+</li>
+<li><p>-n NUM, –iter=NUM      设置监测的次数，默认无限。在非交互模式下很有用</p>
+</li>
+<li><p>-d SEC, –delay=SEC        设置每次监测的间隔，默认1秒，接受非整形数据例如1.1</p>
+</li>
+<li><p>-p PID, –pid=PID     指定监测的进程/线程</p>
+</li>
+<li><p>-u USER, –user=USER    指定监测某个用户产生的I/O</p>
+</li>
+<li><p>-P, –processes                 仅显示进程，默认iotop显示所有线程</p>
+</li>
+<li><p>-a, –accumulated   显示累积的I/O，而不是带宽</p>
+</li>
+<li><p>-k, –kilobytes          使用kB单位，而不是对人友好的单位。在非交互模式下，脚本编程有用</p>
+</li>
+<li><p>-t, –time                 加上时间戳，非交互非模式</p>
+</li>
+<li><p>-q, –quiet                禁止头几行，非交互模式，有三种指定方式</p>
+</li>
+<li><p>-q             只在第一次监测时显示列名</p>
+</li>
+<li><p>-qq          永远不显示列名</p>
+</li>
+<li><p>-qqq                 永远不显示I/O汇总</p>
+</li>
+</ul>
+<p>iostat                统计cpu和设备IO信息<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/iostat.png" alt="enter image description here"></p>
+<p>第一段显示：内核版本（主机名） 当前日期  架构类型  核心数</p>
+<p>第二段显示：cpu平均利用率</p>
+<p>第三段显示：磁盘读写速度（kb/s）</p>
+<p>四、vmstat——虚拟内存统计工具<br>通过top、htop我们可以获得一些进程对系统资源的使用情况，而vmstat则可以通过</p>
+<p>内存、磁盘、网络、CPU来动态显示系统资源的使用情况。</p>
+<p>格式：vmstat [options][delay [count]]</p>
+<p>选项：</p>
+<ul>
+<li><p>-s              显示内存的统计数据</p>
+</li>
+<li><p>-d              显示磁盘的统计数据</p>
+</li>
+</ul>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/vmstat.png" alt="enter image description here"></p>
+<p>vmstat输出含义：</p>
+<p>procs：</p>
+<ul>
+<li><p>r：可运行进程的个数，和核心数有关</p>
+</li>
+<li><p>b：处于不可终端睡眠状态</p>
+</li>
+</ul>
+<p>memory：</p>
+<ul>
+<li><p>swpd：交换内存的使用总量</p>
+</li>
+<li><p>free：空闲物理内存总量</p>
+</li>
+<li><p>buffer：用于buffer的内存总量</p>
+</li>
+<li><p>cache：用于cache的内存总量</p>
+</li>
+</ul>
+<p>swap：</p>
+<ul>
+<li><p>si：从磁盘交换进内存的数据速率（kb/s）</p>
+</li>
+<li><p>so：从内存交换至磁盘的数据速率（kb/s）</p>
+</li>
+</ul>
+<p>io：</p>
+<ul>
+<li><p>bi：从块设备读入数据到系统的速率（kb/s）</p>
+</li>
+<li><p>bo：保存数据至块设备的速率（kb/s）</p>
+</li>
+</ul>
+<p>system：</p>
+<ul>
+<li><p>in：interrupts 中断速率，包括时钟</p>
+</li>
+<li><p>cs：进程切换速率</p>
+</li>
+</ul>
+<p>cpu：</p>
+<ul>
+<li><p>us：user space       用户运行程序占用CPU百分比</p>
+</li>
+<li><p>sy：system     用于运行内核占用CPU百分比</p>
+</li>
+<li><p>id：idle   空闲CPU百分比</p>
+</li>
+<li><p>wa：wait to   等待I/O花费时间</p>
+</li>
+<li><p>st：stolen       被偷走的CPU百分比，一般为虚拟机占用</p>
+</li>
+</ul>
+<h3 id="五、glances——可跨平台系统监控工具"><a href="#五、glances——可跨平台系统监控工具" class="headerlink" title="五、glances——可跨平台系统监控工具"></a>五、glances——可跨平台系统监控工具</h3><p>glances是一款系统监视工具，能够监视CPU、负载、内存、磁盘I/O、网络流量、文件</p>
+<p>系统、系统温度等信息。centos系统默认不安装glances工具，需手动安装（epel源）</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/glances-1.png" alt="enter image description here"></p>
+<p>glances可提供的监视和分析性能数据功能包括：</p>
+<ul>
+<li><p>1.CPU使用率</p>
+</li>
+<li><p>2.内存使用情况</p>
+</li>
+<li><p>3.内核统计信息和运行队列信息</p>
+</li>
+<li><p>4.磁盘I/O速度、传输和读/写比率</p>
+</li>
+<li><p>5.文件系统中的可用空间</p>
+</li>
+<li><p>6.磁盘适配器</p>
+</li>
+<li><p>7.网络I/O速度、传输和读/写比率</p>
+</li>
+<li><p>8.页面空间和页面速度</p>
+</li>
+<li><p>9.消耗资源最多的进程</p>
+</li>
+<li><p>10.计算机信息和系统资源</p>
+</li>
+</ul>
+<p>常用选项：</p>
+<ul>
+<li><p>-b： 以Byte为单位显示网卡数据速率</p>
+</li>
+<li><p>-d： 关闭磁盘I/O模块</p>
+</li>
+<li><p>-f： /path/to/somefile: 设定输入文件位置</p>
+</li>
+<li><p>-o： {HTML|CSV}：输出格式</p>
+</li>
+<li><p>-m： 禁用mount模块</p>
+</li>
+<li><p>-n： 禁用网络模块</p>
+</li>
+<li><p>-t #： 延迟时间间隔</p>
+</li>
+<li><p>-1：  每个CPU的相关数据单独显示</p>
+</li>
+</ul>
+<p>支持远程模式，可在C/S模式下运行glances命令：</p>
+<p>注：glances版本最好一样</p>
+<p>服务器模式：</p>
+<p>glances -s -B IPADDR</p>
+<p>IPADDR: 指明监听的本机哪个地址</p>
+<p>客户端模式：</p>
+<p>glances -c IPADDR</p>
+<p>IPADDR：要连入的服务器端地址</p>
+<h3 id="六、dstat——多功能整合系统监控工具"><a href="#六、dstat——多功能整合系统监控工具" class="headerlink" title="六、dstat——多功能整合系统监控工具"></a>六、dstat——多功能整合系统监控工具</h3><p>dstat是一个多功能工具，他包含了vmstat，iostat，netstat这些命令的功能，并</p>
+<p>增加了监控项，变得更加灵活。dstat可用于基准测试和排除故障。</p>
+<p>默认情况下，dstat每秒刷新一次并显示结果，可按ctrl+c退出</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/dstat.png" alt="enter image description here"></p>
+<p>每一区列代表的含义：</p>
+<ul>
+<li><p>total-cpu-usage               CPU使用率</p>
+</li>
+<li><p>dsk/total          磁盘读写总数</p>
+</li>
+<li><p>net/total          网络设备发送和接收数据的总数</p>
+</li>
+<li><p>paging                       系统的分页活动，大多数情况我们希望此处两项为0</p>
+</li>
+<li><p>system                      显示中断和上下文切换。只在有比较基线时才有意义。这一栏较高的统计值通常表示大量进程造成拥塞</p>
+</li>
+</ul>
+<p>dstat支持的选项：</p>
+<ul>
+<li><p>-c     显示cpu性能指标相关统计数据</p>
+</li>
+<li><p>-d     显示磁盘disk相关速率</p>
+</li>
+<li><p>-g     显示page相关速率数据</p>
+</li>
+<li><p>-m    显示内存memory相关统计数据</p>
+</li>
+<li><p>-n     显示网络network相关统计数据</p>
+</li>
+<li><p>-p     显示进程process相关统计数据</p>
+</li>
+<li><p>-r      显示io请求相关统计数据</p>
+</li>
+<li><p>-s      显示swap的相关数据</p>
+</li>
+</ul>
+<p>长选项：</p>
+<ul>
+<li><p>–top-cpu         显示最占用CPU的进程</p>
+</li>
+<li><p>–top-io   显示最占用io的进程</p>
+</li>
+<li><p>–top-mem      显示最占用内存的进程</p>
+</li>
+<li><p>–top-latency  显示延迟最大的进程</p>
+</li>
+<li><p>–tcp                  显示tcp套接字相关数据</p>
+</li>
+<li><p>–udp                 显示udp套接字相关数据</p>
+</li>
+<li><p>–unix                显示unix sock接口相关统计数据</p>
+</li>
+<li><p>–raw                显示raw套接的相关数据</p>
+</li>
+<li><p>–socket 显示套接相关数据</p>
+</li>
+<li><p>–ipc         显示进程间通信相关的速率数据</p>
+</li>
+</ul>
 
-安全3ALinux通过三个机制来保证用户的安全：
-
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/05/Linux系统进程管理及作业操作/" title= Linux系统进程管理及作业操作 >
+                    <div class="prevTitle">Linux系统进程管理及作业操作</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -519,6 +853,24 @@ Linux用户：Username
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、top——进程监控工具"><span class="toc-number">1.</span> <span class="toc-text">一、top——进程监控工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、iotop、iostat——磁盘读写监控工具"><span class="toc-number">2.</span> <span class="toc-text">三、iotop、iostat——磁盘读写监控工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、glances——可跨平台系统监控工具"><span class="toc-number">3.</span> <span class="toc-text">五、glances——可跨平台系统监控工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、dstat——多功能整合系统监控工具"><span class="toc-number">4.</span> <span class="toc-text">六、dstat——多功能整合系统监控工具</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1076,6 +1428,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

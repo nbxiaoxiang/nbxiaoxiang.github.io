@@ -332,6 +332,54 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/03/Linux系统网络管理/" >
+                
+                    <span>Linux系统网络管理</span>
+            </a>
+            <div class="abstract-content">
+                一、基本网络配置：将Linux主机接入网络，需要配置网络相关设置
+一般包括以下内容：
+
+主机名
+
+IP/netmask
+
+路由：默认网关
+
+DNS服务器：
+
+主DNS服务器
+
+次DNS服务器
+
+
+网络配置文件：IP、MASK、GW、DNS相关配置文件：/etc/sysconfig/networkscripts/ifcfg-IFACE：
+
+DEVICE=eth0                   针对网卡名称（必须有）
+
+ONTBOOT=yes                 yes表示开机自动启动网卡，默认yes
+
+BOOTPROTO=dhcp         自动获取，生产中一般改为...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/03</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >
                 
                     <span>网络基本概念及OSI参考模型、TCP/IP协议简介</span>
@@ -371,54 +419,6 @@ web网络服务（apache,nginx,IIS）
         <a class="post-tag" href="javascript:void(0);" data-tags = "OSi">OSi</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/02/Linux系统网络管理/" >
-                
-                    <span>Linux系统网络管理</span>
-            </a>
-            <div class="abstract-content">
-                一、基本网络配置：将Linux主机接入网络，需要配置网络相关设置
-一般包括以下内容：
-
-主机名
-
-IP/netmask
-
-路由：默认网关
-
-DNS服务器：
-
-主DNS服务器
-
-次DNS服务器
-
-
-网络配置文件：IP、MASK、GW、DNS相关配置文件：/etc/sysconfig/networkscripts/ifcfg-IFACE：
-
-DEVICE=eth0                   针对网卡名称（必须有）
-
-ONTBOOT=yes                 yes表示开机自动启动网卡，默认yes
-
-BOOTPROTO=dhcp         自动获取，生产中一般改为...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
     
 </div>
                 
@@ -790,7 +790,19 @@ BOOTPROTO=dhcp         自动获取，生产中一般改为...
     
     
     
-    <div class="total-archive"> Total : 21 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 23 </div>
     
     <div class="post-archive">
     
@@ -802,12 +814,22 @@ BOOTPROTO=dhcp         自动获取，生产中一般改为...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2018/05/05/Linux进程监控管理工具详解/" >Linux进程监控管理工具详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/Linux系统网络管理/" >Linux系统网络管理</a>
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2018/05/05/Linux系统进程管理及作业操作/" >Linux系统进程管理及作业操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/Linux系统网络管理/" >Linux系统网络管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
         </li>
     
     
@@ -963,6 +985,10 @@ BOOTPROTO=dhcp         自动获取，生产中一般改为...
         <span class="sidebar-tag-name" data-tags="OSi"><span class="iconfont-archer">&#xe606;</span>OSi</span>
     
         <span class="sidebar-tag-name" data-tags="TCP/IP"><span class="iconfont-archer">&#xe606;</span>TCP/IP</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程"><span class="iconfont-archer">&#xe606;</span>进程</span>
+    
+        <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

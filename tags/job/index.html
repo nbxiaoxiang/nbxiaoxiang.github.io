@@ -332,112 +332,37 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
+            <a class="abstract-title" href = "/2018/05/05/Linux系统进程管理及作业操作/" >
                 
-                    <span>Linux用户与组管理详解</span>
+                    <span>Linux系统进程管理及作业操作</span>
             </a>
             <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
+                一、进程相关概念：进程是正在运行的程序实体，并且包括这个运行的程序中占据的所有系统资源，比如说CPU，IO,内存，网络资源等。通过学习Linux系统进程管理来协调多道程序之间的关系，使CPU得到充分的利用。
+进程和程序的区别是什么？
+进程是一个动态的概念，当用户把一个程序或命令执行起来的时候，才有进程的概念，系统会自动分配一个编号PID给进程。
+程序是一个静态的概念，表现为一个文件
+进程的分类：根据进程与系统终端的关系：
 
-安全3ALinux通过三个机制来保证用户的安全：
+（1）守护进程：在系统引导过程中启动的进程，即跟终端无关的进程。
 
-Authentication：认证
-
-Authorization：授权
-
-Accouting|Audition：审计
+（2）前台进程：跟终端相关，通过终端启动的进程；
 
 
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
+注：守护进程和前台进程可相互转化
+根据进程占...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/05</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "job">job</a>
     
 </div>
                 
@@ -445,10 +370,6 @@ Linux用户：Username
         </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
     
 </main>
             <!-- profile -->

@@ -332,7 +332,91 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/02/Linux系统网络管理/" >
+            <a class="abstract-title" href = "/2018/05/05/Linux进程监控管理工具详解/" >
+                
+                    <span>Linux进程监控管理工具详解</span>
+            </a>
+            <div class="abstract-content">
+                一、top——进程监控工具相对于ps而言，ps显示的是某个时间点的进程状态信息，top命令工具类似于windows系统的任务管理器，可以动态的持续监控进程的运行状态
+每一行的代表的含义为：
+第一行：
+
+1.当前系统时间
+
+2.系统已启动的时间
+
+3.当前登录用户数
+
+4.系统平均负载（1min、5min、15min），超过1表示负载过高
+
+
+第二行：
+当前进程的总量，以及处于各种状态的进程的数量，要注意最后的zombie，不为0
+要及时查看哪个进程处于僵死状态
+第三行：CPU的整体负载，多核CPU可按1切换不同CPU的负载率
+
+us：user space       用户运行程序占用CP...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/05</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/05/Linux系统进程管理及作业操作/" >
+                
+                    <span>Linux系统进程管理及作业操作</span>
+            </a>
+            <div class="abstract-content">
+                一、进程相关概念：进程是正在运行的程序实体，并且包括这个运行的程序中占据的所有系统资源，比如说CPU，IO,内存，网络资源等。通过学习Linux系统进程管理来协调多道程序之间的关系，使CPU得到充分的利用。
+进程和程序的区别是什么？
+进程是一个动态的概念，当用户把一个程序或命令执行起来的时候，才有进程的概念，系统会自动分配一个编号PID给进程。
+程序是一个静态的概念，表现为一个文件
+进程的分类：根据进程与系统终端的关系：
+
+（1）守护进程：在系统引导过程中启动的进程，即跟终端无关的进程。
+
+（2）前台进程：跟终端相关，通过终端启动的进程；
+
+
+注：守护进程和前台进程可相互转化
+根据进程占...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/05</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "job">job</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/03/Linux系统网络管理/" >
                 
                     <span>Linux系统网络管理</span>
             </a>
@@ -364,7 +448,7 @@ BOOTPROTO=dhcp         自动获取，生产中一般改为...
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/03</span>
                 </div>
                 <!-- tags  -->
                 
@@ -790,7 +874,19 @@ web网络服务（apache,nginx,IIS）
     
     
     
-    <div class="total-archive"> Total : 21 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 23 </div>
     
     <div class="post-archive">
     
@@ -802,12 +898,22 @@ web网络服务（apache,nginx,IIS）
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2018/05/05/Linux进程监控管理工具详解/" >Linux进程监控管理工具详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/Linux系统网络管理/" >Linux系统网络管理</a>
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2018/05/05/Linux系统进程管理及作业操作/" >Linux系统进程管理及作业操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/Linux系统网络管理/" >Linux系统网络管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >网络基本概念及OSI参考模型、TCP/IP协议简介</a>
         </li>
     
     
@@ -963,6 +1069,10 @@ web网络服务（apache,nginx,IIS）
         <span class="sidebar-tag-name" data-tags="OSi"><span class="iconfont-archer">&#xe606;</span>OSi</span>
     
         <span class="sidebar-tag-name" data-tags="TCP/IP"><span class="iconfont-archer">&#xe606;</span>TCP/IP</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程"><span class="iconfont-archer">&#xe606;</span>进程</span>
+    
+        <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>TangWei&#39;s Studio</title>
+    <title>Linux系统进程管理及作业操作 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux系统进程管理及作业操作</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>TangWei's Studio</a>
 </header>
@@ -210,24 +223,76 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Linux系统进程管理及作业操作
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "job">job</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2,001</span> / Reading time: <span class="post-count">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/05</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,129 +392,322 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
-                
-                    <span>Linux用户与组管理详解</span>
-            </a>
-            <div class="abstract-content">
-                Linux用户与组管理详解
-在linux系统上，用户管理是基于用户名和密码的方式进行资源的分配，了解和掌握用户与组的管理是从事运维工作所必须具备的能力，也是将来从事运维行业的重要工作之一。这里我将介绍Linux系统中用户与组的一些相关概念及管理用户与组的常见命令等：
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、进程相关概念："><a href="#一、进程相关概念：" class="headerlink" title="一、进程相关概念："></a>一、进程相关概念：</h3><p>进程是正在运行的程序实体，并且包括这个运行的程序中占据的所有系统资源，比如说CPU，IO,内存，网络资源等。通过学习Linux系统进程管理来协调多道程序之间的关系，使CPU得到充分的利用。</p>
+<p>进程和程序的区别是什么？</p>
+<p>进程是一个动态的概念，当用户把一个程序或命令执行起来的时候，才有进程的概念，系统会自动分配一个编号PID给进程。</p>
+<p>程序是一个静态的概念，表现为一个文件</p>
+<p>进程的分类：<br>根据进程与系统终端的关系：</p>
+<ul>
+<li><p>（1）守护进程：在系统引导过程中启动的进程，即跟终端无关的进程。</p>
+</li>
+<li><p>（2）前台进程：跟终端相关，通过终端启动的进程；</p>
+</li>
+</ul>
+<p>注：守护进程和前台进程可相互转化</p>
+<p>根据进程占用资源的多少分为：</p>
+<ul>
+<li><p>（1）CPU密集型：对cpu占用率高的进程</p>
+</li>
+<li><p>（2）IO密集型：占用磁盘读写高的进程</p>
+</li>
+</ul>
+<p>进程的状态：<br>进程在被内核调度过程中的状态可分为很多种：</p>
+<ul>
+<li><p>1.运行态：running 进程正在运行中</p>
+</li>
+<li><p>2.就绪态：ready</p>
+</li>
+<li><p>3.睡眠态：sleeping</p>
+</li>
+<li><p>可中断睡眠：interruptible  大部分进程处于此状态，随时可唤醒</p>
+</li>
+<li><p>不可中断睡眠：uninterruptible</p>
+</li>
+<li><p>4.僵尸态：zombie 找不到归属的进程，或父进程已不存在</p>
+</li>
+<li><p>5.停止态：stopped 不可被调度并运行</p>
+</li>
+</ul>
+<p>进程优先级<br>进程优先级：</p>
+<p>系统优先级：数字越小，优先级越高</p>
+<p>0-139（CentOS4,5）</p>
+<p>各有140个运行队列和过期队列</p>
+<p>0-98，99（CentOS6）</p>
+<p>实时优先级: 99-0 值最大优先级最高</p>
+<p>nice值：-20到19，对应系统优先级100-139或99</p>
+<p>Big O：时间复杂度，用时和规模的关系（越往左越好）</p>
+<p>O(1), O(logn), O(n)线性, O(n^2)抛物线, O(2^n)</p>
+<p>进程内存：</p>
+<ul>
+<li><p>Page Frame: 页框，用存储页面数据，存储Page 4k</p>
+</li>
+<li><p>LRU：Least Recently Used 近期最少使用算法,释放内存</p>
+</li>
+</ul>
+<p>物理地址空间和线性地址空间</p>
+<ul>
+<li><p>MMU：Memory Management Unit负责转换线性和物理地址</p>
+</li>
+<li><p>TLB:Translation Lookaside Buffer 翻译后备缓冲器,用于保存虚拟地址和物理地址</p>
+</li>
+</ul>
+<p>映射关系的缓存</p>
+<ul>
+<li><p>IPC: Inter Process Communication</p>
+</li>
+<li><p>同一主机: signal:信号</p>
+</li>
+<li><p>shm: shared memory</p>
+</li>
+<li><p>semaphore:信号量，一种计数器</p>
+</li>
+<li><p>不同主机：socket: IP和端口号</p>
+</li>
+<li><p>RPC: remote procedure call       远程过程调用</p>
+</li>
+<li><p>MQ：消息队列，Kafka，ActiveMQ</p>
+</li>
+</ul>
+<h3 id="二、信号操作管理"><a href="#二、信号操作管理" class="headerlink" title="二、信号操作管理"></a>二、信号操作管理</h3><p>我们指定同一主机间的程序是通过信号来进行通讯的，那么我们也可以通过发送信号的方式对进程进行管理。</p>
+<p>使用kill  -l 命令可以查看当前支持的信号类型：<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/%E4%BF%A1%E5%8F%B7.png" alt="enter image description here"></p>
+<p>信号的表示方式：</p>
+<ul>
+<li><p>（1）数字表示：1,2,9</p>
+</li>
+<li><p>（2）完整名称：SIGHUP</p>
+</li>
+<li><p>（3）简写名称：HUP</p>
+</li>
+</ul>
+<p>Linux系统支持的型号类型多达60余种，常用信号类型有：</p>
+<ul>
+<li><p>SIGHUP：1，无须关闭进程而让其重新读取配置文件，使新配置生效</p>
+</li>
+<li><p>SIGINT：2，打断正在运行中的进程，相当于Ctrl+c</p>
+</li>
+<li><p>SIGQUIT：3，相当Ctrl+\</p>
+</li>
+<li><p>SIGKILL：9，强制杀死正在运行的进程</p>
+</li>
+<li><p>SIGTERN：15，终止正在运行的进程（kill命令默认信号）</p>
+</li>
+<li><p>SIGCONT：18，继续运行指定进程</p>
+</li>
+<li><p>SIGSTOP：19，后台休眠</p>
+</li>
+</ul>
+<p>信号管理命令<br>常用的信号管理命令有kill，killall，pkill：</p>
+<p>kill命令可用来向进程发送信号指令，以及显示当前系统可用的信号</p>
+<p>kill发送信号格式：</p>
+<p>kill [-SIGNAL] PID</p>
+<p>如：kill -9 123                 强制杀死PID为123的进程</p>
+<p>killall发送信号格式：</p>
+<p>killall [-SIGNAL] PROCESS</p>
+<p>如：kill -9 sleep      强制杀死sleep进程</p>
+<p>注意：kill命令跟PID，killall命令跟进程名</p>
+<p>pkill发送信号格式：</p>
+<p>pkill [options] pattern</p>
+<p>options：</p>
+<ul>
+<li><p>-SIGNAL</p>
+</li>
+<li><p>-u uid                生效者</p>
+</li>
+<li><p>-U uid               真正发起运行命令者</p>
+</li>
+<li><p>-t terminal       与指定终端相关的进程</p>
+</li>
+<li><p>-P pid                显示指定进程的子进程</p>
+</li>
+</ul>
+<p>如：pkill -9 -t tty2  强制杀死tty2终端下的所有进程</p>
+<h3 id="三、作业管理（job-control）"><a href="#三、作业管理（job-control）" class="headerlink" title="三、作业管理（job control）"></a>三、作业管理（job control）</h3><p>我们知道，在登录系统后每一个工作进程都是当前bash的子进程，通过作业管理我们可以实现多个进程同时运行，这里我们要涉及到两个新的名词：前台作业和后台作业</p>
+<ul>
+<li><p>前台作业：通过终端前，且启动后一直占据终端</p>
+</li>
+<li><p>后台作业：可通过终端启动，但启动后即转入后台运行（释放前端）</p>
+</li>
+</ul>
+<p>作业状态切换：<br>作用运行一共有三种状态，分别为：前台执行、后台执行与后台休眠（stoped）</p>
+<p>jobs命令         显示当前作业编号以及作业状态</p>
+<p>让作业运行于后台：</p>
+<ul>
+<li><p>（1）尚未启动的作业：COMMAND &amp;</p>
+</li>
+<li><p>（2）运行中的作业：Ctrl+z，后台休眠状态</p>
+</li>
+</ul>
+<p>将后台休眠|运行作业调回前台运行：</p>
+<p>fg job_num      将作业在前台运行（foreground）</p>
+<p>将后台休眠作业执行后台运行：</p>
+<p>bg job_num     将作业在后台运行（background）</p>
+<p>关闭后台执行：</p>
+<ul>
+<li><p>（1）fg job_num；ctrl+c</p>
+</li>
+<li><p>（2）kill %job_num</p>
+</li>
+</ul>
+<p>并行运行<br>同时运行多个进程，提高效率</p>
+<p>方法1：</p>
+<p>利用脚本</p>
+<p>vi all.sh</p>
+<pre><code>f1.sh&amp;
 
-安全3ALinux通过三个机制来保证用户的安全：
+f2.sh&amp;
 
-Authentication：认证
+f3.sh&amp;
+</code></pre><p>方法2：</p>
+<p>  (CMD1&amp;);(CMD2&amp;);(CMD3&amp;)</p>
+<p>方法3：</p>
+<p>{ CMD1&amp; CMD2&amp; CMD3&amp; }</p>
+<p>执行长时间任务时防止网络中断造成操作中断<br>方法1：剥离命令与终端的联系，终端中断后进程将转移至1进程上，再恢复</p>
+<p>nohup COMMAND &amp;&gt;/dev/null &amp;</p>
+<p>方法2：开启一个screen会话，重新进入后screen -r即可恢复</p>
+<p>screen；COMMAND；screen -r 恢复</p>
+<p>四、Linux进程管理常用命令<br>进程的管理命令有：</p>
+<p>pstree、ps、pidof、pgrep、pkill、pmap、kill、killall、job、bg、fg等</p>
+<p>进程的管理工具：</p>
+<p>top、htop、vmstat、dstat、iostat、glances等（下节介绍）</p>
+<p>ps                   显示进程状态</p>
+<p>BSD选项：</p>
+<ul>
+<li><p>a               所有终端中的进程</p>
+</li>
+<li><p>x                不连接终端的进程</p>
+</li>
+<li><p>u               显示进程所有者的信息</p>
+</li>
+<li><p>f                显示进程树</p>
+</li>
+<li><p>k|–sort 属性 对属性排列，属性前加-表示倒序</p>
+</li>
+<li><p>L       显示支持的属性</p>
+</li>
+</ul>
+<p>显示PID,tty，cmd，cpu占用率，内存占用列表，并按%mem排序</p>
+<ul>
+<li><p>ps xo pid,tty,cmd,%cpu,%mem –sort %mem</p>
+</li>
+<li><p>ps xo pid,tty,cmd,%cpu,%mem k%mem</p>
+</li>
+</ul>
+<p>按%cpu排序，“-”表示倒序</p>
+<p>ps xo pid,tty,cmd,%cpu,%mem –sort -%cpu</p>
+<p>短选项：</p>
+<ul>
+<li><p>-e              显示所有进程</p>
+</li>
+<li><p>-f               显示完整格式程序信息</p>
+</li>
+<li><p>-F              显示更完整格式的进程信息</p>
+</li>
+<li><p>-C              查看指定CMD或脚本的进程，多个命令用“，”分开</p>
+</li>
+</ul>
+<p>显示PID，命令，pri优先级（数字越大，优先级越高），nice优先级，realtime优先级</p>
+<p>ps xo pid,cmd,pri,nice,rtprio</p>
+<p>根据进程编号查询CMD命令</p>
+<ul>
+<li><p>ps -p 3245  -o comm=           查找PID3245对应的命令名称</p>
+</li>
+<li><p>ps -C sleep -o pid=           根据命令查找pid</p>
+</li>
+</ul>
+<p>常用组合：</p>
+<ul>
+<li><p>ps aux                        显示所有进程的详细信息</p>
+</li>
+<li><p>ps -ef                         类似于aux，缺少cpu%，mem%</p>
+</li>
+<li><p>ps -eF</p>
+</li>
+</ul>
+<p>pstree              显示进程树</p>
+<ul>
+<li><p>-p                       显示PID</p>
+</li>
+<li><p>-h                      高亮标注当前使用的进程</p>
+</li>
+</ul>
+<p>pgrep                进程搜索命令，支持正则表达式</p>
+<p>格式：pgrep [options] pattern</p>
+<p>options：</p>
+<ul>
+<li><p>-u uid                effective user,生效者</p>
+</li>
+<li><p>-U uid               real user，真正发起运行命令者</p>
+</li>
+<li><p>-t terminal       与指定终端相关的进程</p>
+</li>
+<li><p>-l               显示进程名</p>
+</li>
+<li><p>-a              显示完整格式的进程名</p>
+</li>
+<li><p>-P pid                显示指定进程的子进程</p>
+</li>
+</ul>
+<p>pidof                 查找正在运行进程的PID</p>
+<p>如：pidof bash                显示bash进程的PID</p>
+<p>uptime 命令</p>
+<p>显示当前时间，系统已启动时间，当前上线人数，系统平均负载（1、5、10分钟，一般不超过1）</p>
+<p>free          显示内存空间使用状态</p>
+<p>options</p>
+<ul>
+<li><p>-b              以字节为单位</p>
+</li>
+<li><p>-m             以MB为单位</p>
+</li>
+<li><p>-g              以GB为单位</p>
+</li>
+<li><p>-h              人类已读格式</p>
+</li>
+</ul>
+<p>pmap       比较专业的查看内存与进程对应关系工具</p>
+<ul>
+<li><p>pmap    12         查看进程号12的内存与进程对应关系</p>
+</li>
+<li><p>-x     显示详细格式的信息</p>
+</li>
+</ul>
 
-Authorization：授权
-
-Accouting|Audition：审计
-
-
-用户user令牌：token
-Linux用户：Username
-管理员：root，UID=0（拥有对系统的最高操作权限）
-普通用户：
-
-系统用户：1-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/带你认识Linux中的通配符/" >
-                
-                    <span>带你认识Linux中的通配符</span>
-            </a>
-            <div class="abstract-content">
-                带你认识Linux中的通配符
-所谓的通配是指：显示以指定条件的文件，英文名为glob。通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-
-通配符是一种特殊语句，用来模糊搜索文件。当查找文件夹时，可以使用它来代替一个或多个真正字符它使得文件管理更加快速，便捷，大大提升了工作效率。
-常用的通配符有  *   ?   []  等（可通过man 7 glob的帮助文档来查看所有通配符）
-1. * 表示任意长度的任意字符例：     ls -d /etc/a*    
-显示/etc目录下所有以a开头的文件与...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "通配符">通配符</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/05/05/Linux进程监控管理工具详解/" title= Linux进程监控管理工具详解 >
+                    <div class="nextTitle">Linux进程监控管理工具详解</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/03/Linux系统网络管理/" title= Linux系统网络管理 >
+                    <div class="prevTitle">Linux系统网络管理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&#60; PREV</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -519,6 +777,24 @@ Linux用户：Username
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、进程相关概念："><span class="toc-number">1.</span> <span class="toc-text">一、进程相关概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、信号操作管理"><span class="toc-number">2.</span> <span class="toc-text">二、信号操作管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、作业管理（job-control）"><span class="toc-number">3.</span> <span class="toc-text">三、作业管理（job control）</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1076,6 +1352,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
