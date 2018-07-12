@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>TangWei&#39;s Studio</title>
+    <title>shell脚本编程基础——循环用法 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">shell脚本编程基础——循环用法</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>TangWei's Studio</a>
 </header>
@@ -210,24 +223,76 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            shell脚本编程基础——循环用法
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,806</span> / Reading time: <span class="post-count">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,320 +392,204 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/08/shell脚本编程基础——循环用法/" >
-                
-                    <span>shell脚本编程基础——循环用法</span>
-            </a>
-            <div class="abstract-content">
-                一、if、case条件判断条件判断if语句：if语句是指编程语言中用来判定所给定的条件是否满足，根据判定的结果（真或假）决定执行给出的两种操作之一。
-if语句格式：if   判断条件1；then
-条件1为真的分支代码
-elif 判断条件2；then
-条件2为真的分支代码
-elif 判断条件3；then
-条件3为真的分支代码
-else
-以上条件都不满足的分支代码
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、if、case条件判断"><a href="#一、if、case条件判断" class="headerlink" title="一、if、case条件判断"></a>一、if、case条件判断</h3><p>条件判断if语句：<br>if语句是指编程语言中用来判定所给定的条件是否满足，根据判定的结果（真或假）决定执行给出的两种操作之一。</p>
+<h4 id="if语句格式："><a href="#if语句格式：" class="headerlink" title="if语句格式："></a>if语句格式：</h4><p>if   判断条件1；then</p>
+<p>条件1为真的分支代码</p>
+<p>elif 判断条件2；then</p>
+<p>条件2为真的分支代码</p>
+<p>elif 判断条件3；then</p>
+<p>条件3为真的分支代码</p>
+<p>else</p>
+<p>以上条件都不满足的分支代码</p>
+<p>fi</p>
+<p>if语句会逐条件的进行判断，当第一次遇到为“真”的条件时，就会执行其分支代码，而后结束整个if语句。</p>
+<h4 id="条件判断case语句："><a href="#条件判断case语句：" class="headerlink" title="条件判断case语句："></a>条件判断case语句：</h4><p>case语句是实现选择结构程序设计的一种语句，比较适合处理离散型变量。</p>
+<p>格式：</p>
+<p>case 变量引用 in</p>
+<p>1|2|3)</p>
+<p>cmd1</p>
+<p>;;</p>
+<p>4|5|6)</p>
+<p>   cmd2</p>
+<p>;;</p>
+<p>7|8|9)</p>
+<p>cmd3</p>
+<p>;;</p>
+<p>*)</p>
+<p>cmd4</p>
+<p>esac</p>
+<p>注意：case支持glob风格的通配符：</p>
+<p>如：*      表示任意长度任意字符</p>
+<p>？    表示任意单个字符</p>
+<p>[]      指定范围内的任意单个字符</p>
+<p>a|b    a或者b</p>
+<h3 id="二、for、while及until循环"><a href="#二、for、while及until循环" class="headerlink" title="二、for、while及until循环"></a>二、for、while及until循环</h3><p>循环执行</p>
+<p>将某代码段重复运行多次</p>
+<p>重复运行多少次</p>
+<p>次数已知</p>
+<p>次数未知</p>
+<p>有进入条件和退出条件</p>
+<p>循环主要语句有：for、whlie、until</p>
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><p>for语句将循环一个列表中的每一个元素执行一次循环体代码，直到列表中元素全部执行过一次。</p>
+<p>一般用于次数预先知道的循环。</p>
+<h5 id="格式1："><a href="#格式1：" class="headerlink" title="格式1："></a>格式1：</h5><p>for 变量名 in 列表；do</p>
+<p>循环体</p>
+<p>done</p>
+<p>其中列表的生成方式有多种：</p>
+<p>1.直接给出列表</p>
+<p>2.整数列表：</p>
+<p>（a）{start..end[..step]}</p>
+<p>（b）$（seq[start[step]end]）</p>
+<p>3.返回列表的命令：</p>
+<p>$（COMMAND）</p>
+<p>4.使用glob，如：*.sh</p>
+<p>5.变量引用：</p>
+<p>\$@,$*等</p>
+<p>执行机制：</p>
+<p>依次将列表中的元素赋值给“变量名”，每次赋值后即执行一次循环体；直到列表中的</p>
+<p>元素全部被执行，循环结束</p>
+<h5 id="格式2：C语言风格"><a href="#格式2：C语言风格" class="headerlink" title="格式2：C语言风格"></a>格式2：C语言风格</h5><p>for ((: for (( exp1; exp2; exp3 )); do COMMANDS; done</p>
+<p>Arithmetic for loop.</p>
+<p>Equivalent to</p>
+<p>(( EXP1 ))</p>
+<p>while (( EXP2 )); do</p>
+<p>COMMANDS</p>
+<p>(( EXP3 ))</p>
+<p>done</p>
+<p>例：利用for循环依次读取列表{1..100}中的内容，并相加，得出1到100的数字之和<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/testfor.png" alt="enter image description here"></p>
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><p>while结构循环为当型循环(when type loop)，一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。</p>
+<p>格式：</p>
+<p>while 循环控制条件；do<br>      循环体</p>
+<p>done</p>
+<p>循环控制条件：进入循环之前，先做一次判断；每次循环之后会再次做判断；当条件为True时，则继续执行循环；直到条件测试状态为false时终止循环。</p>
+<p>例：利用while循环，定义变量i=0，当i小于100时，执行循环，并让变量i每执行一次循环加1，直到i=100时停止循环，得出数字1到100之和<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/testwhile.png" alt="enter image description here"></p>
+<p>while循环的特殊用法（遍历文件的每一行）：</p>
+<p>while read line； do</p>
+<p>  循环体</p>
+<p>done &lt; /PATH/FROM/SOMEFILE</p>
+<p>依次读取/PATH/FROM/SOMEFILE文件中的每一行，且将行赋值给变量line</p>
+<h4 id="for循环与while循环的区别："><a href="#for循环与while循环的区别：" class="headerlink" title="for循环与while循环的区别："></a>for循环与while循环的区别：</h4><p>for循环与while循环是可以相互替代的；比如：</p>
+<p>for i in {1..10}；do</p>
+<p>echo “OK”</p>
+<p>done</p>
+<p>用while语句来写的话：</p>
+<p>i=1</p>
+<p>while [ $i -le 10 ];do</p>
+<p>echo “OK”</p>
+<p>let i++</p>
+<p>done</p>
+<p>两者意思都是打印10次“OK”，那什么时候用for循环，什么时候又用while循环呢？</p>
+<p>for循环用于针对集合中的每个元素的一个代码块，而while循环不断的运行，直到指定的条件不满足为止。</p>
+<p>一般来说：</p>
+<p>for循环比较适合循环次数确定的情况</p>
+<p>while循环适合循环次数不确定的情况</p>
+<h4 id="until循环"><a href="#until循环" class="headerlink" title="until循环"></a>until循环</h4><p>维持循环的也是一个条件表达式，但与while用法正好相反，条件不成立时执行循环体，条件成立时退出循环。</p>
+<p>until 循环控制条件；do</p>
+<p>循环体</p>
+<p>done</p>
+<p>until语句和while语句可相互转化：</p>
+<p>如：until [ test ]；do  等价于 while [ ! test ]；do</p>
+<h3 id="三、循环控制语句continue、break、shift"><a href="#三、循环控制语句continue、break、shift" class="headerlink" title="三、循环控制语句continue、break、shift"></a>三、循环控制语句continue、break、shift</h3><h4 id="continue语句"><a href="#continue语句" class="headerlink" title="continue语句"></a>continue语句</h4><p>用于循环体中</p>
+<p>continue[N]：提前结束第N层的本轮循环，而直接进入下一轮判断；最内层为第1层</p>
+<p>格式：</p>
+<p>while 循环控制条件；do</p>
+<pre><code>CMD1
+
+…
+
+if 判断条件；then
+
+         continue
+
 fi
-if语句会逐条件的进行判断，当第一次遇到为“真”的条件时，就会执行其分支代码，而后结束整个if语句。
-条件判断case语句：case语句是实现选择结构程序设计的一种语句，比较适合处理离散型变量。
-格式：
-case 变量引用 ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/08</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "shell">shell</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "编程">编程</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/06/Linux系统计划任务/" >
-                
-                    <span>Linux系统计划任务</span>
-            </a>
-            <div class="abstract-content">
-                一、同步服务器时间在进行计划任务之前，一定要确保服务器的时间是准确无误的，否则将造成计划任务失败或者无法达到预期效果，尤其是在大规模的集群环境中，更显得尤为重要，所以我们首先要学会的就是同步服务器时间。
-CentOS6：
 
-ntpdata 172.x.x.x                            将时间与服务器同步
+CMDn
 
-vim /etc/ntp.conf                           修改此文件
+…
+</code></pre><p>done</p>
+<p>例：依次打印数字1至10，当continue出现在5循环中时，直接跳过，继续执行6循环；</p>
+<p>当continue出现在嵌套循环中时，continue 2，提前结束第二次本轮循环，并打印3次</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/testcontinue.png" alt="enter image description here"></p>
+<h4 id="break语句"><a href="#break语句" class="headerlink" title="break语句"></a>break语句</h4><p>用于循环体中</p>
+<p>break[N]：提前结束第N层循环，最内层为第一层</p>
+<p>while 循环控制条件；do</p>
+<pre><code>CMD1
 
-server 172.x.x.x iburst                  加上此行
+…
 
-chkconfig ntpd on              ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "计划任务">计划任务</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/06/TCPIP协议详解/" >
-                
-                    <span>TCP/IP协议详解</span>
-            </a>
-            <div class="abstract-content">
-                一、TCP协议TCP是面向连接的通信协议，通过三次握手建立连接，通讯完成时要拆除连接，由于TCP是面向连接的，所有只能用于端到端的通讯。
-TCP协议的工作特性：
+if 判断条件；then
 
-工作在传输层
+         break
 
-面向连接协议：先协商确保网络状态正常稳定
+fi
 
-全双工协议
+CMDn
 
-半关闭：支持一端关闭，一端传输的半关闭状态
+…
+</code></pre><p>done</p>
+<p>例：break语句将直接结束本轮循环</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/testbreak.png" alt="enter image description here"></p>
+<h4 id="shift命令"><a href="#shift命令" class="headerlink" title="shift命令"></a>shift命令</h4><p>shift[n]：将参量列表list左移指定次数，缺省为左移一次，适合用于处理位置参数</p>
+<p>参量列表list一旦被移动，最左端的那个参数就从列表中删除。while循环遍历位置参量列表时，常用到shift</p>
+<p>例1：利用shifit，每次位置变量向左移动1位，并打印本次全部位置变量，直到位置变量为0个</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/testdoit.png" alt="enter image description here"></p>
+<p>例2：利用shifit，每次变量向左移动一位，并打印本次第一个位置变量，直到位置变量小于1时停止执行</p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/testshifit.png" alt="enter image description here"></p>
+<p>避免出现无限循环：<br>while true；do<br>循环体</p>
+<p>done</p>
+<p>until false；do</p>
+<p> 循环体</p>
+<p>done</p>
+<p>每个程序员都会偶尔不小心而编写出无限循环，在循环退出条件比较微妙时尤其如此，如果程序陷入无限循环，可按ctrl+c退出</p>
+<p>要避免编写无限循环，务必对每个while、until循环进行测试，确保它按预期那样结束。</p>
+<h4 id="select循环与菜单"><a href="#select循环与菜单" class="headerlink" title="select循环与菜单"></a>select循环与菜单</h4><p>select 变量 in list；do</p>
+<p>循环体</p>
+<p>done</p>
+<p>select循环主要用于创建菜单，常与case语句搭配使用，用户输入菜单列表中的某个数字，执行相应的命令select是个无限循环，因此要记住用break命令退出循环，或用户exit命令终止脚本。可按ctrl+c退出循环与for循环类似，可以省略in list，此时使用位置变量。</p>
+<p>相关变量：</p>
+<p>$PS3        menu菜单提示符</p>
+<p>$REPLY    保存用户的输入信息</p>
+<h3 id="四、信号捕捉trap"><a href="#四、信号捕捉trap" class="headerlink" title="四、信号捕捉trap"></a>四、信号捕捉trap</h3><h4 id="trap-‘触发指令’信号"><a href="#trap-‘触发指令’信号" class="headerlink" title="trap ‘触发指令’信号"></a>trap ‘触发指令’信号</h4><p>自定义进程收到系统发出的指定信号好，将执行触发指令，而不会执行原操作</p>
+<h4 id="trap-”-信号"><a href="#trap-”-信号" class="headerlink" title="trap ” 信号"></a>trap ” 信号</h4><p>忽略信号的操作</p>
+<h4 id="trap-‘-‘-信号"><a href="#trap-‘-‘-信号" class="headerlink" title="trap ‘-‘ 信号"></a>trap ‘-‘ 信号</h4><p>恢复原信号的操作</p>
+<h4 id="trap-p"><a href="#trap-p" class="headerlink" title="trap -p"></a>trap -p</h4><p>列出自定义信号操作</p>
+<p>例：打印数字1到10的过程中，trap -p显示自定义信号操作，由于trap ”int捕获了int信号，ctrl+c无法中断显示，且显示自定义输入：press ctrl+c；</p>
+<p>打印数字11到20的过程中，由于trap ”int捕获了int信号，ctrl+c无法中断显示</p>
+<p>打印数字21到30的过程中，trap ‘-‘恢复了原信号操作，顾ctrl+c又可中断显示<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/trap.png" alt="enter image description here"></p>
+<p><img src="http://www.178linux.com/wp-content/uploads/2018/05/trap2.png" alt="enter image description here"></p>
 
-错误检查
-
-将数据打包成段，排序
-
-确认机制：保证数据包可靠
-
-数据恢复，重传
-
-流量控制，滑动窗口
-
-拥塞控制，慢启动和拥塞避免算法
-
-
-TCP协议报文格式：为何TCP协议具有上述工作特性呢，这就要结合TCP报文格式来讲起。
-下图是TCP报文格式图：
-
-具体含义如下：
-1.源端口、目标端口：计算机上的进程要...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/05/Linux进程监控管理工具详解/" >
-                
-                    <span>Linux进程监控管理工具详解</span>
-            </a>
-            <div class="abstract-content">
-                一、top——进程监控工具相对于ps而言，ps显示的是某个时间点的进程状态信息，top命令工具类似于windows系统的任务管理器，可以动态的持续监控进程的运行状态
-每一行的代表的含义为：
-第一行：
-
-1.当前系统时间
-
-2.系统已启动的时间
-
-3.当前登录用户数
-
-4.系统平均负载（1min、5min、15min），超过1表示负载过高
-
-
-第二行：
-当前进程的总量，以及处于各种状态的进程的数量，要注意最后的zombie，不为0
-要及时查看哪个进程处于僵死状态
-第三行：CPU的整体负载，多核CPU可按1切换不同CPU的负载率
-
-us：user space       用户运行程序占用CP...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/05</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/05/Linux系统进程管理及作业操作/" >
-                
-                    <span>Linux系统进程管理及作业操作</span>
-            </a>
-            <div class="abstract-content">
-                一、进程相关概念：进程是正在运行的程序实体，并且包括这个运行的程序中占据的所有系统资源，比如说CPU，IO,内存，网络资源等。通过学习Linux系统进程管理来协调多道程序之间的关系，使CPU得到充分的利用。
-进程和程序的区别是什么？
-进程是一个动态的概念，当用户把一个程序或命令执行起来的时候，才有进程的概念，系统会自动分配一个编号PID给进程。
-程序是一个静态的概念，表现为一个文件
-进程的分类：根据进程与系统终端的关系：
-
-（1）守护进程：在系统引导过程中启动的进程，即跟终端无关的进程。
-
-（2）前台进程：跟终端相关，通过终端启动的进程；
-
-
-注：守护进程和前台进程可相互转化
-根据进程占...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/05</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "进程">进程</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "job">job</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/03/Linux系统网络管理/" >
-                
-                    <span>Linux系统网络管理</span>
-            </a>
-            <div class="abstract-content">
-                一、基本网络配置：将Linux主机接入网络，需要配置网络相关设置
-一般包括以下内容：
-
-主机名
-
-IP/netmask
-
-路由：默认网关
-
-DNS服务器：
-
-主DNS服务器
-
-次DNS服务器
-
-
-网络配置文件：IP、MASK、GW、DNS相关配置文件：/etc/sysconfig/networkscripts/ifcfg-IFACE：
-
-DEVICE=eth0                   针对网卡名称（必须有）
-
-ONTBOOT=yes                 yes表示开机自动启动网卡，默认yes
-
-BOOTPROTO=dhcp         自动获取，生产中一般改为...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/03</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/02/网络基本概念及OSI参考模型、TCPIP协议简介/" >
-                
-                    <span>网络基本概念及OSI参考模型、TCP/IP协议简介</span>
-            </a>
-            <div class="abstract-content">
-                一、网络概念什么是网络？
-网络是由节点和连线构成，表示诸多对象及其相互联系。在计算机领域中，网络是信息传输、接收、
-共享的虚拟平台，通过它把各个点、面、体的信息联系到一起，从而实现这些资源的共享。
-网络是人类发展史来最重要的发明，提高了科技和人类社会的发展。
-网络应用程序：
-
-Web 浏览器（Chrome、IE、Firefox等）
-
-即时消息（QQ、微信、钉钉等）
-
-电子邮件（Outlook、foxmail 等）
-
-协作（视频会议、VNC、Netmeeting、WebEx 等）
-
-web网络服务（apache,nginx,IIS）
-
-文件网络服务（ftp,nfs,samba）
-
-数据库服...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/02</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "OSi">OSi</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/06/Linux系统计划任务/" title= Linux系统计划任务 >
+                    <div class="prevTitle">Linux系统计划任务</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -710,6 +659,24 @@ web网络服务（apache,nginx,IIS）
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、if、case条件判断"><span class="toc-number">1.</span> <span class="toc-text">一、if、case条件判断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#if语句格式："><span class="toc-number">1.1.</span> <span class="toc-text">if语句格式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件判断case语句："><span class="toc-number">1.2.</span> <span class="toc-text">条件判断case语句：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、for、while及until循环"><span class="toc-number">2.</span> <span class="toc-text">二、for、while及until循环</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for循环"><span class="toc-number">2.1.</span> <span class="toc-text">for循环</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#格式1："><span class="toc-number">2.1.1.</span> <span class="toc-text">格式1：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#格式2：C语言风格"><span class="toc-number">2.1.2.</span> <span class="toc-text">格式2：C语言风格</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#while循环"><span class="toc-number">2.2.</span> <span class="toc-text">while循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#for循环与while循环的区别："><span class="toc-number">2.3.</span> <span class="toc-text">for循环与while循环的区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#until循环"><span class="toc-number">2.4.</span> <span class="toc-text">until循环</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、循环控制语句continue、break、shift"><span class="toc-number">3.</span> <span class="toc-text">三、循环控制语句continue、break、shift</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#continue语句"><span class="toc-number">3.1.</span> <span class="toc-text">continue语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break语句"><span class="toc-number">3.2.</span> <span class="toc-text">break语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shift命令"><span class="toc-number">3.3.</span> <span class="toc-text">shift命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select循环与菜单"><span class="toc-number">3.4.</span> <span class="toc-text">select循环与菜单</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、信号捕捉trap"><span class="toc-number">4.</span> <span class="toc-text">四、信号捕捉trap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#trap-‘触发指令’信号"><span class="toc-number">4.1.</span> <span class="toc-text">trap ‘触发指令’信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#trap-”-信号"><span class="toc-number">4.2.</span> <span class="toc-text">trap ” 信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#trap-‘-‘-信号"><span class="toc-number">4.3.</span> <span class="toc-text">trap ‘-‘ 信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#trap-p"><span class="toc-number">4.4.</span> <span class="toc-text">trap -p</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1327,6 +1294,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
