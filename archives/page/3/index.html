@@ -332,6 +332,85 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/04/Linux文件权限详解/" >
+                
+                    <span>Linux文件权限详解</span>
+            </a>
+            <div class="abstract-content">
+                Linux文件权限详解
+Linux系统中不仅是对用户与组根据UID,GID进行了管理，还对Linux系统中的文件，按照用户与组进行分类，针对不同的群体进行了权限管理，用他来确定谁能通过何种方式对文件和目录进行访问和操作。
+
+一、文件权限1.文件的权限针对三类对象进行定义
+r：读取文件内容
+
+w：修改文件内容
+
+x：执行权限对除二进制程序以外的文件没什么意义
+
+
+2.每个文件针对每类访问者定义了三种主要权限
+r：Read      读
+
+w：Write      写
+
+x：eXecute      执行
+
+
+另 X：针对目录加执行权限，文件不加执行权限（因文件具备执行权限有安全隐患）
+注意...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件权限">文件权限</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/03/Linux用户与组管理命令的易混淆点和重合点/" >
+                
+                    <span>Linux用户与组管理命令的易混淆点和重合点</span>
+            </a>
+            <div class="abstract-content">
+                Linux用户与组管理命令的易混淆点和重合点
+Linux用户与组的管理命令主要有useradd、usermod、userdel、groupadd、groupmod、groupdel、groupmems、gpasswd、passwd、newgrp等等（详见上篇Linux用户与组的管理详解），其中每条命令也都有很多的可选项，对于初学者来说很容易造成混淆；此外，这些命令之间有很多相重合的用法，即：拥有多种命令可实现相同的需求的情况。
+
+一、易混淆点：关于GID的改变1.改变一个用户的gidusermod -g
+
+[root@CentOS6 ~]#id wangx
+
+uid=1666(wangx...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/03</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "用户与组">用户与组</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/02/Linux用户与组管理详解/" >
                 
                     <span>Linux用户与组管理详解</span>
@@ -825,7 +904,7 @@ Linux用户：Username
     
     
     
-    <div class="total-archive"> Total : 23 </div>
+    <div class="total-archive"> Total : 25 </div>
     
     <div class="post-archive">
     
@@ -834,6 +913,16 @@ Linux用户：Username
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/Linux系统计划任务/" >Linux系统计划任务</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/TCPIP协议详解/" >TCP/IP协议详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1012,6 +1101,8 @@ Linux用户：Username
         <span class="sidebar-tag-name" data-tags="进程"><span class="iconfont-archer">&#xe606;</span>进程</span>
     
         <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
+    
+        <span class="sidebar-tag-name" data-tags="计划任务"><span class="iconfont-archer">&#xe606;</span>计划任务</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

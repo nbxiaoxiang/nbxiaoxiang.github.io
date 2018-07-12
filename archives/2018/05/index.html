@@ -332,6 +332,95 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/06/Linux系统计划任务/" >
+                
+                    <span>Linux系统计划任务</span>
+            </a>
+            <div class="abstract-content">
+                一、同步服务器时间在进行计划任务之前，一定要确保服务器的时间是准确无误的，否则将造成计划任务失败或者无法达到预期效果，尤其是在大规模的集群环境中，更显得尤为重要，所以我们首先要学会的就是同步服务器时间。
+CentOS6：
+
+ntpdata 172.x.x.x                            将时间与服务器同步
+
+vim /etc/ntp.conf                           修改此文件
+
+server 172.x.x.x iburst                  加上此行
+
+chkconfig ntpd on              ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "计划任务">计划任务</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/06/TCPIP协议详解/" >
+                
+                    <span>TCP/IP协议详解</span>
+            </a>
+            <div class="abstract-content">
+                一、TCP协议TCP是面向连接的通信协议，通过三次握手建立连接，通讯完成时要拆除连接，由于TCP是面向连接的，所有只能用于端到端的通讯。
+TCP协议的工作特性：
+
+工作在传输层
+
+面向连接协议：先协商确保网络状态正常稳定
+
+全双工协议
+
+半关闭：支持一端关闭，一端传输的半关闭状态
+
+错误检查
+
+将数据打包成段，排序
+
+确认机制：保证数据包可靠
+
+数据恢复，重传
+
+流量控制，滑动窗口
+
+拥塞控制，慢启动和拥塞避免算法
+
+
+TCP协议报文格式：为何TCP协议具有上述工作特性呢，这就要结合TCP报文格式来讲起。
+下图是TCP报文格式图：
+
+具体含义如下：
+1.源端口、目标端口：计算机上的进程要...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP/IP">TCP/IP</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/05/Linux进程监控管理工具详解/" >
                 
                     <span>Linux进程监控管理工具详解</span>
@@ -886,7 +975,7 @@ web网络服务（apache,nginx,IIS）
     
     
     
-    <div class="total-archive"> Total : 23 </div>
+    <div class="total-archive"> Total : 25 </div>
     
     <div class="post-archive">
     
@@ -895,6 +984,16 @@ web网络服务（apache,nginx,IIS）
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/Linux系统计划任务/" >Linux系统计划任务</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/TCPIP协议详解/" >TCP/IP协议详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1073,6 +1172,8 @@ web网络服务（apache,nginx,IIS）
         <span class="sidebar-tag-name" data-tags="进程"><span class="iconfont-archer">&#xe606;</span>进程</span>
     
         <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
+    
+        <span class="sidebar-tag-name" data-tags="计划任务"><span class="iconfont-archer">&#xe606;</span>计划任务</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

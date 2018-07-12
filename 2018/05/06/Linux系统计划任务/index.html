@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>TangWei&#39;s Studio</title>
+    <title>Linux系统计划任务 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >TangWei&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux系统计划任务</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>TangWei's Studio</a>
 </header>
@@ -210,24 +223,74 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Linux系统计划任务
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "计划任务">计划任务</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2,021</span> / Reading time: <span class="post-count">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,109 +390,251 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/20/Linux系统磁盘及文件系统管理/" >
-                
-                    <span>Linux系统磁盘及文件系统管理</span>
-            </a>
-            <div class="abstract-content">
-                一、磁盘基本概念设备文件：Linux中一切皆文件：open（），read（），write（），close（）
-设备类型：
-块设备：block，存储单位“块”，磁盘
+            <main class="main post-page">
+    <article class="article-entry">
+        <h3 id="一、同步服务器时间"><a href="#一、同步服务器时间" class="headerlink" title="一、同步服务器时间"></a>一、同步服务器时间</h3><p>在进行计划任务之前，一定要确保服务器的时间是准确无误的，否则将造成计划任务失败或者无法达到预期效果，尤其是在大规模的集群环境中，更显得尤为重要，所以我们首先要学会的就是同步服务器时间。</p>
+<p>CentOS6：</p>
+<ul>
+<li><p>ntpdata 172.x.x.x                            将时间与服务器同步</p>
+</li>
+<li><p>vim /etc/ntp.conf                           修改此文件</p>
+</li>
+<li><p>server 172.x.x.x iburst                  加上此行</p>
+</li>
+<li><p>chkconfig ntpd on                           下次启动自动打开ntpd服务</p>
+</li>
+<li><p>service ntpd start                           打开ntpd服务</p>
+</li>
+<li><p>service ntpd status                        检查ntpd服务状态</p>
+</li>
+</ul>
+<p>CentOS7：</p>
+<ul>
+<li><p>ntpdata 172.x.x.x                            将时间与服务器时间同步</p>
+</li>
+<li><p>vim /etc/chrony.conf                     修改此文件</p>
+</li>
+<li><p>server 172.x.x.x iburst                   加上此行</p>
+</li>
+<li><p>systemctl enable chronyd              下次启动自动打开chronyd服务</p>
+</li>
+<li><p>systemctl start chronyd                 打开chronyd服务</p>
+</li>
+<li><p>systemctl status chronyd               检查chronyd服务状态</p>
+</li>
+</ul>
+<p>至此，服务器时间同步就算是完成了！</p>
+<h3 id="二、执行一次性计划任务——at"><a href="#二、执行一次性计划任务——at" class="headerlink" title="二、执行一次性计划任务——at"></a>二、执行一次性计划任务——at</h3><p>Linux任务计划、周期性任务执行</p>
+<p>未来的某时间点执行一次任务</p>
+<p>   at</p>
+<p>batch：系统自行选择空闲时间去执行此处指定的任务</p>
+<p>周期性运行某任务</p>
+<p>   cron<br>使用at命令前，先确认at服务是否处于运行状态</p>
+<p>Centos6：</p>
+<p>确认当前运行级别处于on状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run level</span><br><span class="line"></span><br><span class="line">chkconfig –list atd</span><br></pre></td></tr></table></figure>
+<p>如果服务未开启，请开启atd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service atd start</span><br></pre></td></tr></table></figure>
+<p>centos7：</p>
+<p>确认处于active（running）状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status atd</span><br></pre></td></tr></table></figure>
+<p>如果服务未开启，请开启atd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start atd</span><br></pre></td></tr></table></figure>
+<p>at<br>格式：at [options] TIME   最后Ctrl+d结束输出</p>
+<p>options：</p>
+<ul>
+<li><p>-l      显示所有计划任务列表,同atq命令</p>
+</li>
+<li><p>-d #  删除第#个计划任务，同atrm命令</p>
+</li>
+<li><p>-c #  查看具体作用任务</p>
+</li>
+<li><p>-m    强制发邮件</p>
+</li>
+<li><p>-f /path/from/somefile  草丛指定文件中读取任务</p>
+</li>
+</ul>
+<p>TIME：</p>
+<ul>
+<li><p>HH：MM [YYYY-mm-dd]</p>
+</li>
+<li><p>noon,midnight,teatime （4pm）</p>
+</li>
+<li><p>tomorrow</p>
+</li>
+<li><p>now+#{minute，hours，days，weeks}</p>
+</li>
+</ul>
+<p>HH：MM  02：00</p>
+<p>  在今日HH：MM进行，若该时刻已过，则明天此时执行任务</p>
+<p>HH：MM YYYY-mm-dd</p>
+<p>  规定在某年某月某一天的某时刻执行任务</p>
+<p>HH：MM[am|pm][month][date]</p>
+<p>04pm March 17</p>
+<p>17:20 tomorrow</p>
+<p>HH：MM[am|pm]+number[minutes|hours|days|weeks]</p>
+<p>在某个时间点再加几个时间后才执行任务</p>
+<p>now + 5minutes</p>
+<p>02pm + 3days</p>
+<p>注意：计划任务中的标准输出不显示在终端，将会以邮件方式发送至邮箱，所以执行计划任务最好</p>
+<p>将标准输出全部重定向到/dev/null，否则会产生大量垃圾邮件</p>
+<p>at执行方式：</p>
+<h4 id="方法1：交互式"><a href="#方法1：交互式" class="headerlink" title="方法1：交互式"></a>方法1：交互式</h4><p>例：at</p>
+<p>at 15:00  创建一个15:00的计划任务</p>
+<p>poweroff                  输入计划命令</p>
+<p>Ctrl+d               结束输出</p>
+<h4 id="方法2：输入重定向"><a href="#方法2：输入重定向" class="headerlink" title="方法2：输入重定向"></a>方法2：输入重定向</h4><p>例：at 18:00 &lt;&lt; EOF</p>
+<p>shutdown</p>
+<p>EOF</p>
+<h4 id="方法3：at-f-文件"><a href="#方法3：at-f-文件" class="headerlink" title="方法3：at -f 文件"></a>方法3：at -f 文件</h4><p>例：echo “hello” &gt; /data/f1</p>
+<p>at 19:00 -f /data/f1</p>
+<h4 id="at任务队列存放在-var-spool-at目录中，任务执行后消失。"><a href="#at任务队列存放在-var-spool-at目录中，任务执行后消失。" class="headerlink" title="at任务队列存放在/var/spool/at目录中，任务执行后消失。"></a>at任务队列存放在/var/spool/at目录中，任务执行后消失。</h4><h4 id="at任务的黑名单（deny）、白名单（allow）文件："><a href="#at任务的黑名单（deny）、白名单（allow）文件：" class="headerlink" title="at任务的黑名单（deny）、白名单（allow）文件："></a>at任务的黑名单（deny）、白名单（allow）文件：</h4><p>系统默认只有黑名单文件/etc/at.deny，没有白名单文件/etc/at.allow</p>
+<p>/etc/at.deny    黑名单文件，放入文件中的用户将不能执行at任务计划</p>
+<p>/etc/at.allow  白名单文件，当白名单文件存在时，只有白名单中的用户才能使用at。</p>
+<p>白名单文件需手动创建，优先级高于黑名单</p>
+<p>如果黑、白名单文件包含同一用户，将优先看白名单，可以使用at计划任务</p>
+<p>如果黑、白名单文件都删除，将只有root账号可以使用at计划任务。</p>
+<h3 id="三、执行周期性的计划任务——crond"><a href="#三、执行周期性的计划任务——crond" class="headerlink" title="三、执行周期性的计划任务——crond"></a>三、执行周期性的计划任务——crond</h3><p>使用crond周期任务计划前，先确认crond服务是否处于运行状态</p>
+<p>Centos6：</p>
+<p>确认处于active（running）状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service crond status</span><br></pre></td></tr></table></figure>
+<p>如果服务未开启，请开启crond服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service crond start</span><br></pre></td></tr></table></figure>
+<p>centos7：</p>
+<p>确认处于active（running）状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status crond</span><br></pre></td></tr></table></figure>
+<p>如果服务未开启，请开启crond服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start crond</span><br></pre></td></tr></table></figure>
+<p>相关文件：</p>
+<ul>
+<li><p>/etc/crontab          系统周期性任务计划文件（root only）</p>
+</li>
+<li><p>/var/spool/cron/         给用户创建周期计划的目录</p>
+</li>
+<li><p>/etc/cron.d/           给存储系统创建周期计划的目录</p>
+</li>
+</ul>
+<ul>
+<li>/var/log/cron          日志文件，可利用日志中的信息恢复误操作内容</li>
+</ul>
+<p>注意：</p>
+<p>（1）在/etc/crontab和/etc/cron.d/的文件中刚创建周期计划任务时，需要比普通用户周期计划目录的格式多添加一个用户名，位于时间和命令之间。</p>
+<p>（2）周期计划任务中的标准输出不显示在终端，将会以邮件方式发送至邮箱，所以执行计划任务建议将标准输出全部重定向到/dev/null，否则会产生大量垃圾邮件</p>
+<p>crontab<br>格式：</p>
+<p>crontab [options] file</p>
+<p>crontab [options]</p>
+<p>options：</p>
+<ul>
+<li><p>-u <user>       指定一个用户</user></p>
+</li>
+<li><p>-e           创建计划任务</p>
+</li>
+<li><p>-l             列出计划任务列表</p>
+</li>
+<li><p>-r            删除计划任务</p>
+</li>
+<li><p>-i             删除前进行交互式提示</p>
+</li>
+</ul>
+<p>例：</p>
+<p><code>crontab -l -u wang</code>      查看wang用户的计划任务</p>
+<p><code>crontab -r -u wang</code>     删除wang用户的计划任务</p>
+<p>crontab计划任务同at命令一样，也有自己的黑、白名单文件，并且他们的作用是相类似的：</p>
+<p>/etc/cron.deny    黑名单文件，放入文件中的用户将不能执行周期任务计划</p>
+<p>/etc/cron.allow      白名单文件，只有白名单中的用户才能使用cron，需手动创建，优先级高于黑名单</p>
+<p>如果黑、白名单文件都删除，将只有root账号可以使用周期计划任务。</p>
+<p>创建周期任务的两种方法：</p>
+<h4 id="第一种方法：修改-etc-crontab-（rootonly）"><a href="#第一种方法：修改-etc-crontab-（rootonly）" class="headerlink" title="第一种方法：修改/etc/crontab  （rootonly）"></a>第一种方法：修改/etc/crontab  （rootonly）</h4><p>/etc/crontab 计划任务参考格式</p>
+<p># Example of job definition:</p>
+<p># .—————- minute (0 – 59)</p>
+<p># |  .————- hour (0 – 23)</p>
+<p># |  |  .———- day of month (1 – 31)</p>
+<p># |  |  |  .——- month (1 – 12) OR jan,feb,mar,apr …</p>
+<p># |  |  |  |  .—- day of week (0 – 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</p>
+<p># |  |  |  |  |</p>
+<p># <em>  </em>  <em>  </em>  * user-name  command to be executed</p>
+<p>*表示每次都执行</p>
+<p>*/10表示每10分钟执行一次</p>
+<p>例如：</p>
+<p># run five minutes after midnight, every day</p>
+<p>每五分钟执行一次：</p>
+<p>5 0 <em> </em> *       \$HOME/bin/daily.job &gt;&gt; $HOME/tmp/out 2&gt;&amp;1</p>
+<p># run at 2:15pm on the first of every month — output mailed to paul</p>
+<p>每个月第一天的14:15分执行一次，并发送邮件</p>
+<p>15 14 1 <em> </em>     $HOME/bin/monthly</p>
+<p># run at 10 pm on weekdays, annoy Joe</p>
+<p>每个工作日晚上22：00，发送邮件给Joe</p>
+<p>0 22 <em> </em> 1-5    mail -s “It’s 10pm” joe%Joe,%%Where are your kids?%</p>
+<p>每间隔2小时的23分钟，打印一次，am0:23，am2:23，am4:23…，每天</p>
+<p>23 0-23/2 <em> </em> * echo “run 23 minutes after midn, 2am, 4am …, everyday”</p>
+<p>每个星期日的04:05，打印一次</p>
+<p>5 4 <em> </em> sun     echo “run at 5 after 4 every sunday”</p>
+<p>注意：</p>
+<p>30 4 1,15 * 5     表示每月1,15日加每周五执行，或关系</p>
+<p>若想执行且关系，加脚本判断</p>
+<p>特殊的时间格式：</p>
+<p>这些特殊的时间规范可以用来代替一些时段和日期，用@字符作为前缀</p>
+<p>\@reboot         Run once after reboot   下次启动会执行，包括poweroff</p>
+<p>\@yearly          0 0 1 1 *           每年执行一次</p>
+<p>\@annually      0 0 1 1 *           每年执行一次</p>
+<p>\@monthly      0 0 1 <em> </em>           每月执行一次</p>
+<p>\@weekly        0 0 <em> </em> 0           每周执行一次</p>
+<p>\@daily             0 0 <em> </em> *           每天执行一次</p>
+<p>\@hourly          0 <em> </em> <em> </em>           每小时执行一次</p>
+<h4 id="第二种方法：crontab命令创建"><a href="#第二种方法：crontab命令创建" class="headerlink" title="第二种方法：crontab命令创建"></a>第二种方法：crontab命令创建</h4><p>crontab -e       将以vi打开一个空白文件</p>
+<p># Example of job definition:</p>
+<p># .—————- minute (0 – 59)</p>
+<p># |  .————- hour (0 – 23)</p>
+<p># |  |  .———- day of month (1 – 31)</p>
+<p># |  |  |  .——- month (1 – 12) OR jan,feb,mar,apr …</p>
+<p># |  |  |  |  .—- day of week (0 – 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</p>
+<p># |  |  |  |  |</p>
+<p># <em>  </em>  <em>  </em>  *   command to be executed</p>
+<p>不需写用户名，将以当前用户执行周期计划任务</p>
+<p>创建成功后周期计划文件自动放入/var/spool/cron目录</p>
+<h4 id="at和crontab对比："><a href="#at和crontab对比：" class="headerlink" title="at和crontab对比："></a>at和crontab对比：</h4><p>一次性作业使用at</p>
+<p>重复性作业使用crontab</p>
+<p>at                       crontab</p>
+<p>创建任务：    at time                   crontab -e</p>
+<p>任务列表：    at -l                       crontab -l</p>
+<p>查看信息：    at -c #                    N/A</p>
+<p>删除任务：    at -d #                  crontab -r</p>
+<p>修改任务：     N/A                     crontab -e</p>
+<p>注意：（1）默认不显示标准输出和标准错误，会以邮件方式邮寄给用户</p>
+<p>a.COMMAND &gt; /dev/null</p>
+<p>b.COMMAND &amp;&gt; /dev/null</p>
+<p>（2）根用户能够修改其他用户的作业</p>
 
-字符设备：char，存储单位“字符”，键盘
-
-设备文件：关联至一个设备驱动程序，进而能够跟与之对应硬件设备进行通信
-
-
-设备号码：
-主设备号：maj，标识设备类型
-
-次设备号：min，标识同一类型下的不同设备
-
-
-磁盘结构并行：
-
-IDE：133MB/s
-
-SCSI：640MB/s
-
-
-串口：
-
-SATA：6Gbps
-
-SAS：6Gbps
-
-USB：480MB/s
-
-
-硬盘： 机械硬盘（HDD）：传统普通硬盘，主要由：盘片，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "磁盘">磁盘</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/Linux文件系统简介/" >
-                
-                    <span>Linux文件系统简介</span>
-            </a>
-            <div class="abstract-content">
-                Linux文件系统简介
-“一切皆是文件”是Linux基本哲学思想之一，可见文件系统在linux系统中的重要性，学好文件系统将为以后深入研究与学习Linux系统奠定良好的基础。
-
-一、目录文件管理
-/                         根目录每个文件和目录都从这里开始
-
-/bin                   基本程序，一般为普通用户可执行的程序
-
-/boot                 静态文件，系统文件
-
-/dev                  存放硬件设备文件
-
-/etc                   存放配置文件
-
-/lib64          ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件系统">文件系统</a>
-    
-</div>
-                
-            </div>
-        </article>
+    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/06/TCPIP协议详解/" title= TCP/IP协议详解 >
+                    <div class="prevTitle">TCP/IP协议详解</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -499,6 +704,24 @@ USB：480MB/s
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、同步服务器时间"><span class="toc-number">1.</span> <span class="toc-text">一、同步服务器时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、执行一次性计划任务——at"><span class="toc-number">2.</span> <span class="toc-text">二、执行一次性计划任务——at</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法1：交互式"><span class="toc-number">2.1.</span> <span class="toc-text">方法1：交互式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法2：输入重定向"><span class="toc-number">2.2.</span> <span class="toc-text">方法2：输入重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法3：at-f-文件"><span class="toc-number">2.3.</span> <span class="toc-text">方法3：at -f 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#at任务队列存放在-var-spool-at目录中，任务执行后消失。"><span class="toc-number">2.4.</span> <span class="toc-text">at任务队列存放在/var/spool/at目录中，任务执行后消失。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#at任务的黑名单（deny）、白名单（allow）文件："><span class="toc-number">2.5.</span> <span class="toc-text">at任务的黑名单（deny）、白名单（allow）文件：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、执行周期性的计划任务——crond"><span class="toc-number">3.</span> <span class="toc-text">三、执行周期性的计划任务——crond</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一种方法：修改-etc-crontab-（rootonly）"><span class="toc-number">3.1.</span> <span class="toc-text">第一种方法：修改/etc/crontab  （rootonly）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二种方法：crontab命令创建"><span class="toc-number">3.2.</span> <span class="toc-text">第二种方法：crontab命令创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#at和crontab对比："><span class="toc-number">3.3.</span> <span class="toc-text">at和crontab对比：</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1068,6 +1291,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
