@@ -347,6 +347,57 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/25/交换分区swap管理及特殊介质的使用/" >
+                
+                    <span>交换分区swap管理及特殊介质的使用</span>
+            </a>
+            <div class="abstract-content">
+                一、交换分区swap管理：交换分区是系统RAM的补充，相当于Windows系统中的虚拟内存，当系统RAM不够用的时候将使用交换
+分区来代替内存使用。
+基本设置包括：
+
+创建交换分区或者文件
+
+使用mkswap写入特殊签名
+
+在/etc/fstab文件中添加适当的条目
+
+使用swapon -a激活交换分区
+
+
+swapon                     启用交换分区
+格式：swapon [OPTION]…[DEVICE]
+
+-a              激活所有交换分区
+
+-p priority        指定优先级
+
+/etc/fstab:pri=value
+
+
+swap...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/25</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "swap">swap</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "分区">分区</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/20/搭建自己的yum源服务器/" >
                 
                     <span>搭建自己的yum源服务器</span>
@@ -722,49 +773,6 @@ vim – Vi Improved（vi文本编辑器的升级版）
         <a class="post-tag" href="javascript:void(0);" data-tags = "vim">vim</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "文本处理">文本处理</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/07/文本三剑客之grep及正则表达式用法/" >
-                
-                    <span>文本三剑客之grep及正则表达式用法</span>
-            </a>
-            <div class="abstract-content">
-                文本三剑客之grep及正则表达式用法一、文本三剑客之grep介绍
-grep （缩写来自Globally search a Regular Expression and Print）是一种强大的文本搜索工具，它能使用特定模式匹配（包括正则表达式）搜索文本，并默认输出匹配行。
-
-1.Linux文本处理三剑客：
-grep：文本过滤工具
-
-sed：文本编辑工具（传送门）
-
-awk：Linux上的实现gawk，文本报告生成器（传送门）
-
-
-grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FILE]…option：
-
--v     显示不被匹配到的行
-
--i ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "grep">grep</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "正则表达式">正则表达式</a>
     
 </div>
                 
@@ -1275,7 +1283,26 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
     
     
     
-    <div class="total-archive"> Total : 26 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 27 </div>
     
     <div class="post-archive">
     
@@ -1284,6 +1311,11 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2018/05/10/Linux系统启动流程详解/" >Linux系统启动流程详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1479,6 +1511,10 @@ grep，基于行过滤的文本过滤工具格式：grep [OPTION]… PATTERN [FI
         <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
     
         <span class="sidebar-tag-name" data-tags="计划任务"><span class="iconfont-archer">&#xe606;</span>计划任务</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="系统启动"><span class="iconfont-archer">&#xe606;</span>系统启动</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

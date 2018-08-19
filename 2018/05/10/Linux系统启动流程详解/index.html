@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>交换分区swap管理及特殊介质的使用 · TangWei&#39;s Studio</title>
+    <title>Linux系统启动流程详解 · TangWei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >TangWei&#39;s Studio</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">交换分区swap管理及特殊介质的使用</a>
+                <a href="#" class="post-name">Linux系统启动流程详解</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            交换分区swap管理及特殊介质的使用
+            Linux系统启动流程详解
             <!-- 404 -->
             
         </h1>
@@ -258,20 +258,20 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "swap">swap</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "分区">分区</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "系统启动">系统启动</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,554</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">2,340</span> / Reading time: <span class="post-count">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/04/25</span>
+                    <span class="post-intro-time">2018/05/10</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -394,169 +394,284 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h4 id="一、交换分区swap管理："><a href="#一、交换分区swap管理：" class="headerlink" title="一、交换分区swap管理："></a>一、交换分区swap管理：</h4><p>交换分区是系统RAM的补充，相当于Windows系统中的虚拟内存，当系统RAM不够用的时候将使用交换</p>
-<p>分区来代替内存使用。</p>
-<p>基本设置包括：</p>
+        <blockquote>
+<p>Linux系统从按下电源键开始到系统启动要求用户输入用户名，中间究竟发生什么？了解Linux系统的启动流程，不仅有助于我们更加深入的理解linux底层设计理念，更能帮助我们再出现系统启动故障时，迅速排查出故障原因。</p>
+</blockquote>
+<h3 id="一、Linux系统启动流程"><a href="#一、Linux系统启动流程" class="headerlink" title="一、Linux系统启动流程"></a>一、Linux系统启动流程</h3><p>以下是CentOS6版本系统启动流程图：<br><img src="http://www.178linux.com/wp-content/uploads/2018/05/centos6%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B_gaitubao_com_watermark.png" alt="enter image description here"><br>（注：下文中启动流程主要适用于CentOS6之前的版本，7版本变动较大，暂不加入讨论）</p>
+<p>centos6启动流程_gaitubao_com_watermark</p>
+<p>CentOS6启动流程：</p>
 <ul>
-<li><p>创建交换分区或者文件</p>
+<li><p>1.加载BIOS的硬件信息，进行POST加电自检</p>
 </li>
-<li><p>使用mkswap写入特殊签名</p>
+<li><p>2.读取第一个启动设备MBR的引导加载程序(grub)的启动信息</p>
 </li>
-<li><p>在/etc/fstab文件中添加适当的条目</p>
+<li><p>3.加载核心操作系统的核心信息，核心开始解压缩，并尝试驱动所有的硬件设备</p>
 </li>
-<li><p>使用swapon -a激活交换分区</p>
+<li><p>4.核心执行init程序，并获取默认的运行信息</p>
+</li>
+<li><p>5.init程序执行/etc/rc.d/rc.sysinit文件</p>
+</li>
+<li><p>6.启动核心的外挂模块</p>
+</li>
+<li><p>7.init执行运行的各个批处理文件(scripts)</p>
+</li>
+<li><p>8.init执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>9.执行/bin/login程序，等待用户登录</p>
+</li>
+<li><p>10.登录之后开始以Shell控制主机</p>
 </li>
 </ul>
-<p>swapon                     启用交换分区</p>
-<p>格式：swapon [OPTION]…[DEVICE]</p>
+<p>接下来我们对每一项流程详细讲解</p>
+<h4 id="1-POST："><a href="#1-POST：" class="headerlink" title="1.POST："></a>1.POST：</h4><p>Power-On-Self-Test，加电自检，是BIOS功能的一个主要部分。负责完成对CPU、主板、内存、硬盘子系统、显示子系统、串并行接口、键盘、CD-ROM光驱等硬件情况检测。</p>
+<h4 id="2-加载MBR："><a href="#2-加载MBR：" class="headerlink" title="2.加载MBR："></a>2.加载MBR：</h4><p>MBR：Master Boot Record，主引导记录</p>
 <ul>
-<li><p>-a              激活所有交换分区</p>
+<li><p>0磁道0扇区：512bytes</p>
 </li>
-<li><p>-p priority        指定优先级</p>
+<li><p>446bytes：boot loader</p>
 </li>
-<li><p>/etc/fstab:pri=value</p>
+<li><p>64bytes：分区表</p>
 </li>
-</ul>
-<p>swapoff [OPTION]…[DEVICE]       禁用指定交换分区</p>
-<p>swap的优先级<br>可以指定swap分区0到32767的优先级，值越大优先级越高</p>
-<p>系统默认会给没有指定的swap指定一个优先级，从-1开始，每加入一个新的没有指定优先级的swap，</p>
-<p>会给这个优先级减一</p>
-<p>先添加的swap的缺省优先级比较高，除非用户自己指定一个优先级，而用户</p>
-<p>指定的优先级(是正数)永远高于核心缺省指定的优先级(是负数)</p>
-<p>优化性能：分布存放，高性能磁盘存放</p>
-<h5 id="场景1：增加一个新的swap分区"><a href="#场景1：增加一个新的swap分区" class="headerlink" title="场景1：增加一个新的swap分区"></a>场景1：增加一个新的swap分区</h5><h6 id="1-fdisk-dev-sdb-创建新的swap分区，tyep-82-Linux-swap"><a href="#1-fdisk-dev-sdb-创建新的swap分区，tyep-82-Linux-swap" class="headerlink" title="1.fdisk  /dev/sdb                                    创建新的swap分区，tyep=82=Linux swap"></a>1.fdisk  /dev/sdb                                    创建新的swap分区，tyep=82=Linux swap</h6><p>注：如果文件系统分区没有同步成功，需我们手动同步分区</p>
-<p>CentOS5,7版本：partx   -a  /dev/sdb</p>
-<p>CentOS7版本：partprobe  /dev/sdb</p>
-<p><img src="http://www.178linux.com/wp-content/uploads/2018/04/fdisk.png" alt="enter image description here"></p>
-<h6 id="2-mkswap-dev-sdb1-L-swap-sdb2-添加swap文件系统"><a href="#2-mkswap-dev-sdb1-L-swap-sdb2-添加swap文件系统" class="headerlink" title="2.mkswap       /dev/sdb1 -L swap_sdb2                 添加swap文件系统"></a>2.mkswap       /dev/sdb1 -L swap_sdb2                 添加swap文件系统</h6><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/mkswap.png" alt="enter image description here"></p>
-<h6 id="3-vim-etc-fstab"><a href="#3-vim-etc-fstab" class="headerlink" title="3.vim /etc/fstab"></a>3.vim /etc/fstab</h6><p>UUID=xxx          swap    swap        defaults   0       0<br><img src="http://www.178linux.com/wp-content/uploads/2018/04/vim-1.png" alt="enter image description here"></p>
-<h6 id="4-swapon-a-使swap分区生效"><a href="#4-swapon-a-使swap分区生效" class="headerlink" title="4.swapon -a                                       使swap分区生效"></a>4.swapon -a                                       使swap分区生效</h6><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/swapona.png" alt="enter image description here"></p>
-<h6 id="5-swapon-s-查看是否生效"><a href="#5-swapon-s-查看是否生效" class="headerlink" title="5.swapon -s                                       查看是否生效"></a>5.swapon -s                                       查看是否生效</h6><p><img src="http://www.178linux.com/wp-content/uploads/2018/04/swapons.png" alt="enter image description here"></p>
-<h5 id="场景2：使用一个文件当做新的swap分区"><a href="#场景2：使用一个文件当做新的swap分区" class="headerlink" title="场景2：使用一个文件当做新的swap分区"></a>场景2：使用一个文件当做新的swap分区</h5><ul>
-<li><p>1.dd if=/dev/zero of=/swapfile  bs=1024M  count=2      创建一个2G文件</p>
+<li><p>16bytes：标识一个分区（最多4个分区）</p>
 </li>
-<li><p>2.mkswap     /swapfile                                                         添加文件的文件系统为swap</p>
-</li>
-<li><p>blkid  /swapfile                                                                      查看文件系统添加成功</p>
-</li>
-<li><p>3.vim /etc/fstab                                                                   修改/etc/fstab文件</p>
-</li>
-<li><p>/swapfile       swap       swap      defaults      0       0 注：挂载文件名，不能使用UUID  </p>
-</li>
-<li><p>4.swapon -a</p>
-</li>
-<li><p>5.swapon -s</p>
+<li><p>2bytes：55AA（分区标识位）</p>
 </li>
 </ul>
-<h4 id="二、Linux系统光盘使用"><a href="#二、Linux系统光盘使用" class="headerlink" title="二、Linux系统光盘使用"></a>二、Linux系统光盘使用</h4><p>光盘在Linux图形环境下将自动挂载</p>
-<p>否则就必须手动进行挂</p>
-<p>挂载命令：   mount  /dev/cdrom   /mnt/</p>
-<p>ejetc                          卸载或弹出光盘</p>
-<p>创建ISO文件</p>
-<pre><code>cp  -a  /dev/cdrom   /root/centos7.iso
-
-mkisofs  -r  -o  /root/etc.iso     /etc
-</code></pre><p>刻录光盘</p>
-<pre><code>wodim     -v   -eject   centos.iso
-</code></pre><p>mkisofs -r -o /root/etc.iso    /etc</p>
-<p>这种制作光盘方法可作为yum源，但不可做启动光盘</p>
-<p>centos官网<a href="https://wiki.centos.org" target="_blank" rel="noopener">https://wiki.centos.org</a>  可搜索mkdvdiso.sh脚本</p>
-<p>即可引导又可当yum源</p>
-<h4 id="三、Linux系统USB介质使用"><a href="#三、Linux系统USB介质使用" class="headerlink" title="三、Linux系统USB介质使用"></a>三、Linux系统USB介质使用</h4><p>查看USB设备是否识别</p>
-<p>lsusb</p>
-<p>被内核探测为SCSI设备</p>
-<p>/dev/sdaX、/dev/sdbX、或类似的设备文件</p>
-<p>在图形环境中自动挂载</p>
-<p>图标在[计算机]窗口中创建</p>
-<p>挂载在/run/media/<user>/<label></label></user></p>
-<p>手动挂载</p>
-<p>mount /dev/sdb1   /mnt</p>
-<h4 id="四、强大的dd工具"><a href="#四、强大的dd工具" class="headerlink" title="四、强大的dd工具"></a>四、强大的dd工具</h4><p>dd命令：convert and copy a file</p>
-<p>用法：</p>
+<p>bootloader：引导加载器，引导程序</p>
+<p>主要功能有：</p>
 <ul>
-<li><p>dd if=/PATH/FROM/SRC    of=/PATH/TO/DEST</p>
+<li><p>a）识别、加载操作系统中的核心文件，并提交到内存中运行，进而来启动对应操作系统。</p>
 </li>
-<li><p>bs=#：block size, 复制单元大小</p>
-</li>
-<li><p>count=#：                复制多少个bs</p>
-</li>
-<li><p>of=file             写到所命名的文件而不是到标准输出</p>
-</li>
-<li><p>if=file               从所命名文件读取而不是从标准输入</p>
-</li>
-<li><p>bs=size            指定块大小（既是是ibs也是obs)</p>
-</li>
-<li><p>ibs=size           一次读size个byte</p>
-</li>
-<li><p>obs=size                  一次写size个byte</p>
-</li>
-<li><p>cbs=size                   一次转化size个byte</p>
-</li>
-<li><p>skip=blocks             从开头忽略blocks个ibs大小的块</p>
-</li>
-<li><p>seek=blocks            从开头忽略blocks个obs大小的块</p>
-</li>
-<li><p>count=n                   只拷贝n个记录</p>
-</li>
-<li><p>conv=conversion[,conversion…] 用指定的参数转换文件</p>
+<li><p>b）提供菜单信息，并将启动管理功能转交给其他加载程序。</p>
 </li>
 </ul>
-<p>转换参数:</p>
+<p>Linux：GRUB，可引导多种操作系统</p>
+<p>windows：ntloader，只能引导windows系统</p>
+<p>因此建议：同一台电脑装多个操作系统，先装windows，后装Linux</p>
+<h4 id="3-GRUB："><a href="#3-GRUB：" class="headerlink" title="3.GRUB："></a>3.GRUB：</h4><p>grub0.97（老版本）</p>
+<h5 id="第一阶段：MBR的前446字节"><a href="#第一阶段：MBR的前446字节" class="headerlink" title="第一阶段：MBR的前446字节"></a>第一阶段：MBR的前446字节</h5><p>1.5阶段：MBR后续的27个扇区，加载/boot分区文件系统驱动</p>
+<h5 id="第二阶段：识别文件系统，加载-boot-grub目录下的文件（备份gurb的文件）"><a href="#第二阶段：识别文件系统，加载-boot-grub目录下的文件（备份gurb的文件）" class="headerlink" title="第二阶段：识别文件系统，加载/boot/grub目录下的文件（备份gurb的文件）"></a>第二阶段：识别文件系统，加载/boot/grub目录下的文件（备份gurb的文件）</h5><p>注：grup 修复命令依赖于/boot/grub下的文件</p>
+<p>grub-install修复命令不依赖，将自动生产gurb文件下文件，一旦用grub命令修复后，grub-install也将依赖这些文件。</p>
 <ul>
-<li><p>ascii                          转换 EBCDIC 为 ASCII</p>
+<li><p>/boot/grub/grub.conf    grub配置文件</p>
 </li>
-<li><p>ebcdic                      转换 ASCII 为 EBCDIC</p>
+<li><p>default=0                  定义了默认启动项</p>
 </li>
-<li><p>lcase                         把大写字符转换为小写字符</p>
+<li><p>timeout=5                定义了菜单超时时长</p>
 </li>
-<li><p>ucase                       把小写字符转换为大写字符</p>
+<li><p>splashimage=(hd0,0)/grub/splash.xpm.gz    定义了菜单背景图片</p>
 </li>
-<li><p>nocreat           不创建输出文件</p>
+<li><p>password –md5 口令   默认无此行，添加此行后需输入正确口令才能以但用户模式破解root口令可用grub-md5-crypt生产md5口令</p>
 </li>
-<li><p>noerror           出错时不停止</p>
+<li><p>hiddenmenu             默认隐藏菜单</p>
 </li>
-<li><p>notrunc           不截短输出文件</p>
+<li><p>title                   定义了启动菜单，有几个title就有几个启动菜单</p>
 </li>
-<li><p>sync                          把每个输入块填充到ibs个字节，不足部分用空(NUL)字符补齐</p>
+<li><p>root（hd0,0）</p>
+</li>
+<li><p>krenel               定义了内核文件位置，挂载目录</p>
+</li>
+<li><p>initrd                 定义了initramfs文件位置</p>
 </li>
 </ul>
-<p>备份MBR：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/sda of=/tmp/mbr.bak bs=512 count=1</span><br></pre></td></tr></table></figure>
-<p>破坏MBR中的bootloader：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=/dev/sda bs=64 count=1 seek=446</span><br></pre></td></tr></table></figure>
-<p>有一个大与2K的二进制文件fileA。现在想从第64个字节位置开始读取，需要读取的大小是128Byts。</p>
-<p>又有fileB, 想把上面读取到的128Bytes写到第32个字节开始的位置，替换128Bytes，实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=fileA of=fileB bs=1 count=128 skip=63 seek=31 conv=notrunc</span><br></pre></td></tr></table></figure>
-<p>备份：</p>
-<p><code>dd if=/dev/sdx of=/dev/sdy</code>                     将本地的/dev/sdx整盘备份到/dev/sdy</p>
-<p><code>dd if=/dev/sdx of=/path/to/image</code>                 将/dev/sdx全盘数据备份到指定路径的image文件</p>
-<p><code>dd if=/dev/sdx | gzip &gt;/path/to/image.gz</code>   备份/dev/sdx全盘数据，并利用gzip压缩，保存到指定路径</p>
-<p>恢复：</p>
-<p><code>dd if=/path/to/image of=/dev/sdx</code>                 将备份文件恢复到指定盘</p>
-<p><code>gzip -dc /path/to/image.gz | dd of=/dev/sdx</code>       将压缩的备份文件恢复到指定盘</p>
-<p>拷贝内存资料到硬盘</p>
-<p><code>dd if=/dev/mem of=/root/mem.bin bs=1024</code>                将内存里的数据拷贝到root目录下的mem.bin文件</p>
-<p>从光盘拷贝iso镜像</p>
-<p><code>dd if=/dev/cdrom of=/root/cd.iso</code>                 拷贝光盘数据到root文件夹下，并保存为cd.iso文件</p>
-<p>销毁磁盘数据，文件系统</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/urandom of=/dev/sda1</span><br></pre></td></tr></table></figure>
-<p>利用随机的数据填充硬盘，在某些必要的场合可以用来销毁数据，执行此操作以后，/dev/sda1将无法挂</p>
-<p>载，创建和拷贝操作无法执行。</p>
-<p>得到最恰当的block size</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero bs=2048 count=500000 of=/root/1Gb.file</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero bs=4096 count=250000 of=/root/1Gb.file</span><br></pre></td></tr></table></figure>
-<p>通过比较dd指令输出中命令的执行时间，即可确定系统最佳的block size大小</p>
-<p>测试硬盘写速度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=/root/1Gb.file bs=1024 count=1000000</span><br></pre></td></tr></table></figure>
-<p>测试硬盘读速度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/root/1Gb.file bs=64k | dd of=/dev/null</span><br></pre></td></tr></table></figure>
-<p>修复硬盘</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/sda of=/dev/sda</span><br></pre></td></tr></table></figure>
-<p>当硬盘较长时间（比如1,2年）放置不使用后，磁盘上会产生消磁点。当磁头读</p>
-<p>到这些区域时会遇到困难，并可能导致I/O错误。当这种情况影响到硬盘的第一</p>
-<p>个扇区时，可能导致硬盘报废。上边的命令有可能使这些数据起死回生,且这个</p>
-<p>过程是安全高效的</p>
+<h4 id="4-加载内核Kernel："><a href="#4-加载内核Kernel：" class="headerlink" title="4.加载内核Kernel："></a>4.加载内核Kernel：</h4><ul>
+<li><p>探测可识别到的所有硬件设备</p>
+</li>
+<li><p>加载硬件驱动程序（借助于ramdisk加载驱动）</p>
+</li>
+<li><p>以只读方式挂载根文件系统：</p>
+</li>
+<li><p>/boot/initramfs-VERSION-release.img文件加载根目录文件系统驱动</p>
+</li>
+<li><p>/boot/grup/grup.conf文件定义了根的位置</p>
+</li>
+<li><p>运行用户空间的第一个应用程序：/sbin/init</p>
+</li>
+</ul>
+<h5 id="内核的核心文件："><a href="#内核的核心文件：" class="headerlink" title="内核的核心文件："></a>内核的核心文件：</h5><ul>
+<li><p>/boot/vmlinuz-VERSION-release</p>
+</li>
+<li><p>ramdisk：辅助的伪根系统，存放辅助性的驱动模块</p>
+</li>
+<li><p>CentOS 5: /boot/initrd-VERSION-release.img      ramdisk虚拟磁盘</p>
+</li>
+<li><p>CentOS 6,7: /boot/initramfs-VERSION-release.img  ramfs虚拟文件系统</p>
+</li>
+<li>mkinitrd /boot/initramfs-uname -r.img uname -r        生成新的ramfs文件</li>
+</ul>
+<h4 id="5-启动init进程："><a href="#5-启动init进程：" class="headerlink" title="5.启动init进程："></a>5.启动init进程：</h4><h5 id="CentOS5："><a href="#CentOS5：" class="headerlink" title="CentOS5："></a>CentOS5：</h5><p>SycV：init，redhat开发</p>
+<p>特点：启动服务程序时，有依赖的服务将被串行启动，因此centos5系统启动很缓慢</p>
+<p>配置文件：/etc/inittab</p>
+<h5 id="CentOS6："><a href="#CentOS6：" class="headerlink" title="CentOS6："></a>CentOS6：</h5><p>Upstart：init，ubantu开发</p>
+<p>特点：守护进程间通信依赖于D-Bus进行，因此可基本实现类似并行启动</p>
+<p>配置文件：/etc/inittab，/etc/init/*.conf</p>
+<h5 id="CentOS7："><a href="#CentOS7：" class="headerlink" title="CentOS7："></a>CentOS7：</h5><p>Systemd：systemd–&gt;init  redhat开发</p>
+<p>特点：服务只有在第一次被访问到才会启动，因此centos7系统启动过程非常快</p>
+<p>配置文件：/usr/lib/systemd/system<br> /etc/systemd/system</p>
+<h5 id="sbin-init-CentOS6版本之前"><a href="#sbin-init-CentOS6版本之前" class="headerlink" title="/sbin/init CentOS6版本之前"></a>/sbin/init CentOS6版本之前</h5><p>运行级别：为系统运行或维护等目的而设定；0-6：7个级别</p>
+<ul>
+<li><p>0：关机</p>
+</li>
+<li><p>1：单用户模式(root自动登录), single, 维护模式</p>
+</li>
+<li><p>2: 多用户模式，启动网络功能，但不会启动NFS；维护模式</p>
+</li>
+<li><p>3：多用户模式，正常模式；文本界面</p>
+</li>
+<li><p>4：预留级别；可同3级别</p>
+</li>
+<li><p>5：多用户模式，正常模式；图形界面</p>
+</li>
+<li><p>6：重启</p>
+</li>
+</ul>
+<p>默认级别： 3, 5</p>
+<p>切换级别：init #</p>
+<p>查看级别：runlevel ; who -r</p>
+<h4 id="6-读取-etc-inittab文件"><a href="#6-读取-etc-inittab文件" class="headerlink" title="6.读取/etc/inittab文件"></a>6.读取/etc/inittab文件</h4><h5 id="CentOS5：-1"><a href="#CentOS5：-1" class="headerlink" title="CentOS5："></a>CentOS5：</h5><ul>
+<li><p>1.定义默认启动运行级别为3</p>
+</li>
+<li><p>2.定义了使用/etc/rc.d/rc.sysinit进行系统初始化</p>
+</li>
+<li><p>3.定义了每个运行级别执行的rc#文件</p>
+</li>
+<li><p>4.定义Ctrl-Alt-Delete组合键重启</p>
+</li>
+<li><p>5.配置不断电系统pf、pr两种机制</p>
+</li>
+<li><p>6.定义了终端数量，默认6个</p>
+</li>
+<li><p>7.如果是5级别，则会启动图形化界面</p>
+</li>
+</ul>
+<p>注意：可利用#加注释方法减少5选项中的终端数量，也可复制增加可登陆终端数量</p>
+<p>建议：生产中建议关闭6选项组合键重启功能，防止误操作</p>
+<h5 id="CentOS6：-1"><a href="#CentOS6：-1" class="headerlink" title="CentOS6："></a>CentOS6：</h5><p>仅定义了系统默认启动运行级别，其他项分割为单个文件执行，原来与5版本一致。</p>
+<ul>
+<li><p>/etc/init/control-alt-delete.conf</p>
+</li>
+<li><p>/etc/init/tty.conf</p>
+</li>
+<li><p>/etc/init/start-ttys.conf</p>
+</li>
+<li><p>/etc/init/rc.conf</p>
+</li>
+<li><p>/etc/init/prefdm.conf</p>
+</li>
+</ul>
+<h4 id="7-读取-etc-rc-d-rc-sysinit-系统初始化文件"><a href="#7-读取-etc-rc-d-rc-sysinit-系统初始化文件" class="headerlink" title="7.读取/etc/rc.d/rc.sysinit 系统初始化文件"></a>7.读取/etc/rc.d/rc.sysinit 系统初始化文件</h4><ul>
+<li><p>(1) 设置主机名</p>
+</li>
+<li><p>(2) 设置欢迎信息</p>
+</li>
+<li><p>(3) 激活udev和selinux</p>
+</li>
+<li><p>(4) 挂载/etc/fstab文件中定义的文件系统</p>
+</li>
+<li><p>(5) 检测根文件系统，并以读写方式重新挂载根文件系统</p>
+</li>
+<li><p>(6) 设置系统时钟</p>
+</li>
+<li><p>(7) 激活swap设备</p>
+</li>
+<li><p>(8) 根据/etc/sysctl.conf文件设置内核参数</p>
+</li>
+<li><p>(9) 激活lvm及software raid设备</p>
+</li>
+<li><p>(10) 加载额外设备的驱动程序</p>
+</li>
+<li><p>(11) 清理操作</p>
+</li>
+</ul>
+<h5 id="etc-init-d"><a href="#etc-init-d" class="headerlink" title="/etc/init.d/"></a>/etc/init.d/</h5><ul>
+<li><p>存放对应服务脚本</p>
+</li>
+<li><p>是rc.d文件软连接的源文件</p>
+</li>
+<li><p>通过执行init.d脚本，确定运行级别开启和关闭的服务</p>
+</li>
+</ul>
+<h4 id="8-运行-etc-rc-d-rc-0-6-d-对应级别目录下服务"><a href="#8-运行-etc-rc-d-rc-0-6-d-对应级别目录下服务" class="headerlink" title="8.运行/etc/rc.d/ rc[0-6].d/对应级别目录下服务"></a>8.运行/etc/rc.d/ rc[0-6].d/对应级别目录下服务</h4><ul>
+<li><p>K##*：运行级别为N时，关闭K开头的服务；##运行次序；数字越小，越先运行；数字越小的服务，通常为依赖到别的服务</p>
+</li>
+<li><p>S##*：运行级别为S时，打开S开头的服务；##运行次序；数字越小，越先运行；数字越小的服务，通常为被依赖到的服务</p>
+</li>
+</ul>
+<h5 id="var-lock-subsys"><a href="#var-lock-subsys" class="headerlink" title="/var/lock/subsys"></a>/var/lock/subsys</h5><p>存放已启动的服务名称</p>
+<h4 id="9-运行-etc-rc-d-rc-local文件"><a href="#9-运行-etc-rc-d-rc-local文件" class="headerlink" title="9.运行/etc/rc.d/rc.local文件"></a>9.运行/etc/rc.d/rc.local文件</h4><p>rc.local会在所有服务启动后作为一个兜底的服务进行启动</p>
+<p>注意：</p>
+<ul>
+<li><p>（1）正常级别下，最后启动一个服务S99local没有链接至/etc/rc.d/init.d一个服务脚本，而是指向了/etc/rc.d/rc.local脚本</p>
+</li>
+<li><p>（2）不便或不需写为服务脚本放置于/etc/rc.d/init.d/目录，且又想开机时自动运行的命令，可直接放置于/etc/rc.d/rc.local文件中</p>
+</li>
+<li><p>（3）/etc/rc.d/rc.local在指定运行级别脚本后运行</p>
+</li>
+<li><p>（4）可以根据情况，进行自定义修改</p>
+</li>
+</ul>
+<h4 id="10、执行-bin-login程序"><a href="#10、执行-bin-login程序" class="headerlink" title="10、执行/bin/login程序"></a>10、执行/bin/login程序</h4><p>此时，系统完成启动，显示请输入用户名、密码</p>
+<h3 id="二、制定自己的init服务脚本："><a href="#二、制定自己的init服务脚本：" class="headerlink" title="二、制定自己的init服务脚本："></a>二、制定自己的init服务脚本：</h3><h4 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h4><h5 id="第一步：编写服务脚本"><a href="#第一步：编写服务脚本" class="headerlink" title="第一步：编写服务脚本"></a>第一步：编写服务脚本</h5><p>#！/bin/bash</p>
+<p>#chkconfig:     345/-     95     5             关键一行</p>
+<p>生效模式:345或all  S编号  K编号</p>
+<p>#description:test service</p>
+<p>source /etc/init.d/functions                    调用函数库</p>
+<p>case $1 in</p>
+<p>start）</p>
+<p>[ -f /var/lock/subsys/testsrv ] &amp;&amp; action “testsrv is started ”</p>
+<p>touch /var/lock/subsys/testsrv</p>
+<p>action starting testsrv</p>
+<p>;;</p>
+<p>stop）</p>
+<p>rm -f /var/lock/subsys/testsrv</p>
+<p>action testsrv is stopped</p>
+<p>;;</p>
+<p>status)</p>
+<p>[ -f /var/lock/subsys/testsrv ]&amp;&amp;echo testsrv is starting||echo testsrv is stopped</p>
+<p>*)</p>
+<p>echo “Usage:service testsrv start|stop|status”</p>
+<p>esac</p>
+<h5 id="第二步：放入服务目录"><a href="#第二步：放入服务目录" class="headerlink" title="第二步：放入服务目录"></a>第二步：放入服务目录</h5><p>/etc/init.d/                                         放入服务目录</p>
+<h5 id="第三步：添加脚本至服务"><a href="#第三步：添加脚本至服务" class="headerlink" title="第三步：添加脚本至服务"></a>第三步：添加脚本至服务</h5><p>chkconfig –add testsrv                            将testsrv脚本添加至服务</p>
+<p>方法2：<br>也可以将开机启动服务代码添加到：</p>
+<p>/etc/rc.d/rc[0-6]/99Slocal中执行</p>
+<h4 id="三、服务相关命令"><a href="#三、服务相关命令" class="headerlink" title="三、服务相关命令"></a>三、服务相关命令</h4><p>chkconfig         服务状态控制</p>
+<p>查看服务状态：</p>
+<ul>
+<li><p>–list                  列出所有独立服务</p>
+</li>
+<li><p>–list [name]             列出指定服务各运行模式状态</p>
+</li>
+</ul>
+<p>添加脚本到服务：</p>
+<ul>
+<li>–add  name                   添加脚本到服务</li>
+</ul>
+<p>注：SysV服务脚本要放置于/etc/rc.d/init.d（/etc/init.d）</p>
+<p>#!/bin/bash</p>
+<p>#LLLL 表示初始在哪个级别下启动，-表示都不启动</p>
+<p># chkconfig: LLLL nn nn</p>
+<p>删除服务：   </p>
+<ul>
+<li>–del  name            删除指定服务</li>
+</ul>
+<p>修改服务状态： </p>
+<ul>
+<li>–level 35 atd off|on       将3,5模式atd服务默认开机关闭服务，不添加模式：默认2,3,4,5</li>
+</ul>
+<ul>
+<li><p>ntsysv               查看当前模式服务启动状态，*代表开机启动</p>
+</li>
+<li><p>–level=3          修改指定运行模式的启动服务</p>
+</li>
+</ul>
+<p>service              手动管理服务</p>
+<ul>
+<li><p>[name]  start|stop|restart     管理服务状态</p>
+</li>
+<li><p>–status-all               当前所有服务状态</p>
+</li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -565,17 +680,12 @@ mkisofs  -r  -o  /root/etc.iso     /etc
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/26/Linux系统中RAID及LVM管理/" title= Linux系统中RAID及LVM管理 >
-                    <div class="nextTitle">Linux系统中RAID及LVM管理</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/20/搭建自己的yum源服务器/" title= 搭建自己的yum源服务器 >
-                    <div class="prevTitle">搭建自己的yum源服务器</div>
+                <a href= "/2018/05/08/shell脚本编程基础——循环用法/" title= shell脚本编程基础——循环用法 >
+                    <div class="prevTitle">shell脚本编程基础——循环用法</div>
                 </a>
             
         </li>
@@ -678,7 +788,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、交换分区swap管理："><span class="toc-number">1.</span> <span class="toc-text">一、交换分区swap管理：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#场景1：增加一个新的swap分区"><span class="toc-number">1.1.</span> <span class="toc-text">场景1：增加一个新的swap分区</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-fdisk-dev-sdb-创建新的swap分区，tyep-82-Linux-swap"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.fdisk  /dev/sdb                                    创建新的swap分区，tyep=82=Linux swap</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-mkswap-dev-sdb1-L-swap-sdb2-添加swap文件系统"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.mkswap       /dev/sdb1 -L swap_sdb2                 添加swap文件系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-vim-etc-fstab"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.vim /etc/fstab</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-swapon-a-使swap分区生效"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.swapon -a                                       使swap分区生效</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-swapon-s-查看是否生效"><span class="toc-number">1.1.5.</span> <span class="toc-text">5.swapon -s                                       查看是否生效</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#场景2：使用一个文件当做新的swap分区"><span class="toc-number">1.2.</span> <span class="toc-text">场景2：使用一个文件当做新的swap分区</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、Linux系统光盘使用"><span class="toc-number">2.</span> <span class="toc-text">二、Linux系统光盘使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、Linux系统USB介质使用"><span class="toc-number">3.</span> <span class="toc-text">三、Linux系统USB介质使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、强大的dd工具"><span class="toc-number">4.</span> <span class="toc-text">四、强大的dd工具</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Linux系统启动流程"><span class="toc-number">1.</span> <span class="toc-text">一、Linux系统启动流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-POST："><span class="toc-number">1.1.</span> <span class="toc-text">1.POST：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-加载MBR："><span class="toc-number">1.2.</span> <span class="toc-text">2.加载MBR：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-GRUB："><span class="toc-number">1.3.</span> <span class="toc-text">3.GRUB：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#第一阶段：MBR的前446字节"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一阶段：MBR的前446字节</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第二阶段：识别文件系统，加载-boot-grub目录下的文件（备份gurb的文件）"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二阶段：识别文件系统，加载/boot/grub目录下的文件（备份gurb的文件）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-加载内核Kernel："><span class="toc-number">1.4.</span> <span class="toc-text">4.加载内核Kernel：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#内核的核心文件："><span class="toc-number">1.4.1.</span> <span class="toc-text">内核的核心文件：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-启动init进程："><span class="toc-number">1.5.</span> <span class="toc-text">5.启动init进程：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CentOS5："><span class="toc-number">1.5.1.</span> <span class="toc-text">CentOS5：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CentOS6："><span class="toc-number">1.5.2.</span> <span class="toc-text">CentOS6：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CentOS7："><span class="toc-number">1.5.3.</span> <span class="toc-text">CentOS7：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#sbin-init-CentOS6版本之前"><span class="toc-number">1.5.4.</span> <span class="toc-text">/sbin/init CentOS6版本之前</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-读取-etc-inittab文件"><span class="toc-number">1.6.</span> <span class="toc-text">6.读取/etc/inittab文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CentOS5：-1"><span class="toc-number">1.6.1.</span> <span class="toc-text">CentOS5：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CentOS6：-1"><span class="toc-number">1.6.2.</span> <span class="toc-text">CentOS6：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-读取-etc-rc-d-rc-sysinit-系统初始化文件"><span class="toc-number">1.7.</span> <span class="toc-text">7.读取/etc/rc.d/rc.sysinit 系统初始化文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#etc-init-d"><span class="toc-number">1.7.1.</span> <span class="toc-text">/etc/init.d/</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-运行-etc-rc-d-rc-0-6-d-对应级别目录下服务"><span class="toc-number">1.8.</span> <span class="toc-text">8.运行/etc/rc.d/ rc[0-6].d/对应级别目录下服务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#var-lock-subsys"><span class="toc-number">1.8.1.</span> <span class="toc-text">/var/lock/subsys</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-运行-etc-rc-d-rc-local文件"><span class="toc-number">1.9.</span> <span class="toc-text">9.运行/etc/rc.d/rc.local文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10、执行-bin-login程序"><span class="toc-number">1.10.</span> <span class="toc-text">10、执行/bin/login程序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、制定自己的init服务脚本："><span class="toc-number">2.</span> <span class="toc-text">二、制定自己的init服务脚本：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法1："><span class="toc-number">2.1.</span> <span class="toc-text">方法1：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#第一步：编写服务脚本"><span class="toc-number">2.1.1.</span> <span class="toc-text">第一步：编写服务脚本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第二步：放入服务目录"><span class="toc-number">2.1.2.</span> <span class="toc-text">第二步：放入服务目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第三步：添加脚本至服务"><span class="toc-number">2.1.3.</span> <span class="toc-text">第三步：添加脚本至服务</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、服务相关命令"><span class="toc-number">2.2.</span> <span class="toc-text">三、服务相关命令</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

@@ -347,6 +347,45 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/10/Linux系统启动流程详解/" >
+                
+                    <span>Linux系统启动流程详解</span>
+            </a>
+            <div class="abstract-content">
+                
+Linux系统从按下电源键开始到系统启动要求用户输入用户名，中间究竟发生什么？了解Linux系统的启动流程，不仅有助于我们更加深入的理解linux底层设计理念，更能帮助我们再出现系统启动故障时，迅速排查出故障原因。
+
+一、Linux系统启动流程以下是CentOS6版本系统启动流程图：（注：下文中启动流程主要适用于CentOS6之前的版本，7版本变动较大，暂不加入讨论）
+centos6启动流程_gaitubao_com_watermark
+CentOS6启动流程：
+
+1.加载BIOS的硬件信息，进行POST加电自检
+
+2.读取第一个启动设备MBR的引导加载程序(grub)的启动信息
+
+3...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/10</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "系统启动">系统启动</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/08/shell脚本编程基础——循环用法/" >
                 
                     <span>shell脚本编程基础——循环用法</span>
@@ -735,57 +774,6 @@ RAID-0 ...
         <a class="post-tag" href="javascript:void(0);" data-tags = "RAID">RAID</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "LVM">LVM</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/25/交换分区swap管理及特殊介质的使用/" >
-                
-                    <span>交换分区swap管理及特殊介质的使用</span>
-            </a>
-            <div class="abstract-content">
-                一、交换分区swap管理：交换分区是系统RAM的补充，相当于Windows系统中的虚拟内存，当系统RAM不够用的时候将使用交换
-分区来代替内存使用。
-基本设置包括：
-
-创建交换分区或者文件
-
-使用mkswap写入特殊签名
-
-在/etc/fstab文件中添加适当的条目
-
-使用swapon -a激活交换分区
-
-
-swapon                     启用交换分区
-格式：swapon [OPTION]…[DEVICE]
-
--a              激活所有交换分区
-
--p priority        指定优先级
-
-/etc/fstab:pri=value
-
-
-swap...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/25</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "swap">swap</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "分区">分区</a>
     
 </div>
                 
@@ -1296,7 +1284,26 @@ swap...
     
     
     
-    <div class="total-archive"> Total : 26 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 27 </div>
     
     <div class="post-archive">
     
@@ -1305,6 +1312,11 @@ swap...
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2018/05/10/Linux系统启动流程详解/" >Linux系统启动流程详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1500,6 +1512,10 @@ swap...
         <span class="sidebar-tag-name" data-tags="job"><span class="iconfont-archer">&#xe606;</span>job</span>
     
         <span class="sidebar-tag-name" data-tags="计划任务"><span class="iconfont-archer">&#xe606;</span>计划任务</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="系统启动"><span class="iconfont-archer">&#xe606;</span>系统启动</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
